@@ -21,7 +21,7 @@ const CartItem = ({imageSrc, alt, name, weight, amount, price}) =>{
       </div>
       <div className="right">
           <MdDelete size="16" className='icon' />
-          <p className="h7 sb">${price}</p>
+          <p className="h7 sb">${(price * amount).toFixed(2)}</p>
       </div>
     </div>
   )
@@ -32,8 +32,8 @@ const CartPopup = () => {
 
   return (
     <div className='cart_popup' >
-        <HiShoppingCart size={24} className="icon" />
-        <div className={`menu shadow_300 `}>
+        <a href='#'><HiShoppingCart size={24} className="icon" /></a>
+        <div className="menu shadow_300" >
           <div className="header">
             <h5 className="h5 md">Cart (2)</h5>
           </div>

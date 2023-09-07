@@ -46,8 +46,8 @@ $shape_line: #d8d8d8;
 }
 
 .shape_outline_active {
-	border: 1px solid #5a4098;
-	color: #5a4098;
+	border: 1px solid #5a4098 !important;
+	color: #5a4098 !important;
 
 	// &:hover {
 	// 	border: 2px solid #5a4098;

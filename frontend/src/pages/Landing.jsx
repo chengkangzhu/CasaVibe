@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 //icon
 import { MdOutlineKeyboardArrowRight} from "react-icons/md";
@@ -7,6 +8,7 @@ import { MdOutlineKeyboardArrowRight} from "react-icons/md";
 import CatergoryBlock from "../components/CatergoryBlock";
 import ProductCard from "../components/ProductCard";
 import NewsCard from "../components/NewsCard";
+
 
 //images
 import mirrorImage from "../img/landing/mirror.png"
@@ -52,7 +54,7 @@ const Landing = () => {
 				</h6>
 			</div>
             <div className="shop_now">
-				<button className="shop_now__button h5 sb">Shop Now <MdOutlineKeyboardArrowRight size={24} className="icon"/></button>
+				<Link to="/shop" className="shop_now__button h5 sb">Shop Now <MdOutlineKeyboardArrowRight size={24} className="icon"/></Link>
 			</div>
 			<div className="catergory_section">
 				<h2 className="h2 sb">Preferred Category</h2>
@@ -107,7 +109,9 @@ const Landing = () => {
 					</div>
 					<button className="explore_collection_button h5 sb">Explore Collection <MdOutlineKeyboardArrowRight size={24} className="icon"/></button>
 				</div>
-				<img src={sofaSetMain} alt="sofa set main image" className="sofa_set__image"/>
+				<div className="img_container">
+					<img src={sofaSetMain} alt="sofa set main image" className="sofa_set__image"/>
+				</div>
 			</div>
 			<div className="brands">
 				<div className="brand__container">

@@ -5,6 +5,7 @@ import React from "react";
 import Searchbar from "./Searchbar";
 import CartPopup from "./CartPopup";
 import ProfileIcon from "./ProfileIcon";
+import RoomPopup from "./RoomPopup";
 
 //icons
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
@@ -21,7 +22,7 @@ const Navbar = () => {
 			</div>
       <div className="navbar__bottom ">
         <div className="left h7 md">
-          <div className="room_dropdown">Room <MdOutlineKeyboardArrowDown size={16} className="icon"/></div>
+          <RoomPopup />
           <div className="product_dropdown">Product <MdOutlineKeyboardArrowDown size={16} className="icon"/></div>
           <div className="collections_dropdown">Collections </div>
           <div className="contact_dropdown">Contact </div>
