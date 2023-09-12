@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 //icons
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
@@ -11,11 +12,17 @@ import kitchen from "../img/navbar/kitchen.jpg"
 import living_room from "../img/navbar/living_room.jpg"
 import home_office from "../img/navbar/home_office.jpg"
 
-const RoomPopup = () => {
+const RoomPopup = () => { 
+  const [isDropDownVisible, setIsDropDownVisible] = useState(false);
+
+  const handleRoomClick = () => {
+    setIsDropDownVisible(false)
+  }
+
 	return (
 		<div className="room_popup">
-			<a href="#">Room <MdOutlineKeyboardArrowDown size={16} className="icon" /></a>
-        <div className="room_container shadow_300" >
+			<Link to="/shop " onClick={handleRoomClick} onMouseEnter={() => setIsDropDownVisible(true)} onMouseLeave={() => setIsDropDownVisible(false)}>Room <MdOutlineKeyboardArrowDown size={16} className="icon" /></Link>
+        <div className={`room_container shadow_300 ${isDropDownVisible && "show"}`} >
           <a href="#" className="h7 md"><img src={bathroom} alt="bathroom" />Bathroom</a>
           <a href="#" className="h7 md"><img src={bedroom} alt="bedroom" />Bedroom</a>
           <a href="#" className="h7 md"><img src={dinning_room} alt="dinning_room" />Dinning</a>

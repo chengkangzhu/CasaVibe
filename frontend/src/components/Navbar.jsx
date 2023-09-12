@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 
 //components
@@ -15,7 +16,7 @@ const Navbar = () => {
 	return (
 		<nav className="navbar">
 			<div className="navbar__top">
-				<div className="logo sb">CasaVibe</div>
+				<Link to="/" className="logo sb">CasaVibe</Link>
         <Searchbar />
         <CartPopup />
         <ProfileIcon />
@@ -28,7 +29,7 @@ const Navbar = () => {
           <div className="contact_dropdown">Contact </div>
         </div>
         <div className="right h7 md">
-          <a href="#" className="store_location"><MdLocationOn size={16} className="icon"/> Store Location</a>
+          <Link to="/location" className="store_location"><MdLocationOn size={16} className="icon"/> Store Location</Link>
           <a href="#" className="track_order">Track your order</a>
         </div>
       </div>

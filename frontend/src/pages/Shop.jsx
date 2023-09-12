@@ -21,13 +21,16 @@ const Shop = () => {
             {!isSearch &&  (
                 <div>
                     <RoomSubcatergory room="Living Room" />
-                    <ProductCarousel h2="Current Best Selling Products">
+                    <ProductCarousel h2="Current Best Selling Products" rightId="testing1" leftId="testing2" containerId="testing3">
                         <ProductCard imageSrc={newProduct1Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
                         <ProductCard imageSrc={newProduct2Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
                         <ProductCard imageSrc={newProduct3Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
                         <ProductCard imageSrc={newProduct4Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
                         <ProductCard imageSrc={newProduct3Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
                         <ProductCard imageSrc={newProduct4Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
+                        <ProductCard imageSrc={newProduct1Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" /> 
+                        <ProductCard imageSrc={newProduct2Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
+                        <ProductCard imageSrc={newProduct3Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" /> 
                     </ProductCarousel> 
                 </div>)
             }

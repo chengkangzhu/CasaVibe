@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 
 //icon
 import { HiShoppingCart } from "react-icons/hi";
@@ -28,12 +29,18 @@ const CartItem = ({imageSrc, alt, name, weight, amount, price}) =>{
 }
 
 const CartPopup = () => {
+  const [isDropDownVisible, setIsDropDownVisible] = useState(false);
+
+  const handleCartClick = () => { 
+    setIsDropDownVisible(false);  
+  };
 
 
   return (
     <div className='cart_popup' >
-        <a href='#'><HiShoppingCart size={24} className="icon" /></a>
-        <div className="menu shadow_300" >
+        <Link to="/cart"   onClick={handleCartClick} onMouseEnter={() => setIsDropDownVisible(true)} onMouseLeave={() => setIsDropDownVisible(false)}><HiShoppingCart size={24} className="icon" /></Link>
+        
+         <div className={`menu shadow_300 ${isDropDownVisible && "show"}`} >
           <div className="header">
             <h5 className="h5 md">Cart (2)</h5>
           </div>
@@ -46,7 +53,7 @@ const CartPopup = () => {
             <button className="checkout_button shape_outline_active h7 sb">Checkout</button>
             <button className="view_cart_button shape_outline h7 sb">View Cart</button>
           </div>
-        </div> 
+        </div>  
     </div>
   )
 }

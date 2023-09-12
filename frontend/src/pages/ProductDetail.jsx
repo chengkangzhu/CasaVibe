@@ -39,7 +39,7 @@ const AccordionItem = ({title, content, id}) => {
 						{title}
 					</button>
 				</h2>
-				<div id={id} className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+				<div id={id} className="accordion-collapse collapse" data-bs-parent="#productDetailAccordion">
 					<div className="accordion-body p3">
 						{content}
 					</div>
@@ -110,7 +110,7 @@ const ProductDetail = () => {
 				</div>
 				<div className="product_details">
 					
-					<div className="accordion accordion-flush" id="accordionFlushExample">
+					<div className="accordion accordion-flush" id="productDetailAccordion">
 						<AccordionItem id="flush-collapseOne" title="Product Details" content="A lightweight moisturizer designed to minimize irritations and provide much needed moisture for healthy looking skin. Delicate Daily Moisturizer contains an important blend of botanicals and extracts making your skin healthy and looking its best. " />
 						<AccordionItem id="flush-collapseTwo" title="Size & dimentions" content="A lightweight moisturizer designed to minimize irritations and provide much needed moisture for healthy looking skin. Delicate Daily Moisturizer contains an important blend of botanicals and extracts making your skin healthy and looking its best. " />
 						<AccordionItem id="flush-collapseThree" title="Reviews" content="A lightweight moisturizer designed to minimize irritations and provide much needed moisture for healthy looking skin. Delicate Daily Moisturizer contains an important blend of botanicals and extracts making your skin healthy and looking its best. " />

@@ -55,9 +55,11 @@ const ShopGrid = () => {
 	return (
 		<div className="shop_grid">
 			<div className="head_row">
-				<Sort />
-				<Filter />
-				<span className="h7 rg">Shows 1-40 of 183 product</span>
+				<div className="head_row_buttons">
+					<Filter />
+					<Sort />
+				</div>
+				<p className="h7 rg total_products">Shows 1-40 of 183 product</p>
 			</div>
 			<div className="shop_grid_container">
 				{imageSources.map((imgSrc, index) => (
