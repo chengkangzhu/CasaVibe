@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; 
 
 //icon
 import { MdOutlineKeyboardArrowRight} from "react-icons/md";
@@ -44,7 +44,13 @@ import news2 from "../img/landing/news (2).png"
 import news3 from "../img/landing/news (3).png"
 
 const Landing = () => {
+
+
+	  
 	return (
+
+		
+
 		<div className="landing">
 			<div className="hero">
 				<h1 className="h1 sb">A furniture that eases your life</h1>
@@ -71,15 +77,15 @@ const Landing = () => {
 				<div className="new_product__header">
 					<h2 className="h2 sb">New Products</h2>
 					<nav >
-						<a href="#" className="shape_outline_active h7 md">All category</a>
-						<a href="#" className="h7 md">Furnitures</a>
-						<a href="#" className="h7 md">Chairs</a>
-						<a href="#" className="h7 md">Decor</a>
-						<a href="#" className="h7 md">Lighting</a>
+						<span className="shape_outline_active h7 md">All category</span>
+						<span className="h7 md">Furnitures</span>
+						<span className="h7 md">Chairs</span>
+						<span className="h7 md">Decor</span>
+						<span className="h7 md">Lighting</span>
 					</nav>
 				</div>
 				<div className="new_product__content">
-					<img src={mainNewProductImage} alt="main new product image"  />
+					<img src={mainNewProductImage} alt="main new product"  />
 					<div className="other_products_container">
 						<ProductCard imageSrc={newProduct1Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
 						<ProductCard imageSrc={newProduct2Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
@@ -110,23 +116,23 @@ const Landing = () => {
 					<button className="explore_collection_button h5 sb">Explore Collection <MdOutlineKeyboardArrowRight size={24} className="icon"/></button>
 				</div>
 				<div className="img_container">
-					<img src={sofaSetMain} alt="sofa set main image" className="sofa_set__image"/>
+					<img src={sofaSetMain} alt="sofa set main" className="sofa_set__image"/>
 				</div>
 			</div>
 			<div className="brands">
 				<div className="brand__container">
-					<div className="brand"><img src={brand1} /></div>
-					<div className="brand"><img src={brand2} /></div>
-					<div className="brand"><img src={brand3} /></div>
-					<div className="brand"><img src={brand4} /></div>
-					<div className="brand"><img src={brand5} /></div>
-					<div className="brand"><img src={brand6} /></div>
-					<div className="brand"><img src={brand7} /></div>
-					<div className="brand"><img src={brand8} /></div>
-					<div className="brand"><img src={brand9} /></div>
-					<div className="brand"><img src={brand10} /></div>
+					<div className="brand"><img src={brand1} alt="" /></div>
+					<div className="brand"><img src={brand2}  alt="" /></div>
+					<div className="brand"><img src={brand3}  alt="" /></div>
+					<div className="brand"><img src={brand4}  alt="" /></div>
+					<div className="brand"><img src={brand5}  alt=""  /></div>
+					<div className="brand"><img src={brand6}  alt="" /></div>
+					<div className="brand"><img src={brand7}  alt="" /></div>
+					<div className="brand"><img src={brand8}  alt="" /></div>
+					<div className="brand"><img src={brand9}  alt="" /></div>
+					<div className="brand"><img src={brand10}  alt="" /></div>
 				</div>
-				<a href="#" className="h6 md purple all_brand">See all availlable brands</a>
+				<Link to="/shop" className="h6 md purple all_brand">See all availlable brands</Link>
 			</div>
 			<div className="news">
 				<h1 className="h1 sb">Our Recent News</h1>

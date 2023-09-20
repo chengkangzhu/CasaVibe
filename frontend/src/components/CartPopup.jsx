@@ -14,7 +14,7 @@ import woodenChairImage from "../img/cart/wooden_chair.png"
 const CartItem = ({imageSrc, alt, name, weight, amount, price}) =>{
   return (
     <div className="cart_item">
-      <div className="left"><img src={imageSrc} alt={alt} /></div>
+      <div className="left"><img src={imageSrc} alt="" /></div>
       <div className="center">
         <p className="name product-m item_name">{name}</p>
         <p className="h8 rg item_weight">Total package weight: {weight} kg</p>

@@ -1,12 +1,5 @@
-import React from "react";
-
-//images
-import main_product from "../img/pdp/main_product.png"
-import thumbnail1 from "../img/pdp/thumbnail (1).png"
-import thumbnail2 from "../img/pdp/thumbnail (2).png"
-import thumbnail3 from "../img/pdp/thumbnail (3).png"
-import thumbnail4 from "../img/pdp/thumbnail (4).png"
-import thumbnail5 from "../img/pdp/thumbnail (5).png"
+import React from "react"; 
+ 
 
 import variation1 from "../img/pdp/variation (1).png"
 import variation2 from "../img/pdp/variation (2).png"
@@ -27,14 +20,19 @@ import { FaStoreAlt } from "react-icons/fa";
 import { MdOutlineKeyboardArrowRight} from "react-icons/md";
 
 //images
+import main_product from "../img/pdp/main_product.png" 
+
 import newProduct1Image from "../img/landing/new_product_1.png"
 import newProduct2Image from "../img/landing/new_product_2.png"
 import newProduct3Image from "../img/landing/new_product_3.png"
 import newProduct4Image from "../img/landing/new_product_4.png"
+ 
+   
 
 const AccordionItem = ({title, content, id}) => {
+ 
 	return  <div className="accordion-item">
-				<h2 class="accordion-header h5 md">
+				<h2 className="accordion-header h5 md">
 					<button className="accordion-button collapsed custom-accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#${id}`} aria-expanded="false" aria-controls={id}>
 						{title}
 					</button>
@@ -49,18 +47,15 @@ const AccordionItem = ({title, content, id}) => {
 }
 
 
-const ProductDetail = () => {
+const ProductDetail = () => {  
+	  
+ 
+
+
 	return <div className="pdp">
 				<div className="main_product_info">
 					<div className="img_container">
-						<div className="product_display"><img src={main_product} alt="main product image display" /></div>
-						<div className="thumbnails_container">
-							<div className="thumbail"><img src={thumbnail1} alt="thumbnail 1" /></div>
-							<div className="thumbail"><img src={thumbnail2} alt="thumbnail 2" /></div>
-							<div className="thumbail"><img src={thumbnail3} alt="thumbnail 3" /></div>
-							<div className="thumbail"><img src={thumbnail4} alt="thumbnail 4" /></div>
-							<div className="thumbail"><img src={thumbnail5} alt="thumbnail 5" /></div>
-						</div>
+						<div className="product_display"><img src={main_product} alt="main product display" /></div> 
 					</div>
 					<div className="product_info">
 						<Breadcrumb />
@@ -97,12 +92,12 @@ const ProductDetail = () => {
 						<div className="shipping_or_store">
 							<div className="shipping">
 								<RiTruckFill size={24} className="icon"/>
-								<p className="h7 md">Shipping costs start from $24 <p className="p4">See details here</p></p>
+								<h6 className="h7 md">Shipping costs start from $24 <p className="p4">See details here</p></h6>
 								<MdOutlineKeyboardArrowRight size={24} className="icon" />
 							</div>
 							<div className="store">
 								<FaStoreAlt size={24} className="icon"/>
-								<p className="h7 md">Find in store <p className="p4">Please select a pick-up store in your area</p></p>
+								<h6 className="h7 md">Find in store <p className="p4">Please select a pick-up store in your area</p></h6>
 								<MdOutlineKeyboardArrowRight size={24} className="icon" />
 							</div>
 						</div>

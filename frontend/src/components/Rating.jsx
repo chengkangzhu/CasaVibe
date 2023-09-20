@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React  from "react";
 
 import { ImStarFull, ImStarHalf, ImStarEmpty } from "react-icons/im";
 
@@ -10,9 +10,9 @@ const Rating = ({ rating, reviews }) => {
 
 	return (
 		<div className="rating">
-			{[...Array(fullStars)].map(() => (<ImStarFull className="star" />))}
+			{[...Array(fullStars)].map((e,index) => (<ImStarFull className="star" key={index} />))}
 			{hasHalfStar && <ImStarHalf className="star" />}
-      		 {[...Array(emptyStars)].map(()=> (<ImStarEmpty className="star" />))}
+      		 {[...Array(emptyStars)].map((e,index)=> (<ImStarEmpty className="star"  key={index} />))}
 			<p className="h7 rg ">
 				{rating.toFixed(1)} ({reviews} reviews)
 			</p>

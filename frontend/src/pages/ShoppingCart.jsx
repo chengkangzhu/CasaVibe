@@ -73,36 +73,36 @@ const ShoppingCart = () => {
 	return (
 		<div className="shopping_cart">
 			<h2 className="h2 sb">Shopping Cart</h2>
-      <div className="cart_items_scrollbar">
-        <div className="cart_items_container">
-          <div className="cart_header">
-            <span className="h7 rg product">Product</span>
-            <span className="h7 rg amount">Amount</span>
-            <span className="h7 rg subtotal">Subtotal</span>
-          </div>
-          <CartItem
-            imageSrc={whiteChairImage}
-            name="MALSKÄR/ LOBERGET Chair - White"
-            weight={4.23}
-            price={"28.88"}
-            amount={3}
-          />
-          <CartItem
-            imageSrc={woodenChairImage}
-            name="Wooden Chair"
-            weight={4.23}
-            price={"8.00"}
-            amount={1}
-          />
-          <CartItem
-            imageSrc={coffeeTableImage}
-            name="coffee Table Image"
-            weight={4.23}
-            price={"35.00"}
-            amount={1}
-          />
-        </div>        
-      </div>
+			<div className="cart_items_scrollbar">
+				<div className="cart_items_container">
+				<div className="cart_header">
+					<span className="h7 rg product">Product</span>
+					<span className="h7 rg amount">Amount</span>
+					<span className="h7 rg subtotal">Subtotal</span>
+				</div>
+				<CartItem
+					imageSrc={whiteChairImage}
+					name="MALSKÄR/ LOBERGET Chair - White"
+					weight={4.23}
+					price={"28.88"}
+					amount={3}
+				/>
+				<CartItem
+					imageSrc={woodenChairImage}
+					name="Wooden Chair"
+					weight={4.23}
+					price={"8.00"}
+					amount={1}
+				/>
+				<CartItem
+					imageSrc={coffeeTableImage}
+					name="coffee Table Image"
+					weight={4.23}
+					price={"35.00"}
+					amount={1}
+				/>
+				</div>        
+			</div>
 
 			<div className="cart_footer ">
 				<div className="textarea_container">

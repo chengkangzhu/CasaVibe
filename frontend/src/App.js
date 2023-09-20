@@ -12,6 +12,7 @@ import Shop from "./pages/Shop";
 import ShoppingCart from "./pages/ShoppingCart";
 import Location from "./pages/Location";
 import ThankYou from "./pages/ThankYou";
+import Payment from "./pages/Payment";
 
 function App() {
 	return (
@@ -20,13 +21,12 @@ function App() {
 			<Navbar />
 			<Routes>
 				<Route path="/" element={<Landing />} />
-				<Route path="/pdp" element={<ProductDetail />} />
+				<Route path="/pdp/:id" element={<ProductDetail />} />
 				<Route path="/shop" element={<Shop />} />
           		<Route path="/cart" element={<ShoppingCart />} />
           		<Route path="/location" element={<Location />} />
-          		<Route path="/checkout/completed" element={<ThankYou />} />
-         {/* <Route path="/auth" element={<AuthPage />} />
-          <Route path="/payment" element={<Payment />} /> */}
+          		<Route path="/checkout/completed" element={<ThankYou />} /> 
+				<Route path="/payment" element={<Payment />} /> 
 			</Routes>
 			<Footer />
 		</Router>

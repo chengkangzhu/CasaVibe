@@ -32,12 +32,14 @@ const Footer = () => {
 								<img
 									src={app_store_image}
 									alt="download button for app store"
+									className="inactive_cursor"
 								/>
 							</button>
 							<button>
 								<img
 									src={google_play_image}
 									alt="download button for app store"
+									className="inactive_cursor"
 								/>
 							</button>
 						</div>
@@ -46,57 +48,57 @@ const Footer = () => {
 				<div className="right">
 					<div className="list_container">
 						<h5 className="h5 sb">Company</h5>
-						<a href="#" className="h7 rg">
+						<a href="#" className="h7 rg inactive_cursor" >
 							About Us
 						</a>
-						<a href="#" className="h7 rg">
+						<a href="#" className="h7 rg inactive_cursor" >
 							Career
 						</a>
-						<a href="#" className="h7 rg">
+						<a href="#" className="h7 rg inactive_cursor" >
 							Privacy Policy
 						</a>
-						<a href="#" className="h7 rg">
+						<a href="#" className="h7 rg inactive_cursor" >
 							Blogs
 						</a>
-						<a href="#" className="h7 rg">
+						<a href="#" className="h7 rg inactive_cursor" >
 							Flash Sale
 						</a>
-						<a href="#" className="h7 rg">
+						<a href="#" className="h7 rg inactive_cursor" >
 							Affiliates
 						</a>
 					</div>
 					<div className="list_container">
 						<h5 className="h5 sb">Buyer</h5>
-						<a href="#" className="h7 rg">
+						<a href="#" className="h7 rg inactive_cursor">
 							How to shop
 						</a>
-						<a href="#" className="h7 rg">
+						<a href="#" className="h7 rg inactive_cursor">
 							Payment method
 						</a>
-						<a href="#" className="h7 rg">
+						<a href="#" className="h7 rg inactive_cursor">
 							Track Buyer Orders
 						</a>
-						<a href="#" className="h7 rg">
+						<a href="#" className="h7 rg inactive_cursor">
 							Free Shipping
 						</a>
-						<a href="#" className="h7 rg">
+						<a href="#" className="h7 rg inactive_cursor">
 							Returns & Funds
 						</a>
-						<a href="#" className="h7 rg">
+						<a href="#" className="h7 rg inactive_cursor">
 							Guarantee
 						</a>
 					</div>
 					<div className="list_container">
 						<h5 className="h5 sb">Contact us</h5>
-						<a href="#" className="h7 md contact">
+						<a href="tel:(123)4567890" className="h7 md contact">
 							<HiPhone />
 							(123) 456 7890
 						</a>
-						<a href="#" className="h7 md contact">
+						<a href="mailto:hello@CasaVibe.com" className="h7 md contact">
 							<MdEmail />
 							hello@CasaVibe.com
 						</a>
-						<a href="#" className="h7 md contact">
+						<a href="#" className="h7 md contact inactive_cursor">
 							<AiFillShop />
 							Monday – Friday: 09.00 - 16.00 WIB
 						</a>
