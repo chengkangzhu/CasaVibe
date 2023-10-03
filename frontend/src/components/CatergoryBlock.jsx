@@ -1,11 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const CatergoryBlock = ({imageSrc, name}) => {
   return (
-    <a href="#" className='catergory_block'>
+    <Link to={"/shop/" + name.toLowerCase()} className='catergory_block'>
         <img src={imageSrc} alt="mirror"  />
         <h6 className="h6 md">{name}</h6>
-    </a>
+    </Link>
   )
 }
 

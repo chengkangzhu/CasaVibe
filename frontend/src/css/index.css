@@ -225,6 +225,10 @@ a {
   color: #ff7050;
 }
 
+.pointer_cursor {
+  cursor: pointer;
+}
+
 .inactive_cursor {
   cursor: not-allowed !important;
 }
@@ -360,7 +364,7 @@ body {
 .room_popup {
   position: relative;
 }
-.room_popup > a {
+.room_popup > span {
   width: 57px;
 }
 .room_popup .room_container {
@@ -408,7 +412,7 @@ body {
   left: 48px;
   top: -14px;
 }
-.room_popup .room_container:hover {
+.room_popup .room_container:hover .show {
   visibility: visible;
   opacity: 1;
 }
@@ -566,10 +570,35 @@ body {
   text-align: center;
   cursor: pointer;
 }
-.product_card img {
-  max-width: 263px;
-  height: auto;
+.product_card .image_container {
+  position: relative;
+  width: 263px;
+  height: 263px;
+}
+.product_card .image_container img {
+  width: 100%;
+  height: 100%;
   border-radius: 8px;
+  transition: opacity 0.3s ease-in-out;
+}
+.product_card .image_container img.main {
+  padding: 15px;
+  border: 1px solid #d8d8d8;
+}
+.product_card .image_container img.main.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.product_card .image_container img.contextImg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+.product_card .image_container img.contextImg.show {
+  opacity: 1;
+  visibility: visible;
 }
 .product_card .name {
   margin: 8px 0 4px;
@@ -614,7 +643,7 @@ body {
 
 .product_carousel {
   width: 100%;
-  padding: 100px 0 90px;
+  padding: 100px 0 100px;
   position: relative;
 }
 .product_carousel .hide_scrollbar {
@@ -630,6 +659,10 @@ body {
   transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
   position: relative;
   bottom: 5px;
+}
+.product_carousel:hover .hide_scrollbar {
+  opacity: 0;
+  visibility: hidden;
 }
 .product_carousel .products_container {
   display: flex;
@@ -660,7 +693,7 @@ body {
   width: 40px;
   height: 40px;
   border: 0;
-  background: rgba(255, 255, 255, 0.6862745098);
+  background: rgba(236, 236, 236, 0.6862745098);
   transition: background-color 1s ease;
   border-radius: 50%;
   bottom: 315px;
@@ -675,7 +708,11 @@ body {
 }
 .product_carousel > button:hover {
   opacity: 1;
-  background: rgba(255, 255, 255, 0.9254901961);
+  background: rgba(223, 222, 222, 0.6862745098);
+}
+.product_carousel > button:hover ~ .hide_scrollbar {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .footer {
@@ -858,10 +895,12 @@ body {
 .landing .new_product__header nav {
   display: flex;
   flex-wrap: wrap;
+  gap: 4px;
 }
 .landing .new_product__header nav span {
   padding: 6px 16px;
   border-radius: 24px;
+  border: 1px solid transparent;
   cursor: pointer;
 }
 .landing .new_product__content {
@@ -871,9 +910,23 @@ body {
   justify-content: center;
   gap: 30px;
 }
-.landing .new_product__content > img {
+.landing .new_product__content .mainDisplayContainer {
+  max-width: 555px;
+  height: 740px;
+  width: 90%;
+}
+.landing .new_product__content .mainDisplayContainer img {
+  width: 100%;
   height: 100%;
-  max-width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 8px;
+}
+@media (max-width: 800px) {
+  .landing .new_product__content .mainDisplayContainer {
+    width: 100%;
+    height: auto;
+  }
 }
 .landing .new_product__content .other_products_container {
   display: grid;
@@ -905,6 +958,11 @@ body {
   display: flex;
   gap: 24px;
   margin-bottom: 24px;
+}
+.landing .sofa_set__content .other_product img {
+  width: 105px;
+  height: 105px;
+  border-radius: 8px;
 }
 .landing .sofa_set__content .other_product .discounted_price span {
   color: #808080;
@@ -965,11 +1023,8 @@ body {
   display: grid;
   place-items: center;
 }
-.landing .brands .all_brand {
-  display: block;
-  text-align: center;
-  padding: 72px 10.42vw 100px;
-  border-bottom: 1px solid #d8d8d8;
+.landing .brands .divider {
+  margin-top: 88px;
 }
 .landing .news {
   padding: 100px 10.42vw;
@@ -1002,14 +1057,32 @@ body {
 .pdp .img_container {
   width: 50%;
   height: 100%;
-}
-.pdp .img_container .product_display {
   display: grid;
   place-items: center;
+  padding: 20px;
+  position: relative;
 }
-.pdp .img_container .product_display img {
+.pdp .img_container img {
   width: 100%;
   height: auto;
+  transition: opacity 0.3s ease;
+}
+.pdp .img_container img.main.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.pdp .img_container img.contextImg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  width: calc(100% - 40px);
+  margin: 20px;
+}
+.pdp .img_container img.contextImg.show {
+  opacity: 1;
+  visibility: visible;
 }
 @media (max-width: 1100px) {
   .pdp .img_container {
@@ -1064,9 +1137,11 @@ body {
   gap: 16px;
 }
 .pdp .product_info .variation_container .variation_images img {
+  padding: 2px;
   border-radius: 4px;
   width: 48px;
   height: 48px;
+  border: 1px solid transparent;
 }
 .pdp .product_info .action_container {
   padding: 24px 0 32px;
@@ -1178,9 +1253,14 @@ body {
   gap: 16px;
   background: #f8f8f8;
   border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #f8f8f8;
 }
 .shop .room_subcatergory .furniture_container span img {
+  width: 72px;
+  height: 72px;
   border-radius: 8px;
+  border: 1px solid #f8f8f8;
 }
 .shop .product_carousel {
   border-bottom: 1px solid #d8d8d8;
@@ -1768,6 +1848,7 @@ body {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0.3s, opacity 0.3s;
+  z-index: 2;
 }
 .sort__menu::after {
   content: "";

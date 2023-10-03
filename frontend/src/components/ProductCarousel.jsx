@@ -28,7 +28,7 @@ const ProductCarousel = ({ h2, children }) => {
         left: container.scrollLeft - container.clientWidth * 0.8,
         behavior: 'smooth'
       });
-    };
+    }; 
   }, []);
 
   return (

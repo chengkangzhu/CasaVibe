@@ -7,13 +7,13 @@ import { MdOutlineKeyboardArrowRight} from "react-icons/md";
 const Breadcrumb = () => {
   return (
     <nav className='breadcrumb h8 md'>
-        <a href="#">home</a>
+        <span >home</span>
         <MdOutlineKeyboardArrowRight size={16} />
-        <a href="#">workspace</a>
+        <span >workspace</span>
         <MdOutlineKeyboardArrowRight  size={16} />
-        <a href="#">home workspace</a>
+        <span >home workspace</span>
         <MdOutlineKeyboardArrowRight size={16}  />
-        <a href="#">home work Chair</a>
+        <span >home work Chair</span>
     </nav>
   )
 }

@@ -24,13 +24,12 @@ const Navbar = () => {
       <div className="navbar__bottom ">
         <div className="left h7 md">
           <RoomPopup />
-          <div className="product_dropdown inactive_cursor">Product <MdOutlineKeyboardArrowDown size={16} className="icon"/></div>
-          <div className="collections_dropdown inactive_cursor">Collections </div>
+          <div className="product_dropdown inactive_cursor">Product <MdOutlineKeyboardArrowDown size={16} className="icon"/></div> 
           <div className="contact_dropdown inactive_cursor">Contact </div>
         </div>
         <div className="right h7 md">
           <Link to="/location" className="store_location"><MdLocationOn size={16} className="icon"/> Store Location</Link>
-          <a href="#" className="track_order inactive_cursor">Track your order</a>
+          <span className="track_order inactive_cursor">Track your order</span>
         </div>
       </div>
 		</nav>

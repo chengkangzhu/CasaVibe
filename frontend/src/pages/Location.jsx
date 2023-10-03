@@ -21,7 +21,7 @@ const StoreCard = ({ img, name, description, openHour, link }) => {
 			<p className="p3">{description}</p>
 			<p className="h7 md open_hour">Operational hours:</p>
 			<p className="p3">{openHour}</p>
-			<a className="h6 md read_more" href={link} target="_blank">
+			<a className="h6 md read_more" href={link} target="_blank"  rel="noreferrer" >
 				Read more details
 			</a>
 		</div>

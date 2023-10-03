@@ -61,7 +61,7 @@ const ShoppingCart = () => {
 	};
 
 	const handleBlur = () => {
-    if(note == ""){
+    if(note === ""){
 		  setIsFocused(false);
     }
 	};

@@ -136,7 +136,7 @@ const Payment = () => {
                         <div id={"paypalMethod"} className="accordion-collapse collapse" data-bs-parent="#paymentMethodAccordion">
                             <div className="accordion-body p3">
                                 to be completed
-                            </div>
+                            </div>  
                         </div>
                     </div>
 

@@ -1,40 +1,102 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 //componennts
 import RoomSubcatergory from "../components/RoomSubcatergory";
 import ProductCard from "../components/ProductCard";
 import ProductCarousel from "../components/ProductCarousel";
 
-//imgs 
-
-import newProduct1Image from "../img/landing/new_product_1.png"
-import newProduct2Image from "../img/landing/new_product_2.png"
-import newProduct3Image from "../img/landing/new_product_3.png"
-import newProduct4Image from "../img/landing/new_product_4.png"
+//imgs
 import ShopGrid from "../components/ShopGrid";
 
+//product datas
+import {
+	defaultShopGridProducts,
+	collectonShopGridProducts,
+	diningShopGridProducts,
+	kitchenShopGridProducts,
+	livingShopGridProducts,
+	homeOfficeShopGridProducts,
+	bathroomShopGridProducts,
+} from "../data";
+
 const Shop = () => {
-    const [isSearch, setIsSearch] = useState(false)
+	const [shopGridProducts, setShopGridProducts] = useState(
+		defaultShopGridProducts
+	);
+	const [showRoom, setShowRoom] = useState(false);
+	const { type } = useParams();
+
+	//check the route param to determine to showroom or not
+	useEffect(() => {
+		const rooms = [
+			"Bedroom",
+			"Dining Room",
+			"Kitchen",
+			"Living Room",
+			"Home Office",
+			"Bathroom",
+		];
+
+		if (rooms.includes(type)) {
+			setShowRoom(type);
+
+			//update the shopgridproduct state to show the bedroom furnitures
+			switch (type) {
+				case "Bedroom":
+					setShopGridProducts(defaultShopGridProducts); // Change this to your desired data for Bedroom
+					break;
+				case "Dining Room":
+					setShopGridProducts(diningShopGridProducts);
+					break;
+				case "Kitchen":
+					setShopGridProducts(kitchenShopGridProducts);
+					break;
+				case "Living Room":
+					setShopGridProducts(livingShopGridProducts);
+					break;
+				case "Home Office":
+					setShopGridProducts(homeOfficeShopGridProducts);
+					break;
+				case "Bathroom":
+					setShopGridProducts(bathroomShopGridProducts);
+					break;
+				default:
+					setShopGridProducts(defaultShopGridProducts);
+			}
+		} else if (type === "collections") {
+			setShopGridProducts(collectonShopGridProducts);
+		} else {
+			//send a category result to the backend and update the shopGridProducts state
+			async function fetchData() {
+				try {
+					const response = await axios.get(
+						`${process.env.REACT_APP_API_URL}/product/search/${type}`
+					); 
+					setShopGridProducts(response.data); 
+				} catch (error) {
+					console.error("Error fetching data:", error);
+				}
+			}
+
+			fetchData();
+		}
+	}, [type]);
 
 	return (
 		<div className="shop">
-            {!isSearch &&  (
-                <div>
-                    <RoomSubcatergory room="Living Room" />
-                    <ProductCarousel h2="Current Best Selling Products" rightId="testing1" leftId="testing2" containerId="testing3">
-                        <ProductCard imageSrc={newProduct1Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
-                        <ProductCard imageSrc={newProduct2Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
-                        <ProductCard imageSrc={newProduct3Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
-                        <ProductCard imageSrc={newProduct4Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
-                        <ProductCard imageSrc={newProduct3Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
-                        <ProductCard imageSrc={newProduct4Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
-                        <ProductCard imageSrc={newProduct1Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" /> 
-                        <ProductCard imageSrc={newProduct2Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" />
-                        <ProductCard imageSrc={newProduct3Image} name="Studio Chair" alt="testimg" rating={4.8} reviews={102} price="18.90" /> 
-                    </ProductCarousel> 
-                </div>)
-            }
-            <ShopGrid />
+			{showRoom && <RoomSubcatergory room={showRoom} />}
+			<ProductCarousel h2="Best Selling Products">
+				{shopGridProducts.map((item, index) => {
+					if (index < 10) {
+						return <ProductCard key={index} productObj={item} />;
+					} else {
+						return null;
+					}
+				})}
+			</ProductCarousel>
+			<ShopGrid gridProducts={shopGridProducts.slice(10, 50)} />
 		</div>
 	);
 };

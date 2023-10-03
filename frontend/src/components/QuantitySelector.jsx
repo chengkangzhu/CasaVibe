@@ -14,7 +14,7 @@ const QuantitySelector = ({weight, height, amount, id, className,iconSize} ) => 
     }
 
     const handleDecrement = () => {
-        if(itemAmount != 0){
+        if(itemAmount !== 0){
             setItemAmount(prev => prev - 1)
         }
     }

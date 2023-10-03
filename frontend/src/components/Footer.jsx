@@ -48,79 +48,79 @@ const Footer = () => {
 				<div className="right">
 					<div className="list_container">
 						<h5 className="h5 sb">Company</h5>
-						<a href="#" className="h7 rg inactive_cursor" >
+						<span  className="h7 rg inactive_cursor" >
 							About Us
-						</a>
-						<a href="#" className="h7 rg inactive_cursor" >
+						</span>
+						<span  className="h7 rg inactive_cursor" >
 							Career
-						</a>
-						<a href="#" className="h7 rg inactive_cursor" >
+						</span>
+						<span  className="h7 rg inactive_cursor" >
 							Privacy Policy
-						</a>
-						<a href="#" className="h7 rg inactive_cursor" >
+						</span>
+						<span  className="h7 rg inactive_cursor" >
 							Blogs
-						</a>
-						<a href="#" className="h7 rg inactive_cursor" >
+						</span>
+						<span  className="h7 rg inactive_cursor" >
 							Flash Sale
-						</a>
-						<a href="#" className="h7 rg inactive_cursor" >
+						</span>
+						<span  className="h7 rg inactive_cursor" >
 							Affiliates
-						</a>
+						</span>
 					</div>
 					<div className="list_container">
 						<h5 className="h5 sb">Buyer</h5>
-						<a href="#" className="h7 rg inactive_cursor">
+						<span  className="h7 rg inactive_cursor">
 							How to shop
-						</a>
-						<a href="#" className="h7 rg inactive_cursor">
+						</span>
+						<span  className="h7 rg inactive_cursor">
 							Payment method
-						</a>
-						<a href="#" className="h7 rg inactive_cursor">
+						</span>
+						<span  className="h7 rg inactive_cursor">
 							Track Buyer Orders
-						</a>
-						<a href="#" className="h7 rg inactive_cursor">
+						</span>
+						<span  className="h7 rg inactive_cursor">
 							Free Shipping
-						</a>
-						<a href="#" className="h7 rg inactive_cursor">
+						</span>
+						<span  className="h7 rg inactive_cursor">
 							Returns & Funds
-						</a>
-						<a href="#" className="h7 rg inactive_cursor">
+						</span>
+						<span  className="h7 rg inactive_cursor">
 							Guarantee
-						</a>
+						</span>
 					</div>
 					<div className="list_container">
 						<h5 className="h5 sb">Contact us</h5>
-						<a href="tel:(123)4567890" className="h7 md contact">
+						<span href="tel:(123)4567890" className="h7 md contact">
 							<HiPhone />
 							(123) 456 7890
-						</a>
-						<a href="mailto:hello@CasaVibe.com" className="h7 md contact">
+						</span>
+						<span href="mailto:hello@CasaVibe.com" className="h7 md contact">
 							<MdEmail />
 							hello@CasaVibe.com
-						</a>
-						<a href="#" className="h7 md contact inactive_cursor">
+						</span>
+						<span  className="h7 md contact inactive_cursor">
 							<AiFillShop />
 							Monday – Friday: 09.00 - 16.00 WIB
-						</a>
+						</span>
 						<div className="social_media_container">
-							<a href="#">
+							<span >
 								<img
 									src="https://cdn-icons-png.flaticon.com/512/3670/3670151.png"
 									alt="twtiter icon"
 								/>
-							</a>
-							<a href="#">
+							</span>
+							<span >
 								<img
 									src="https://cdn.iconscout.com/icon/free/png-128/free-facebook-35-83440.png"
 									alt="facebook icon"
 								/>
-							</a>
-							<a href="#">
+							</span>
+							<span >
 								<img
 									src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/LinkedIn_icon_circle.svg/640px-LinkedIn_icon_circle.svg.png"
 									alt="linkedin icon"
 								/>
-							</a>
+							</span>
 						</div>
 					</div>
 				</div>
