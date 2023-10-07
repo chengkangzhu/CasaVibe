@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+//redux 
+import { useDispatch } from "react-redux";
+import { updatePdp } from "../store";
+
 //icon
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
@@ -44,6 +48,7 @@ import { collectionProducts ,categoryNewProducts } from "../data"
 const Landing = () => {
 	const [activeCategory, setActiveCategory] = useState("All category");
 	const [productArr, setProductArr] = useState(categoryNewProducts["All category"])  
+	const dispatch = useDispatch()
 
 	const handleClick = (category) => {
 		setActiveCategory(category);
@@ -138,12 +143,15 @@ const Landing = () => {
 					</nav>
 				</div>
 				<div className="new_product__content">
-					<div className="mainDisplayContainer">
-						<img
-							src={productArr[0].contextualImageUrl}
-							alt={productArr[0].imageAlt}
-						/>
-					</div>
+						<div className="mainDisplayContainer ">
+							<Link to={`/pdp/${productArr[0].id}`} onClick={()=> dispatch(updatePdp(productArr[0]))}>
+								<img
+									src={productArr[0].contextualImageUrl}
+									alt={productArr[0].imageAlt}
+								/>			
+								</Link>
+						</div>		
+
 					<div className="other_products_container">
 						{productArr.map((item, index) => {
 							if (index !== 0) {
@@ -168,26 +176,30 @@ const Landing = () => {
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 						sed do eiusmod tempor incididunt.
 					</p>
-					<div className="other_product">
-						<img src={collectionProducts[0].image} alt={collectionProducts[0].imageAlt} />
-						<div className="product_description">
-							<h6 className="h6 md">{collectionProducts[0].name}</h6>
-							<p className="h7 sb discounted_price">
-								${collectionProducts[0].price.currentPrice} 
-								{collectionProducts[0].price.discounted && <span className="h8 rg">${parseFloat((collectionProducts[0].price.currentPrice * 1.25).toFixed(2))}</span>}
-							</p>
-						</div>
-					</div>
-					<div className="other_product">
-						<img src={collectionProducts[1].image} alt={collectionProducts[1].imageAlt} />
-						<div className="product_description">
-							<h6 className="h6 md">{collectionProducts[1].name}</h6>
-							<p className="h7 sb discounted_price">
-								${collectionProducts[1].price.currentPrice} 
-								{collectionProducts[1].price.discounted && <span className="h8 rg">${parseFloat((collectionProducts[1].price.currentPrice * 1.25).toFixed(2))}</span>}
-							</p>
-						</div>
-					</div>  
+					<Link to={`/pdp/${collectionProducts[0].id}`} onClick={()=> dispatch(updatePdp(collectionProducts[0]))}>
+						<div className="other_product pointer_cursor">
+							<img src={collectionProducts[0].image} alt={collectionProducts[0].imageAlt} />
+							<div className="product_description">
+								<h6 className="h6 md">{collectionProducts[0].name}</h6>
+								<p className="h7 sb discounted_price">
+									${collectionProducts[0].price.currentPrice} 
+									{collectionProducts[0].price.discounted && <span className="h8 rg">${parseFloat((collectionProducts[0].price.currentPrice * 1.25).toFixed(2))}</span>}
+								</p>
+							</div>
+						</div>					
+					</Link> 
+					<Link to={`/pdp/${collectionProducts[1].id}`} onClick={()=> dispatch(updatePdp(collectionProducts[1]))}>
+						<div className="other_product pointer_cursor">
+							<img src={collectionProducts[1].image} alt={collectionProducts[1].imageAlt} />
+							<div className="product_description">
+								<h6 className="h6 md">{collectionProducts[1].name}</h6>
+								<p className="h7 sb discounted_price">
+									${collectionProducts[1].price.currentPrice} 
+									{collectionProducts[1].price.discounted && <span className="h8 rg">${parseFloat((collectionProducts[1].price.currentPrice * 1.25).toFixed(2))}</span>}
+								</p>
+							</div>
+						</div>  
+					</Link>
 					<Link to="/shop/collections" >
 						<button className="explore_collection_button h5 sb">
 							Explore Collection{" "}

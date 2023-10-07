@@ -4,20 +4,25 @@ import React ,{useState} from 'react'
 import Rating from './Rating';
 import { Link } from 'react-router-dom';
 
-const ProductCard = ({
-  productObj: {
+//redux
+import { useDispatch } from 'react-redux';
+import { updatePdp } from '../store';
+
+const ProductCard = ({ productObj }) => {
+  const {
     id,
     name,
     price: { currentPrice, discounted },
     image,
     contextualImageUrl,
     imageAlt,
-  },
-}) => {
+  } = productObj;
+
   const [isHovered, setIsHovered] = useState(false);
+  const dispatch = useDispatch()
 
   return (
-    <Link to={"/pdp/" + id} >
+    <Link to={"/pdp/" + id} onClick={()=> dispatch(updatePdp(productObj))}>
       <div className='product_card'> 
         <div className="image_container" onMouseOver={() => setIsHovered(true)} onMouseOut={() => setIsHovered(false)}>
           <img className={`main ${isHovered && "hidden"}`} src={image} alt={imageAlt} />

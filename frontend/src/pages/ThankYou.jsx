@@ -2,10 +2,12 @@ import React from 'react'
 
 //icons
 import { BsCheckLg } from "react-icons/bs";
+import { useParams } from 'react-router-dom';
 
 
 
-const ThankYou = ({id="QW12ER34TY56"}) => {
+const ThankYou = ( ) => {
+  const {id} = useParams()
   return (
     <div className='thankyou'>
         <div className="checked shape_outline_active"><BsCheckLg size={32}/></div>

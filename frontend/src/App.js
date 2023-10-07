@@ -42,7 +42,7 @@ function App() {
 				<Route path="/shop" element={<Shop />} />
           		<Route path="/cart" element={<ShoppingCart />} />
           		<Route path="/location" element={<Location />} />
-          		<Route path="/checkout/completed" element={<ThankYou />} /> 
+          		<Route path="/checkout/completed/:id" element={<ThankYou />} /> 
 				<Route path="/payment" element={<Payment />} /> 
 			</Routes>
 			<Footer />

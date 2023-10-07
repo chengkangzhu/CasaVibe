@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";  
-import axios from "axios"
-  
+import axios from "axios" 
+import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
 
 //components
 import Rating from "../components/Rating";
-import Breadcrumb from "../components/Breadcrumb";
 import QuantitySelector from "../components/QuantitySelector"
 import ProductCarousel from "../components/ProductCarousel";
 import ProductCard from "../components/ProductCard";
@@ -810,22 +809,14 @@ const ProductDetail = () => {
 	//set selected variation to have outline 
 	const [variation, setVariation] = useState(0)
 
-	//list of products display on shopgrid
-	const [productObj, setProductObj] = useState(templateproductObj)
+	//list of products display on shopgrid 
 	const {id} = useParams()	  
- 
-	useEffect(()=>{ 
-		async function fetchData() {
-			try {
-			  const response = await axios.get(`${process.env.REACT_APP_API_URL}/product/${id}`);
-			  console.log(response.data.name); 
-			  setProductObj(response.data) 
-			} catch (error) {
-			  console.error('Error fetching data:', error);
-			}
-		  }
 
-		  fetchData()
+	//get the product data from redux store 
+	const productObj = useSelector((state)=>state.products.pdp)
+ 
+	useEffect(()=>{    
+		console.log('ehy')
 	},[id])
 
 
@@ -841,9 +832,9 @@ const ProductDetail = () => {
 					</div>
 
 					{/* RIGHT */}
-					<div className="product_info">
-						<Breadcrumb />
+					<div className="product_info"> 
 						<h2 className="h2 sb product_name">{productObj.name}</h2>
+						<p className="h7 rg">{productObj.imageAlt}</p>
 						<div className="price_rating_container">
 							<div className="price_container">
 								{productObj.price.discounted && 

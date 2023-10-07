@@ -7,9 +7,11 @@ import { MdDelete } from "react-icons/md";
 
 //component
 import QuantitySelector from './QuantitySelector';
+ 
 
-import whiteChairImage from "../img/cart/white_chair.png"
-import woodenChairImage from "../img/cart/wooden_chair.png"
+//products data
+
+import {cartProductsTemplate} from "../data"
 
 const CartItem = ({imageSrc, alt, name, weight, amount, price}) =>{
   return (
@@ -45,8 +47,9 @@ const CartPopup = () => {
             <h5 className="h5 md">Cart (2)</h5>
           </div>
           <div className="cart_items">
-            <CartItem imageSrc={whiteChairImage} name="MALSKÄR/ LOBERGET Chair - White" weight={4.23} price={"28.88"} amount={3}/>
-            <CartItem imageSrc={woodenChairImage} name="Wooden Chair" weight={4.23} price={"8.00"} amount={1}/>
+            {cartProductsTemplate.map((item,index)=>{
+              return <CartItem key={index} imageSrc={item.image} name={item.name} weight={4.23} price={item.price.currentPrice} amount={3} />
+            })}  
           </div>
           <div className="checkout">
             <p className="h7 rg subtotal">Subtotal <span className="sb">$36.88</span></p>

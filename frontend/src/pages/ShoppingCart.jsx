@@ -8,11 +8,10 @@ import { HiOutlineShoppingBag } from "react-icons/hi";
 
 //component
 import QuantitySelector from "../components/QuantitySelector";
-
-//images
-import whiteChairImage from "../img/cart/shoppingcart (1).png";
-import woodenChairImage from "../img/cart/shoppingcart (2).png";
-import coffeeTableImage from "../img/cart/shoppingcart (3).png";
+ 
+//product datas 
+import {cartProductsTemplate} from "../data"
+ 
 
 const CartItem = ({
 	imageSrc,
@@ -80,27 +79,9 @@ const ShoppingCart = () => {
 					<span className="h7 rg amount">Amount</span>
 					<span className="h7 rg subtotal">Subtotal</span>
 				</div>
-				<CartItem
-					imageSrc={whiteChairImage}
-					name="MALSKÄR/ LOBERGET Chair - White"
-					weight={4.23}
-					price={"28.88"}
-					amount={3}
-				/>
-				<CartItem
-					imageSrc={woodenChairImage}
-					name="Wooden Chair"
-					weight={4.23}
-					price={"8.00"}
-					amount={1}
-				/>
-				<CartItem
-					imageSrc={coffeeTableImage}
-					name="coffee Table Image"
-					weight={4.23}
-					price={"35.00"}
-					amount={1}
-				/>
+				{cartProductsTemplate.map((item,index)=>{
+					return <CartItem key={index} imageSrc={item.image} name={item.name} weight={4.23} price={item.price.currentPrice} amount={3} />
+				})} 
 				</div>        
 			</div>
 

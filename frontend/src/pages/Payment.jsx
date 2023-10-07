@@ -11,9 +11,9 @@ import masterCard from "../img/payment/Mastercard.png"
 import paymentPartners from "../img/payment/Payment Partners.png"
 import visa from "../img/payment/Visa.png"
 
-import whiteChairImage from "../img/cart/shoppingcart (1).png";
-import woodenChairImage from "../img/cart/shoppingcart (2).png";
-import coffeeTableImage from "../img/cart/shoppingcart (3).png";
+import whiteChairImage from "../img/landing/bed.png";
+import woodenChairImage from "../img/landing/lamp.png";
+import coffeeTableImage from "../img/landing/chair.png";
 
 //icons
 import { FaCheckSquare, FaRegSquare } from 'react-icons/fa';
@@ -35,7 +35,12 @@ const CartItem = ({ imageSrc, alt, name, weight, quantity, price,  }) => {
 };
 
 const Payment = () => {
+    const [orderId, setOrderId] = useState("s2327459")
+    
+    //check style for input form 
     const [isChecked, setIsChecked] = useState(false);   
+
+    //payment method
     const [selectedMethod, setSelectedMethod] = useState('creditCardMethod');
     const countryOptions = Object.entries(countries.getNames('en')).map(([code, name]) => ({ value: code, label: name }));
 
@@ -197,7 +202,7 @@ const Payment = () => {
                 <h6 className="h6 rg">Shipping <span className="md">$14.00</span></h6>
             </div>
             <h6 className="total h6 md">Total <span className="sb h4">$46.77</span></h6>
-            <Link to="/checkout/completed" className="next_button h5 sb">Next</Link> 
+            <Link to={`/checkout/completed/${orderId}`} className="next_button h5 sb">Next</Link> 
         </div>
 
     </div>
