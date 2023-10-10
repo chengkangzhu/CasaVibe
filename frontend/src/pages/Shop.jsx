@@ -67,14 +67,14 @@ const Shop = () => {
 			}
 		} else if (type === "collections") {
 			setShopGridProducts(collectonShopGridProducts);
-		} else {
+		} else if (type !== undefined) {
 			//send a category result to the backend and update the shopGridProducts state
 			async function fetchData() {
 				try {
 					const response = await axios.get(
 						`${process.env.REACT_APP_API_URL}/product/search/${type}`
-					); 
-					setShopGridProducts(response.data); 
+					);
+					setShopGridProducts(response.data);
 				} catch (error) {
 					console.error("Error fetching data:", error);
 				}
@@ -87,15 +87,19 @@ const Shop = () => {
 	return (
 		<div className="shop">
 			{showRoom && <RoomSubcatergory room={showRoom} />}
-			<ProductCarousel h2="Best Selling Products">
-				{shopGridProducts.map((item, index) => {
-					if (index < 10) {
-						return <ProductCard key={index} productObj={item} />;
-					} else {
-						return null;
-					}
-				})}
-			</ProductCarousel>
+			{shopGridProducts && (
+				<ProductCarousel h2="Best Selling Products">
+					{shopGridProducts.map((item, index) => {
+						if (index < 10) {
+							return (
+								<ProductCard key={index} productObj={item} />
+							);
+						} else {
+							return null;
+						}
+					})}
+				</ProductCarousel>
+			)}
 			<ShopGrid gridProducts={shopGridProducts.slice(10, 50)} />
 		</div>
 	);

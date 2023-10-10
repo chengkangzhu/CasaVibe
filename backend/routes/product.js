@@ -78,41 +78,42 @@ router.get("/search/:keyword", async (req, res) => {
 	}
 });
 
-// router.get("/category/:categoryId", async (req, res) => {
-// 	const categoryId = req.params.categoryId;
-// 	const options = {
-// 		method: "GET",
-// 		url: "https://ikea-api.p.rapidapi.com/categorySearch",
-// 		params: {
-// 			categoryID: categoryId,
-// 			countryCode: "us",
-// 			languageCode: "en",
-// 		},
-// 		headers: {
-// 			"X-RapidAPI-Key":process.env.IKEA_API,
-// 			"X-RapidAPI-Host": "ikea-api.p.rapidapi.com",
-// 		},
-// 	};
+router.get("/category/:categoryId", async (req, res) => {
+	const categoryId = req.params.categoryId;
+	const options = {
+		method: "GET",
+		url: "https://ikea-api.p.rapidapi.com/categorySearch",
+		params: {
+			categoryID: categoryId,
+			countryCode: "us",
+			languageCode: "en",
+		},
+		headers: {
+			"X-RapidAPI-Key":process.env.IKEA_API,
+			"X-RapidAPI-Host": "ikea-api.p.rapidapi.com",
+		},
+	};
 
-// 	try {
-// 		const response = await axios.request(options);
-// 		if (!response.data) {
-// 			res.status(404).json({ error: "Product not found" });
-// 		} else {
-// 			res.json(response.data);
-// 		}
-// 	} catch (error) {
-// 		console.error(error);
+	try {
+		//sending the request to ikea api for data
+		const response = await axios.request(options);
+		if (!response.data) {
+			res.status(404).json({ error: "Product not found" });
+		} else {
+			res.json(response.data);
+		}
+	} catch (error) {
+		console.error(error);
 
-// 		if (error.response) {
-// 			// Handle specific error response from the API (non-sensitive errors)
-// 			const { status, data } = error.response;
-// 			res.status(status).json({ error: 'An error occurred with the external API' });
-// 		} else {
-// 			// Handle other errors (e.g., network issues) without exposing details
-// 			res.status(500).json({ error: 'An error occurred' });
-// 		}
-// 	}
-// });
+		if (error.response) {
+			// Handle specific error response from the API (non-sensitive errors)
+			const { status, data } = error.response;
+			res.status(status).json({ error: 'An error occurred with the external API' });
+		} else {
+			// Handle other errors (e.g., network issues) without exposing details
+			res.status(500).json({ error: 'An error occurred' });
+		}
+	}
+});
 
 module.exports = router;

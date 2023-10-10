@@ -24,7 +24,7 @@ body * {
 
 .shape_outline_active {
   border: 1px solid #5a4098 !important;
-  color: #5a4098 !important;
+  color: #5a4098;
 }
 
 .shadow_cardshadow {
@@ -225,7 +225,7 @@ a {
   color: #ff7050;
 }
 
-.pointer_cursor {
+.shape_outline_active {
   cursor: pointer;
 }
 
@@ -482,7 +482,6 @@ body {
 .cart_popup .menu .checkout .checkout_button {
   background-color: #5a4098;
   color: #ffffff;
-  color: red;
   padding: 12px;
   text-align: center;
   border-radius: 20px;
@@ -513,7 +512,7 @@ body {
   right: 48px;
   top: -14px;
 }
-.cart_popup .menu:hover {
+.cart_popup .menu:hover.show {
   visibility: visible;
   opacity: 1;
 }
@@ -565,7 +564,7 @@ body {
   gap: 4px;
 }
 .rating .star {
-  color: #FFAA28;
+  color: #ffaa28;
 }
 
 .divider {
@@ -577,6 +576,7 @@ body {
 .product_card {
   text-align: center;
   cursor: pointer;
+  max-width: 263px;
 }
 .product_card .image_container {
   position: relative;
@@ -895,7 +895,7 @@ body {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   border-top: 1px solid #d8d8d8;
   padding: 100px 0 68px;
@@ -1143,6 +1143,23 @@ body {
 .pdp .product_info .variation_container .variation_images {
   display: flex;
   gap: 16px;
+  max-width: 100%;
+  padding-bottom: 10px;
+  overflow-x: auto;
+}
+.pdp .product_info .variation_container .variation_images::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+  border-radius: 20px;
+}
+.pdp .product_info .variation_container .variation_images::-webkit-scrollbar {
+  height: 6px;
+  background-color: #f5f5f5;
+  border-radius: 20px;
+}
+.pdp .product_info .variation_container .variation_images::-webkit-scrollbar-thumb {
+  background-color: #d8d8d8;
+  border-radius: 20px;
 }
 .pdp .product_info .variation_container .variation_images img {
   padding: 2px;
@@ -1307,6 +1324,9 @@ body {
   -moz-column-gap: 30px;
        column-gap: 30px;
 }
+.shop .shop_grid .shop_grid_container .product_card {
+  margin: auto;
+}
 .shop .shop_grid .pagination {
   margin-top: 100px;
   display: flex;
@@ -1352,7 +1372,7 @@ body {
   background-color: #d8d8d8;
 }
 .shopping_cart .cart_items_container {
-  min-width: 600px;
+  min-width: 700px;
 }
 .shopping_cart .cart_items_container .cart_header {
   margin-top: 44px;

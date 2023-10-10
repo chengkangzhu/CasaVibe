@@ -5,8 +5,8 @@ import Sort from "./Sort";
 import Filter from "./Filter";
 import ProductCard from "./ProductCard";
 import Pagination from "./Pagination";
- 
-const ShopGrid = ({gridProducts}) => {
+
+const ShopGrid = ({ gridProducts }) => {
 	return (
 		<div className="shop_grid">
 			<div className="head_row">
@@ -23,7 +23,10 @@ const ShopGrid = ({gridProducts}) => {
 					<ProductCard key={index} productObj={item} />
 				))}
 			</div>
-			<Pagination totalPages={Math.ceil(gridProducts.length / 40)} currentPage={1} />
+			<Pagination
+				totalPages={Math.ceil(gridProducts.length / 40)}
+				currentPage={1}
+			/>
 		</div>
 	);
 };

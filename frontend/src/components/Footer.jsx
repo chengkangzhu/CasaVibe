@@ -48,45 +48,37 @@ const Footer = () => {
 				<div className="right">
 					<div className="list_container">
 						<h5 className="h5 sb">Company</h5>
-						<span  className="h7 rg inactive_cursor" >
-							About Us
-						</span>
-						<span  className="h7 rg inactive_cursor" >
-							Career
-						</span>
-						<span  className="h7 rg inactive_cursor" >
+						<span className="h7 rg inactive_cursor">About Us</span>
+						<span className="h7 rg inactive_cursor">Career</span>
+						<span className="h7 rg inactive_cursor">
 							Privacy Policy
 						</span>
-						<span  className="h7 rg inactive_cursor" >
-							Blogs
-						</span>
-						<span  className="h7 rg inactive_cursor" >
+						<span className="h7 rg inactive_cursor">Blogs</span>
+						<span className="h7 rg inactive_cursor">
 							Flash Sale
 						</span>
-						<span  className="h7 rg inactive_cursor" >
+						<span className="h7 rg inactive_cursor">
 							Affiliates
 						</span>
 					</div>
 					<div className="list_container">
 						<h5 className="h5 sb">Buyer</h5>
-						<span  className="h7 rg inactive_cursor">
+						<span className="h7 rg inactive_cursor">
 							How to shop
 						</span>
-						<span  className="h7 rg inactive_cursor">
+						<span className="h7 rg inactive_cursor">
 							Payment method
 						</span>
-						<span  className="h7 rg inactive_cursor">
+						<span className="h7 rg inactive_cursor">
 							Track Buyer Orders
 						</span>
-						<span  className="h7 rg inactive_cursor">
+						<span className="h7 rg inactive_cursor">
 							Free Shipping
 						</span>
-						<span  className="h7 rg inactive_cursor">
+						<span className="h7 rg inactive_cursor">
 							Returns & Funds
 						</span>
-						<span  className="h7 rg inactive_cursor">
-							Guarantee
-						</span>
+						<span className="h7 rg inactive_cursor">Guarantee</span>
 					</div>
 					<div className="list_container">
 						<h5 className="h5 sb">Contact us</h5>
@@ -94,28 +86,31 @@ const Footer = () => {
 							<HiPhone />
 							(123) 456 7890
 						</span>
-						<span href="mailto:hello@CasaVibe.com" className="h7 md contact">
+						<span
+							href="mailto:hello@CasaVibe.com"
+							className="h7 md contact"
+						>
 							<MdEmail />
 							hello@CasaVibe.com
 						</span>
-						<span  className="h7 md contact inactive_cursor">
+						<span className="h7 md contact inactive_cursor">
 							<AiFillShop />
 							Monday – Friday: 09.00 - 16.00 WIB
 						</span>
 						<div className="social_media_container">
-							<span >
+							<span>
 								<img
 									src="https://cdn-icons-png.flaticon.com/512/3670/3670151.png"
 									alt="twtiter icon"
 								/>
 							</span>
-							<span >
+							<span>
 								<img
 									src="https://cdn.iconscout.com/icon/free/png-128/free-facebook-35-83440.png"
 									alt="facebook icon"
 								/>
 							</span>
-							<span >
+							<span>
 								<img
 									src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/LinkedIn_icon_circle.svg/640px-LinkedIn_icon_circle.svg.png"
 									alt="linkedin icon"

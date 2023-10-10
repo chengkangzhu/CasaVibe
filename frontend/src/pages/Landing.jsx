@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-//redux 
+//redux
 import { useDispatch } from "react-redux";
-import { updatePdp } from "../store";
+import { updatePdp } from "../slices/ProductSlice";
 
 //icon
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
@@ -21,7 +21,7 @@ import sofaImage from "../img/landing/sofa.png";
 import chairImage from "../img/landing/chair.png";
 import lampImage from "../img/landing/lamp.png";
 
-import sofaSetMain from "../img/landing/sofa_set_main.png"; 
+import sofaSetMain from "../img/landing/sofa_set_main.png";
 
 import brand1 from "../img/landing/brand1.png";
 import brand2 from "../img/landing/brand2.png";
@@ -39,20 +39,18 @@ import news2 from "../img/landing/news (2).png";
 import news3 from "../img/landing/news (3).png";
 
 //product datas
-import { collectionProducts ,categoryNewProducts } from "../data"
- 
-
-
-
+import { collectionProducts, categoryNewProducts } from "../data";
 
 const Landing = () => {
 	const [activeCategory, setActiveCategory] = useState("All category");
-	const [productArr, setProductArr] = useState(categoryNewProducts["All category"])  
-	const dispatch = useDispatch()
+	const [productArr, setProductArr] = useState(
+		categoryNewProducts["All category"]
+	);
+	const dispatch = useDispatch();
 
 	const handleClick = (category) => {
 		setActiveCategory(category);
-		setProductArr(categoryNewProducts[category])
+		setProductArr(categoryNewProducts[category]);
 	};
 
 	return (
@@ -66,7 +64,7 @@ const Landing = () => {
 			</div>
 			<div className="shop_now">
 				<Link to="/shop" className="shop_now__button h5 sb">
-					Shop Now{" "}
+					Shop Now
 					<MdOutlineKeyboardArrowRight size={24} className="icon" />
 				</Link>
 			</div>
@@ -86,15 +84,10 @@ const Landing = () => {
 					<h2 className="h2 sb">New Products</h2>
 					<nav className="h7 md">
 						<span
-							className={
-								activeCategory === "All category"
-									? "shape_outline_active"
-									: ""
-							}
+							className={ activeCategory === "All category" ? "shape_outline_active" : "" }
 							onClick={() => handleClick("All category")}
-						>
-							{" "}
-							All category{" "}
+						> 
+							All category
 						</span>
 						<span
 							className={
@@ -103,9 +96,8 @@ const Landing = () => {
 									: ""
 							}
 							onClick={() => handleClick("Furnitures")}
-						>
-							{" "}
-							Furnitures{" "}
+						> 
+							Furnitures 
 						</span>
 						<span
 							className={
@@ -114,9 +106,8 @@ const Landing = () => {
 									: ""
 							}
 							onClick={() => handleClick("Chairs")}
-						>
-							{" "}
-							Chairs{" "}
+						> 
+							Chairs
 						</span>
 						<span
 							className={
@@ -126,8 +117,8 @@ const Landing = () => {
 							}
 							onClick={() => handleClick("Decor")}
 						>
-							{" "}
-							Decor{" "}
+							
+							Decor
 						</span>
 						<span
 							className={
@@ -137,20 +128,23 @@ const Landing = () => {
 							}
 							onClick={() => handleClick("Lighting")}
 						>
-							{" "}
-							Lighting{" "}
+							
+							Lighting
 						</span>
 					</nav>
 				</div>
 				<div className="new_product__content">
-						<div className="mainDisplayContainer ">
-							<Link to={`/pdp/${productArr[0].id}`} onClick={()=> dispatch(updatePdp(productArr[0]))}>
-								<img
-									src={productArr[0].contextualImageUrl}
-									alt={productArr[0].imageAlt}
-								/>			
-								</Link>
-						</div>		
+					<div className="mainDisplayContainer ">
+						<Link
+							to={`/pdp/${productArr[0].id}`}
+							onClick={() => dispatch(updatePdp(productArr[0]))}
+						>
+							<img
+								src={productArr[0].contextualImageUrl}
+								alt={productArr[0].imageAlt}
+							/>
+						</Link>
+					</div>
 
 					<div className="other_products_container">
 						{productArr.map((item, index) => {
@@ -176,33 +170,73 @@ const Landing = () => {
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 						sed do eiusmod tempor incididunt.
 					</p>
-					<Link to={`/pdp/${collectionProducts[0].id}`} onClick={()=> dispatch(updatePdp(collectionProducts[0]))}>
+					<Link
+						to={`/pdp/${collectionProducts[0].id}`}
+						onClick={() =>
+							dispatch(updatePdp(collectionProducts[0]))
+						}
+					>
 						<div className="other_product pointer_cursor">
-							<img src={collectionProducts[0].image} alt={collectionProducts[0].imageAlt} />
+							<img
+								src={collectionProducts[0].image}
+								alt={collectionProducts[0].imageAlt}
+							/>
 							<div className="product_description">
-								<h6 className="h6 md">{collectionProducts[0].name}</h6>
+								<h6 className="h6 md">
+									{collectionProducts[0].name}
+								</h6>
 								<p className="h7 sb discounted_price">
-									${collectionProducts[0].price.currentPrice} 
-									{collectionProducts[0].price.discounted && <span className="h8 rg">${parseFloat((collectionProducts[0].price.currentPrice * 1.25).toFixed(2))}</span>}
+									${collectionProducts[0].price.currentPrice}
+									{collectionProducts[0].price.discounted && (
+										<span className="h8 rg">
+											$
+											{parseFloat(
+												(
+													collectionProducts[0].price
+														.currentPrice * 1.25
+												).toFixed(2)
+											)}
+										</span>
+									)}
 								</p>
 							</div>
-						</div>					
-					</Link> 
-					<Link to={`/pdp/${collectionProducts[1].id}`} onClick={()=> dispatch(updatePdp(collectionProducts[1]))}>
-						<div className="other_product pointer_cursor">
-							<img src={collectionProducts[1].image} alt={collectionProducts[1].imageAlt} />
-							<div className="product_description">
-								<h6 className="h6 md">{collectionProducts[1].name}</h6>
-								<p className="h7 sb discounted_price">
-									${collectionProducts[1].price.currentPrice} 
-									{collectionProducts[1].price.discounted && <span className="h8 rg">${parseFloat((collectionProducts[1].price.currentPrice * 1.25).toFixed(2))}</span>}
-								</p>
-							</div>
-						</div>  
+						</div>
 					</Link>
-					<Link to="/shop/collections" >
+					<Link
+						to={`/pdp/${collectionProducts[1].id}`}
+						onClick={() =>
+							dispatch(updatePdp(collectionProducts[1]))
+						}
+					>
+						<div className="other_product pointer_cursor">
+							<img
+								src={collectionProducts[1].image}
+								alt={collectionProducts[1].imageAlt}
+							/>
+							<div className="product_description">
+								<h6 className="h6 md">
+									{collectionProducts[1].name}
+								</h6>
+								<p className="h7 sb discounted_price">
+									${collectionProducts[1].price.currentPrice}
+									{collectionProducts[1].price.discounted && (
+										<span className="h8 rg">
+											$
+											{parseFloat(
+												(
+													collectionProducts[1].price
+														.currentPrice * 1.25
+												).toFixed(2)
+											)}
+										</span>
+									)}
+								</p>
+							</div>
+						</div>
+					</Link>
+					<Link to="/shop/collections">
 						<button className="explore_collection_button h5 sb">
-							Explore Collection{" "}
+							Explore Collection
 							<MdOutlineKeyboardArrowRight
 								size={24}
 								className="icon"
@@ -284,4 +318,3 @@ const Landing = () => {
 };
 
 export default Landing;
-

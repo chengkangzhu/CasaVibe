@@ -23,7 +23,6 @@ $white: #ffffff;
 $purple: #5a4098;
 $orange: #ff7050;
 
-
 $grey_100: #000000;
 $grey_200: #303030;
 $grey_300: #646464;
@@ -34,8 +33,8 @@ $grey_700: #f8f8f8;
 
 $alert_red: #ff5353;
 $alert_green: #67ad1a;
-$alert_yellow: #FFAA28;
-$alert_blue: #46B8DC;
+$alert_yellow: #ffaa28;
+$alert_blue: #46b8dc;
 
 $shape_icon: #808080;
 $shape_line: #d8d8d8;
@@ -47,11 +46,7 @@ $shape_line: #d8d8d8;
 
 .shape_outline_active {
 	border: 1px solid #5a4098 !important;
-	color: #5a4098 !important;
-
-	// &:hover {
-	// 	border: 2px solid #5a4098;
-	// }
+	color: #5a4098;
 }
 
 //SHADOWS
@@ -85,7 +80,7 @@ $shape_line: #d8d8d8;
 }
 
 .icon {
-	color: $shape_icon ;
+	color: $shape_icon;
 	cursor: pointer;
 }
 
@@ -247,18 +242,18 @@ a {
 }
 
 .white {
-	color:#ffffff;
+	color: #ffffff;
 }
 
 .purple {
-	color:#5a4098;
+	color: #5a4098;
 }
 
 .orange {
-	color:#ff7050;
+	color: #ff7050;
 }
 
-.pointer_cursor {
+.shape_outline_active {
 	cursor: pointer;
 }
 
