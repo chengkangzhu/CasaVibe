@@ -40,6 +40,7 @@ const cartInitialState = {
 				},
 			],
 			variants: [],
+			quantity: 1,
 		},
 
 		{
@@ -76,8 +77,14 @@ const cartInitialState = {
 				},
 			],
 			variants: [],
+			quantity: 1,
 		},
 	],
+	orderSummary: {
+		subtotal: 0,
+		tax: 0,
+		grandTotal: 0,
+	},
 };
 
 export const cartSlice = createSlice({
@@ -85,17 +92,69 @@ export const cartSlice = createSlice({
 	initialState: cartInitialState,
 	reducers: {
 		addToCart: (state, action) => {
-			state.items.push(action.payload);
+			const isItemDuplicate = state.items.some(
+				(item) => item.id === action.payload.id
+			);
+
+			if (!isItemDuplicate) {
+				// If the item doesn't exist, add it to the cart
+				state.items.push(action.payload);
+
+				state.orderSummary = updateOrderSummary(state);
+			}
 		},
 		removeFromCart: (state, action) => {
 			state.items = state.items.filter((item) => {
 				return item.id !== action.payload.id;
 			});
+			state.orderSummary = updateOrderSummary(state);
+		},
+		incrementQuantity: (state, action) => {
+			state.items = state.items.map((item) =>
+				item.id === action.payload.id
+					? { ...item, quantity: item.quantity + 1 }
+					: item
+			);
+			
+			state.orderSummary = updateOrderSummary(state)
+		},
+		decrementQuantity: (state, action) => {
+			state.items = state.items.map((item) =>
+				item.id === action.payload.id
+					? { ...item, quantity: item.quantity - 1 }
+					: item
+			);
+			
+			state.orderSummary = updateOrderSummary(state)
 		},
 		clearCart: (state) => {
 			state.items = [];
+			
+			state.orderSummary = updateOrderSummary(state)
 		},
 	},
 });
 
-export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
+const updateOrderSummary = (state) => {
+	const subtotal = parseFloat(state.items.reduce((sum, item) => {
+		return sum + item.quantity * item.price.currentPrice;
+	}, 0).toFixed(2))
+
+	const tax = parseFloat((subtotal * 0.09).toFixed(2))
+	const total =parseFloat( (subtotal + tax).toFixed(2))
+
+
+	return {
+		subtotal,
+		tax,
+		total,
+	};
+};
+
+export const {
+	addToCart,
+	removeFromCart,
+	incrementQuantity,
+	decrementQuantity,
+	clearCart,
+} = cartSlice.actions;

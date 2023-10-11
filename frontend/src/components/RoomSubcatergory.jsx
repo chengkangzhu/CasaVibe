@@ -94,9 +94,9 @@ const RoomSubcatergory = ({ room }) => {
 			<div className="furniture_container h7 md">
 				{categoryImgs[room] &&
 					Object.entries(categoryImgs[room]).map(([key, value]) => (
-						<Link to={"/shop/" + key.toLowerCase()}>
+						<Link key={key}  to={"/shop/" + key.toLowerCase()}>
 							<span>
-								<img key={key} src={value} alt={key} />
+								<img src={value} alt={key} />
 								{key}
 							</span>{" "}
 						</Link>

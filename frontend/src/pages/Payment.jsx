@@ -19,18 +19,18 @@ import { FaCheckSquare, FaRegSquare } from "react-icons/fa";
 import { BsRecordCircleFill, BsCircle } from "react-icons/bs";
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
-const CartItem = ({ imageSrc, alt, name, weight, quantity, price }) => {
+const CartItem = ({ image, imageAlt, name, quantity, price:{currentPrice}}) => {
 	return (
 		<div className="cart_item">
-			<img src={imageSrc} alt={alt} className="image" />
+			<img src={image} alt={imageAlt} className="image" />
 			<div>
 				<p className="h5 md name">{name}</p>
 				<p className="h7 rg weight">
-					Total package weight: {weight} kg
+					Total package weight: {6.8} kg
 				</p>
 				<p className="h7 rg quantity">Qty: {quantity}</p>
 			</div>
-			<p className="h5 sb price">${(price * quantity).toFixed(2)}</p>
+			<p className="h5 sb price">${(currentPrice * quantity).toFixed(2)}</p>
 		</div>
 	);
 };
@@ -49,6 +49,7 @@ const Payment = () => {
 
 	//cart state
 	const cart = useSelector((state) => state.cart.items);
+	const orderSummary = useSelector( state => state.cart.orderSummary)
 
 	const handleMethodChange = (methodId) => {
 		if (selectedMethod === methodId) {
@@ -295,15 +296,11 @@ const Payment = () => {
 					</h2>
 					<div className="cart_info_container">
 						{cart &&
-							cart.map((item) => {
+							cart.map((item,index) => {
 								return (
 									<CartItem
-										imageSrc={item.image}
-										name={item.name}
-										weight={4.23}
-										price={item.price.currentPrice}
-										quantity={3}
-										alt={item.imageAlt}
+										{...item}
+										key={index}
 									/>
 								);
 							})}
@@ -336,17 +333,17 @@ const Payment = () => {
 				<h5 className="h5 sb headline">Order Summary</h5>
 				<div className="order_info">
 					<h6 className="h6 rg">
-						Subtotal <span className="md">$942.00</span>
+						Subtotal <span className="md">${orderSummary.subtotal}</span>
 					</h6>
 					<h6 className="h6 rg">
-						Tax <span className="md">$00.00</span>
+						Tax (9%)<span className="md">${orderSummary.tax}</span>
 					</h6>
 					<h6 className="h6 rg">
-						Shipping <span className="md">$14.00</span>
+						Shipping <span className="md">$00.00</span>
 					</h6>
 				</div>
 				<h6 className="total h6 md">
-					Total <span className="sb h4">$46.77</span>
+					Total <span className="sb h4">${orderSummary.total}</span>
 				</h6>
 				<Link
 					to={`/checkout/completed/${orderId}`}

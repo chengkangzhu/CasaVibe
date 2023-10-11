@@ -3,7 +3,7 @@ import axios from "axios";
 
 //redux
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import {addToCart} from "../slices/cartSlice"
+import { addToCart } from "../slices/cartSlice";
 import { useDispatch } from "react-redux";
 
 //components
@@ -19,6 +19,8 @@ import { RiTruckFill } from "react-icons/ri";
 import { FaStoreAlt } from "react-icons/fa";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useParams } from "react-router-dom";
+import { MdAdd } from "react-icons/md";
+import { MdRemove } from "react-icons/md";
 
 const AccordionItem = ({ title, content, id }) => {
 	return (
@@ -47,32 +49,24 @@ const AccordionItem = ({ title, content, id }) => {
 };
 
 const ProductDetail = () => {
-	//show contextimage on hover
 	const [isDisplayHovered, setIsDisplayHovered] = useState(false);
-
-	//set selected variation to have outline
 	const [variation, setVariation] = useState(-1);
-
-	//list of products display on shopgrid
 	const { id } = useParams();
 
-	//get the product data from redux store
+	//redux
 	const productObj = useSelector((state) => state.products.pdp);
-
-	//main product
 	const [currrentProduct, setCurrentProduct] = useState(productObj);
-
-	//related products
 	const [relatedItem, setRelatedItem] = useState([]);
+	const dispatch = useDispatch();
+	const [quantity, setQuantity] = useState(1);
 
-	const dispatch = useDispatch()
-
-	//double check the id with the product
 	useEffect(() => {
-		setCurrentProduct(productObj);
+		if (id === productObj.id) {
+			setCurrentProduct(productObj);
+			//set error page saying cant find item if it doesnt match
+		}
 
-		//double confirm the id
-		//get the catergory then send the request
+		//fetch related category items
 		const category = productObj.typeName;
 
 		async function fetchCategoryData() {
@@ -114,7 +108,7 @@ const ProductDetail = () => {
 				{/* RIGHT */}
 				<div className="product_info">
 					<h2 className="h2 sb product_name">
-						{currrentProduct.currrentProductname}
+						{currrentProduct.name}
 					</h2>
 					<p className="h7 rg">{currrentProduct.imageAlt}</p>
 					<div className="price_rating_container">
@@ -131,7 +125,7 @@ const ProductDetail = () => {
 												currrentProduct.price
 													.currentPrice * 1.25
 											).toFixed(2)
-										)}{" "}
+										)}
 									</span>
 								</div>
 							)}
@@ -190,23 +184,50 @@ const ProductDetail = () => {
 							<h5 className="h5 rg">
 								Stock:{" "}
 								<span className="md">
-									{parseInt(currrentProduct.id.slice(-3))}{" "}
-									left
+									{" "}
+									{currrentProduct.id.slice(-3)} left{" "}
 								</span>
 							</h5>
-							<QuantitySelector
-								amount={2}
-								weight="150px"
-								height="56px"
-								className="h6"
-								iconSize={24}
-							/>
+							<div
+								className={`quantity_selector shape_outline md h6`}
+								style={{ width: "150px", height: "56px" }}
+							>
+								<div
+									className="decrement icon"
+									onClick={() => {
+										if (quantity !== 1) {
+											setQuantity((prev) => prev - 1);
+										}
+									}}
+								>
+									<MdRemove size={24} />
+								</div>
+								<div className="amount">{quantity}</div>
+								<div
+									className="dincrement icon"
+									onClick={() =>
+										setQuantity((prev) => prev + 1)
+									}
+								>
+									<MdAdd size={24} />
+								</div>
+							</div>
 						</div>
 						<div className="add_item_container">
 							<button className="add_wishlist shape_outline">
 								<FiHeart size={24} className="icon" />
 							</button>
-							<button className="add_cart h5 sb" onClick={()=>dispatch(addToCart(productObj))}>
+							<button
+								className="add_cart h5 sb"
+								onClick={() =>
+									dispatch(
+										addToCart({
+											...currrentProduct,
+											quantity,
+										})
+									)
+								}
+							>
 								<BiCartAdd size={24} />
 								Add to Cart
 							</button>

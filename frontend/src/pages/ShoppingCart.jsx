@@ -6,6 +6,8 @@ import { MdDelete } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FaPen } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi";
+import { MdAdd } from "react-icons/md";
+import { MdRemove } from "react-icons/md";
 
 //component
 import QuantitySelector from "../components/QuantitySelector";
@@ -13,43 +15,67 @@ import QuantitySelector from "../components/QuantitySelector";
 //redux
 import { useDispatch } from "react-redux";
 import { removeFromCart } from "../slices/cartSlice";
- 
+import { incrementQuantity, decrementQuantity } from "../slices/cartSlice";
 
 const CartItem = ({
-	imageSrc,
-	alt,
+	image,
+	imageAlt,
 	name,
-	weight,
-	amount,
-	price,
-	isLiked = false,
-	id
+	quantity,
+	price: { currentPrice },
+	id,
 }) => {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
 	return (
 		<div className="cart_item">
+
+			{/* PRODUCT INFO  */}
 			<div className="left">
-				<img src={imageSrc} alt={alt} />
+				<img src={image} alt={imageAlt} />
 				<div>
 					<p className="h5 md name">{name}</p>
-					<p className="h5 sb price">${price}</p>
-					<p className="h7 rg">Total package weight: {weight} kg</p>
+					<p className="h5 sb price">${currentPrice}</p>
+					<p className="h7 rg">Total package weight: {6.8} kg</p>
 				</div>
 			</div>
-			<QuantitySelector
-				amount={amount}
-				weight="150px"
-				height="56px"
-				className="h6"
-				iconSize={24}
-			/>
+
+
+			{/* QUANTITY SELECTOR */}
+			<div
+				className={`quantity_selector shape_outline md h6`}
+				style={{ width: "150px", height: "56px" }}
+			>
+				<div
+					className="decrement icon"
+					onClick={() => {
+						if (quantity !== 1) {
+							dispatch(decrementQuantity({ id }));
+						}
+					}}
+				>
+					<MdRemove size={24} />
+				</div>
+				<div className="amount">{quantity}</div>
+				<div
+					className="dincrement icon"
+					onClick={() => dispatch(incrementQuantity({ id }))}
+				>
+					<MdAdd size={24} />
+				</div>
+			</div>
+
+			{/* ACTION BUTTOMS  */}
 			<div className="right">
-				<p className="h4 sb">${(price * amount).toFixed(2)}</p>
+				<p className="h4 sb">${(currentPrice * quantity).toFixed(2)}</p>
 				<div className="action_icons">
 					<AiOutlineHeart size={24} className="icon" />
 					<div className="vertical_divider"></div>
-					<MdDelete size={24} className="icon"  onClick={()=>dispatch(removeFromCart({id}))}/>
+					<MdDelete
+						size={24}
+						className="icon"
+						onClick={() => dispatch(removeFromCart({ id }))}
+					/>
 				</div>
 			</div>
 		</div>
@@ -87,17 +113,7 @@ const ShoppingCart = () => {
 					</div>
 					{cartItems &&
 						cartItems.map((item, index) => {
-							return (
-								<CartItem
-									key={index}
-									id={item.id}
-									imageSrc={item.image}
-									name={item.name}
-									weight={4.23}
-									price={item.price.currentPrice}
-									amount={3}
-								/>
-							);
+							return <CartItem {...item} key={index} />;
 						})}
 				</div>
 			</div>

@@ -14,26 +14,20 @@ const QuantitySelector = ({
 }) => {
 	const [itemAmount, setItemAmount] = useState(parseInt(amount));
 
-	const handleIncrement = () => {
-		setItemAmount((prev) => prev + 1);
-	};
-
-	const handleDecrement = () => {
-		if (itemAmount !== 0) {
-			setItemAmount((prev) => prev - 1);
-		}
-	};
-
 	return (
 		<div
 			className={`quantity_selector shape_outline md ${className}`}
 			style={{ width: weight, height: height }}
 		>
-			<div className="decrement icon" onClick={handleDecrement}>
+			<div className="decrement icon" onClick={()=>{
+				if (itemAmount !== 0) {
+					setItemAmount((prev) => prev - 1);
+				}
+			}}>
 				<MdRemove size={iconSize} />
 			</div>
 			<div className="amount">{itemAmount}</div>
-			<div className="dincrement icon" onClick={handleIncrement}>
+			<div className="dincrement icon" onClick={()=>setItemAmount((prev) => prev + 1)}>
 				<MdAdd size={iconSize} />
 			</div>
 		</div>
