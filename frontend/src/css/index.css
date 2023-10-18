@@ -297,6 +297,7 @@ body {
   padding: 0 12px 0 24px;
   border-radius: 24px;
   margin: 0 48px;
+  border: 1px solid #d8d8d8;
 }
 .navbar__top .searchbar input {
   border: none;
@@ -1192,6 +1193,13 @@ body {
   place-items: center;
   margin-right: 16px;
 }
+.pdp .product_info .action_container .add_item_container .add_wishlist.liked {
+  border-color: #FF0000; /* liked border color (red) */
+  background-color: #FFD3D3; /* liked background color (light red) */
+}
+.pdp .product_info .action_container .add_item_container .add_wishlist.liked .icon {
+  color: #FF0000; /* liked icon color (red) */
+}
 .pdp .product_info .action_container .add_item_container .add_cart {
   padding: 20px 0;
   background-color: #5a4098;
@@ -1203,6 +1211,10 @@ body {
   justify-content: center;
   gap: 8px;
   flex: 1 1 auto;
+}
+.pdp .product_info .action_container .add_item_container .add_cart:active {
+  /* Add styles for the :active state here */
+  background-color: #44316f; /* Darker color, for example */
 }
 .pdp .product_info .shipping_or_store {
   padding-top: 24px;
@@ -1258,7 +1270,7 @@ body {
   padding: 0 10.42vw;
 }
 .shop .room_subcatergory {
-  padding: 72px 0;
+  padding: 48px 0;
   border-bottom: 1px solid #d8d8d8;
 }
 .shop .room_subcatergory .h2 {
@@ -1289,7 +1301,7 @@ body {
 }
 .shop .product_carousel {
   border-bottom: 1px solid #d8d8d8;
-  margin-bottom: 50px;
+  padding: 80px 0;
 }
 @media (max-width: 780px) {
   .shop {
@@ -1427,6 +1439,9 @@ body {
 .shopping_cart .cart_items_container .cart_item .right .action_icons {
   display: flex;
   align-items: center;
+}
+.shopping_cart .cart_items_container .cart_item .right .action_icons .like {
+  color: #DC143C;
 }
 .shopping_cart .cart_items_container .cart_item .right .action_icons .vertical_divider {
   height: 24px;
@@ -2172,4 +2187,20 @@ body {
   .payment__form .heading_num {
     display: none;
   }
+}
+
+.loading_screen {
+  display: block;
+  margin: 100px auto;
+  width: 50px;
+  height: 50px;
+}
+.loading_screen.wider {
+  margin: 30vh auto;
+}
+
+.not_found_image {
+  display: block;
+  width: 100%;
+  margin: 50px 0;
 }/*# sourceMappingURL=index.css.map */

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+//toastify
+import { toast } from "react-toastify";
+
 //redux
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { addToCart } from "../slices/cartSlice";
@@ -8,12 +11,12 @@ import { useDispatch } from "react-redux";
 
 //components
 import Rating from "../components/Rating";
-import QuantitySelector from "../components/QuantitySelector";
 import ProductCarousel from "../components/ProductCarousel";
 import ProductCard from "../components/ProductCard";
 
 //icons
-import { FiHeart } from "react-icons/fi";
+import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
 import { BiCartAdd } from "react-icons/bi";
 import { RiTruckFill } from "react-icons/ri";
 import { FaStoreAlt } from "react-icons/fa";
@@ -51,254 +54,366 @@ const AccordionItem = ({ title, content, id }) => {
 const ProductDetail = () => {
 	const [isDisplayHovered, setIsDisplayHovered] = useState(false);
 	const [variation, setVariation] = useState(-1);
+	const [isLiked, setIsLiked] = useState(false);
+	const [notFound, setNotFound] = useState(false);
 	const { id } = useParams();
 
 	//redux
-	const productObj = useSelector((state) => state.products.pdp);
-	const [currrentProduct, setCurrentProduct] = useState(productObj);
+	const reduxPdp = useSelector((state) => state.products.pdp);
+	const [currentProduct, setCurrentProduct] = useState(reduxPdp);
 	const [relatedItem, setRelatedItem] = useState([]);
 	const dispatch = useDispatch();
 	const [quantity, setQuantity] = useState(1);
 
+	function isEmptyObject(obj) {
+		return Object.keys(obj).length === 0;
+	}
+
+	const temp = {
+		id: "s69216757",
+		name: "FRIHETEN",
+		price: {
+			currency: "USD",
+			currentPrice: 899,
+			discounted: true,
+		},
+		availability: {
+			status: "Unknown",
+			store: "No Store Specified",
+		},
+		measurement: "",
+		typeName: "Sleeper sectional,3 seat w/storage",
+		image: "https://www.ikea.com/us/en/images/products/friheten-sleeper-sectional-3-seat-w-storage-skiftebo-dark-gray__0175610_pe328883_s5.jpg",
+		contextualImageUrl:
+			"https://www.ikea.com/us/en/images/products/friheten-sleeper-sectional-3-seat-w-storage-skiftebo-dark-gray__1089881_pe861727_s5.jpg",
+		imageAlt:
+			"FRIHETEN Sleeper sectional,3 seat w/storage, Skiftebo dark gray",
+		url: "https://www.ikea.com/us/en/p/friheten-sleeper-sectional-3-seat-w-storage-skiftebo-dark-gray-s69216757/",
+		categoryPath: [
+			{
+				name: "Furniture",
+				key: "fu001",
+			},
+			{
+				name: "Sofas & sectionals",
+				key: "fu003",
+			},
+			{
+				name: "Sleeper sofas & sofa beds",
+				key: "10663",
+			},
+			{
+				name: "Convertible sofa beds & futons",
+				key: "20874",
+			},
+		],
+	};
+
 	useEffect(() => {
-		if (id === productObj.id) {
-			setCurrentProduct(productObj);
-			//set error page saying cant find item if it doesnt match
-		}
-
-		//fetch related category items
-		const category = productObj.typeName;
-
-		async function fetchCategoryData() {
+		async function fetchRelatedItems(category) {
 			try {
+				setRelatedItem([]);
 				const response = await axios.get(
 					`${process.env.REACT_APP_API_URL}/product/search/${category}`
 				);
-				setRelatedItem(response.data.slice(0, 15));
+
+				console.log("fetching related item");
+				const filteredData = response.data
+					.slice(0, 15)
+					.filter((item) => item.id !== id);
+				setRelatedItem(filteredData);
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			}
 		}
 
-		fetchCategoryData();
-	}, [productObj]);
+		const fetchDataById = async (productId) => {
+			console.log("fetching product id item");
+			const response = await axios.get(
+				`${process.env.REACT_APP_API_URL}/product/${productId}`
+			);
+			if(isEmptyObject(response.data)){
+				setCurrentProduct(temp);
+			} else {
+				
+			setCurrentProduct(response.data);
+			}
+
+			//  fetchRelatedItems(response.data.typeName.split(",")[0]);
+		};
+		if (id === reduxPdp.id) {
+			setCurrentProduct(reduxPdp);
+			fetchRelatedItems(currentProduct.typeName.split(",")[0]);
+			//set error page saying cant find item if it doesnt match
+		} else {
+			fetchDataById(id);
+		}
+	}, [reduxPdp]);
 
 	return (
 		<div className="pdp">
 			{/* MAIN CONTENT */}
-			<div className="main_product_info">
-				{/* LEFT */}
-				<div
-					className="img_container"
-					onMouseOver={() => setIsDisplayHovered(true)}
-					onMouseOut={() => setIsDisplayHovered(false)}
-				>
-					<img
-						className={`main ${isDisplayHovered && "hidden"}`}
-						src={currrentProduct.image}
-						alt={currrentProduct.imageAlt}
-					/>
-					<img
-						className={`contextImg ${isDisplayHovered && "show"}`}
-						src={currrentProduct.contextualImageUrl}
-						alt={currrentProduct.imageAlt}
-					/>
-				</div>
 
-				{/* RIGHT */}
-				<div className="product_info">
-					<h2 className="h2 sb product_name">
-						{currrentProduct.name}
-					</h2>
-					<p className="h7 rg">{currrentProduct.imageAlt}</p>
-					<div className="price_rating_container">
-						<div className="price_container">
-							{currrentProduct.price.discounted && (
-								<div>
-									<span className="discount_percent h8 md">
-										20%
-									</span>
-									<span className="original_price tiny_text">
-										$
-										{parseFloat(
-											(
-												currrentProduct.price
-													.currentPrice * 1.25
-											).toFixed(2)
-										)}
-									</span>
-								</div>
-							)}
-							<h2 className="h2 sb current_price">
-								${currrentProduct.price.currentPrice}
-							</h2>
-						</div>
-						<div className="review_container">
-							<Rating rating={4.5} reviews="535" />
-							<p className="h8 rg people_purchased">
-								806 people have purchased this product
-							</p>
-						</div>
+			{!isEmptyObject(currentProduct) ? (
+				<div className="main_product_info">
+					{/* LEFT */}
+					<div
+						className="img_container"
+						onMouseOver={() => setIsDisplayHovered(true)}
+						onMouseOut={() => setIsDisplayHovered(false)}
+					>
+						<img
+							className={`main ${
+								isDisplayHovered ? "hidden" : ""
+							}`}
+							src={currentProduct.image}
+							alt={currentProduct.imageAlt}
+						/>
+						<img
+							className={`contextImg ${
+								isDisplayHovered ? "show" : ""
+							}`}
+							src={currentProduct.contextualImageUrl}
+							alt={currentProduct.imageAlt}
+						/>
 					</div>
-					<div className="variation_container">
-						<h5 className="h5 md">Variations </h5>
-						<div className="variation_images">
-							{/* outline on first default variation */}
-							<img
-								src={productObj.image}
-								alt={productObj.imageAlt}
-								className={
-									variation === -1 && "shape_outline_active"
-								}
-								onClick={() => {
-									setVariation(-1);
-									setCurrentProduct(productObj);
-								}}
-							/>
 
-							{/* when clicked will change the variant state nubmer to index+1, show outline*/}
-							{productObj.variants &&
-								productObj.variants.map((variant, index) => {
-									return (
-										<img
-											key={index}
-											src={variant.image}
-											alt={variant.imageAlt}
-											className={
-												variation === index &&
-												"shape_outline_active"
-											}
-											onClick={() => {
-												setVariation(index);
-												setCurrentProduct(
-													productObj.variants[index]
-												);
-											}}
-										/>
-									);
-								})}
-						</div>
-					</div>
-					<div className="action_container">
-						<div className="stocks_container">
-							<h5 className="h5 rg">
-								Stock:{" "}
-								<span className="md">
-									{" "}
-									{currrentProduct.id.slice(-3)} left{" "}
-								</span>
-							</h5>
-							<div
-								className={`quantity_selector shape_outline md h6`}
-								style={{ width: "150px", height: "56px" }}
-							>
-								<div
-									className="decrement icon"
-									onClick={() => {
-										if (quantity !== 1) {
-											setQuantity((prev) => prev - 1);
-										}
-									}}
-								>
-									<MdRemove size={24} />
-								</div>
-								<div className="amount">{quantity}</div>
-								<div
-									className="dincrement icon"
-									onClick={() =>
-										setQuantity((prev) => prev + 1)
-									}
-								>
-									<MdAdd size={24} />
-								</div>
+					{/* RIGHT */}
+					<div className="product_info">
+						<h2 className="h2 sb product_name">
+							{currentProduct.name}
+						</h2>
+						<p className="h7 rg">{currentProduct.imageAlt}</p>
+						<div className="price_rating_container">
+							<div className="price_container">
+								{currentProduct.price.discounted && (
+									<div>
+										<span className="discount_percent h8 md">
+											20%
+										</span>
+										<span className="original_price tiny_text">
+											$
+											{parseFloat(
+												(
+													currentProduct.price
+														.currentPrice * 1.25
+												).toFixed(2)
+											)}
+										</span>
+									</div>
+								)}
+								<h2 className="h2 sb current_price">
+									${currentProduct.price.currentPrice}
+								</h2>
+							</div>
+							<div className="review_container">
+								<Rating rating={4.5} reviews="535" />
+								<p className="h8 rg people_purchased">
+									806 people have purchased this product
+								</p>
 							</div>
 						</div>
-						<div className="add_item_container">
-							<button className="add_wishlist shape_outline">
-								<FiHeart size={24} className="icon" />
-							</button>
-							<button
-								className="add_cart h5 sb"
-								onClick={() =>
-									dispatch(
-										addToCart({
-											...currrentProduct,
-											quantity,
-										})
-									)
-								}
-							>
-								<BiCartAdd size={24} />
-								Add to Cart
-							</button>
-						</div>
-					</div>
-					<div className="shipping_or_store">
-						<div className="shipping pointer_cursor">
-							<RiTruckFill size={24} className="icon " />
-							<h6 className="h7 md">
-								Shipping costs start from $24{" "}
-								<p className="p4">See details here</p>
-							</h6>
-							<MdOutlineKeyboardArrowRight
-								size={24}
-								className="icon"
-							/>
-						</div>
-						<div className="store pointer_cursor">
-							<FaStoreAlt size={24} className="icon" />
-							<h6 className="h7 md">
-								Find in store{" "}
-								<p className="p4">
-									Please select a pick-up store in your area
-								</p>
-							</h6>
-							<MdOutlineKeyboardArrowRight
-								size={24}
-								className="icon"
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
+						<div className="variation_container">
+							<h5 className="h5 md">Variations </h5>
+							<div className="variation_images">
+								{/* outline on first default variation */}
+								<img
+									src={currentProduct.image}
+									alt={currentProduct.imageAlt}
+									className={
+										variation === -1
+											? "shape_outline_active"
+											: ""
+									}
+									onClick={() => {
+										setVariation(-1);
+										setCurrentProduct(currentProduct);
+									}}
+								/>
 
-			{/* PRODUCT DETAIL */}
-			<div className="product_details">
-				<div
-					className="accordion accordion-flush"
-					id="productDetailAccordion"
-				>
-					<AccordionItem
-						id="flush-collapseOne"
-						title="Product Description"
-						content={productObj.imageAlt}
-					/>
-					<AccordionItem
-						id="flush-collapseTwo"
-						title="Size & dimentions"
-						content={
-							productObj.measurement !== ""
-								? productObj.measurement
-								: "Measurements not available"
-						}
-					/>
-					<AccordionItem
-						id="flush-collapseThree"
-						title="Reviews"
-						content="Review system not implemented yet"
-					/>
+								{/* when clicked will change the variant state nubmer to index+1, show outline*/}
+								{currentProduct.variants &&
+									currentProduct.variants.map(
+										(variant, index) => {
+											return (
+												<img
+													key={index}
+													src={variant.image}
+													alt={variant.imageAlt}
+													className={
+														variation === index
+															? "shape_outline_active"
+															: ""
+													}
+													onClick={() => {
+														setVariation(index);
+														setCurrentProduct(
+															currentProduct
+																.variants[index]
+														);
+													}}
+												/>
+											);
+										}
+									)}
+							</div>
+						</div>
+						<div className="action_container">
+							<div className="stocks_container">
+								<h5 className="h5 rg">
+									Stock:{" "}
+									<span className="md">
+										{" "}
+										{currentProduct.id.slice(-3)} left{" "}
+									</span>
+								</h5>
+								<div
+									className="quantity_selector shape_outline md h6"
+									style={{ width: "150px", height: "56px" }}
+								>
+									<div
+										className="decrement icon"
+										onClick={() => {
+											if (quantity !== 1) {
+												setQuantity((prev) => prev - 1);
+											}
+										}}
+									>
+										<MdRemove size={24} />
+									</div>
+									<div className="amount">{quantity}</div>
+									<div
+										className="dincrement icon"
+										onClick={() =>
+											setQuantity((prev) => prev + 1)
+										}
+									>
+										<MdAdd size={24} />
+									</div>
+								</div>
+							</div>
+							<div className="add_item_container">
+								<button
+									className={`add_wishlist shape_outline ${
+										isLiked ? "liked" : ""
+									}`}
+									onClick={() => setIsLiked(!isLiked)}
+								>
+									{isLiked ? (
+										<AiFillHeart
+											size={24}
+											className="icon"
+										/>
+									) : (
+										<AiOutlineHeart
+											size={24}
+											className="icon"
+										/>
+									)}
+								</button>
+
+								<button
+									className="add_cart h5 sb"
+									onClick={() => {
+										dispatch(
+											addToCart({
+												...currentProduct,
+												quantity,
+												liked: isLiked,
+											})
+										);
+										toast.success(
+											"Successfully added to cart!"
+										);
+									}}
+								>
+									<BiCartAdd size={24} />
+									Add to Cart
+								</button>
+							</div>
+						</div>
+						<div className="shipping_or_store">
+							<div className="shipping pointer_cursor">
+								<RiTruckFill size={24} className="icon " />
+								<h6 className="h7 md">
+									Shipping costs start from $24{" "}
+									<p className="p4">See details here</p>
+								</h6>
+								<MdOutlineKeyboardArrowRight
+									size={24}
+									className="icon"
+								/>
+							</div>
+							<div className="store pointer_cursor">
+								<FaStoreAlt size={24} className="icon" />
+								<h6 className="h7 md">
+									Find in store{" "}
+									<p className="p4">
+										Please select a pick-up store in your
+										area
+									</p>
+								</h6>
+								<MdOutlineKeyboardArrowRight
+									size={24}
+									className="icon"
+								/>
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>
+			) : (
+				<img
+					src="https://i.gifer.com/ZKZg.gif"
+					alt="loading gif"
+					className="loading_screen"
+				/>
+			)}
+			{/* PRODUCT DETAIL */}
+
+			{!isEmptyObject(currentProduct) && (
+				<div className="product_details">
+					<div
+						className="accordion accordion-flush"
+						id="productDetailAccordion"
+					>
+						<AccordionItem
+							id="flush-collapseOne"
+							title="Product Description"
+							content={currentProduct.imageAlt}
+						/>
+						<AccordionItem
+							id="flush-collapseTwo"
+							title="Size & dimentions"
+							content={
+								currentProduct.measurement !== ""
+									? currentProduct.measurement
+									: "Measurements not available"
+							}
+						/>
+						<AccordionItem
+							id="flush-collapseThree"
+							title="Reviews"
+							content="Review system not implemented yet"
+						/>
+					</div>
+				</div>
+			)}
 
 			{/* RELATED ITEMS */}
 			<div className="divider"></div>
-			{relatedItem.length ? (
+			{relatedItem.length > 1 ? (
 				<ProductCarousel h2="Related products">
 					{relatedItem.map((item, index) => {
 						return <ProductCard key={index} productObj={item} />;
 					})}
 				</ProductCarousel>
-			) : null}
+			) : (
+				<img
+					src="https://i.gifer.com/ZKZg.gif"
+					alt="loading gif"
+					className="loading_screen"
+				/>
+			)}
 		</div>
 	);
 };

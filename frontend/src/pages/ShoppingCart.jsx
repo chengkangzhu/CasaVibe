@@ -1,45 +1,60 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { Link } from "react-router-dom";
 
 //icon
 import { MdDelete } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
 import { FaPen } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { MdAdd } from "react-icons/md";
 import { MdRemove } from "react-icons/md";
 
-//component
-import QuantitySelector from "../components/QuantitySelector";
-
 //redux
 import { useDispatch } from "react-redux";
-import { removeFromCart } from "../slices/cartSlice";
-import { incrementQuantity, decrementQuantity } from "../slices/cartSlice";
+import { updatePdp } from "../slices/ProductSlice";
+import {
+	incrementQuantity,
+	decrementQuantity,
+	removeFromCart,
+	toggleLike
+} from "../slices/cartSlice";
 
-const CartItem = ({
-	image,
-	imageAlt,
-	name,
-	quantity,
-	price: { currentPrice },
-	id,
-}) => {
+const CartItem = ({ item }) => {
+	const {
+		image,
+		imageAlt,
+		name,
+		quantity,
+		price: { currentPrice },
+		id,
+		liked,
+	} = item;
 	const dispatch = useDispatch();
 
 	return (
 		<div className="cart_item">
-
 			{/* PRODUCT INFO  */}
-			<div className="left">
+			<Link
+				className="left"
+				to={`/pdp/${id}`}
+				onClick={() => {
+					dispatch(updatePdp(item));
+					window.scrollTo({
+						top: 0,
+						left: 0,
+						behavior: "instant",
+					});
+				}}
+			>
 				<img src={image} alt={imageAlt} />
 				<div>
 					<p className="h5 md name">{name}</p>
 					<p className="h5 sb price">${currentPrice}</p>
 					<p className="h7 rg">Total package weight: {6.8} kg</p>
 				</div>
-			</div>
-
+			</Link>
 
 			{/* QUANTITY SELECTOR */}
 			<div
@@ -69,7 +84,19 @@ const CartItem = ({
 			<div className="right">
 				<p className="h4 sb">${(currentPrice * quantity).toFixed(2)}</p>
 				<div className="action_icons">
-					<AiOutlineHeart size={24} className="icon" />
+					{liked ? (
+						<AiFillHeart
+							size={24}
+							className="icon like"
+							onClick={() => dispatch(toggleLike({id}))}
+						/>
+					) : (
+						<AiOutlineHeart
+							size={24}
+							className="icon"
+							onClick={() => dispatch(toggleLike({id}))}
+						/>
+					)}
 					<div className="vertical_divider"></div>
 					<MdDelete
 						size={24}
@@ -113,7 +140,7 @@ const ShoppingCart = () => {
 					</div>
 					{cartItems &&
 						cartItems.map((item, index) => {
-							return <CartItem {...item} key={index} />;
+							return <CartItem item={item} key={index} />;
 						})}
 				</div>
 			</div>

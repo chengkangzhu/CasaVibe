@@ -13,7 +13,7 @@ const Pagination = ({ totalPages }) => {
 
 	const renderPaginationButtons = () => {
 		const buttons = [];
-		const pageRange = 2; // Number of pages to show before and after the current page
+		const pageRange = 1; // Number of pages to show before and after the current page
 		const ellipsis = <span>...</span>;
 
 		for (let i = 1; i <= totalPages; i++) {

@@ -1,10 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore,applyMiddleware } from "@reduxjs/toolkit";
 import { productSlice } from "./slices/ProductSlice";
 import { cartSlice } from "./slices/cartSlice";
+import { shopGridSlice } from "./slices/shopGridSlice";
 
 export const store = configureStore({
 	reducer: {
 		products: productSlice.reducer,
 		cart: cartSlice.reducer,
+		grid: shopGridSlice.reducer,
 	},
 });

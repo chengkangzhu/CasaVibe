@@ -41,6 +41,7 @@ const cartInitialState = {
 			],
 			variants: [],
 			quantity: 1,
+			liked: false,
 		},
 
 		{
@@ -78,6 +79,7 @@ const cartInitialState = {
 			],
 			variants: [],
 			quantity: 1,
+			liked: true,
 		},
 	],
 	orderSummary: {
@@ -101,6 +103,12 @@ export const cartSlice = createSlice({
 				state.items.push(action.payload);
 
 				state.orderSummary = updateOrderSummary(state);
+			} else if (isItemDuplicate) {
+				state.items.map((item, index) => {
+					if (item.id === action.payload.id)
+						state.items[index].quantity += action.payload.quantity;
+					state.orderSummary = updateOrderSummary(state);
+				});
 			}
 		},
 		removeFromCart: (state, action) => {
@@ -115,8 +123,8 @@ export const cartSlice = createSlice({
 					? { ...item, quantity: item.quantity + 1 }
 					: item
 			);
-			
-			state.orderSummary = updateOrderSummary(state)
+
+			state.orderSummary = updateOrderSummary(state);
 		},
 		decrementQuantity: (state, action) => {
 			state.items = state.items.map((item) =>
@@ -124,25 +132,35 @@ export const cartSlice = createSlice({
 					? { ...item, quantity: item.quantity - 1 }
 					: item
 			);
-			
-			state.orderSummary = updateOrderSummary(state)
+
+			state.orderSummary = updateOrderSummary(state);
+		},
+		toggleLike: (state, action) => {
+			state.items = state.items.map((item) =>
+				item.id === action.payload.id
+					? { ...item, liked: !item.liked }
+					: item
+			);
 		},
 		clearCart: (state) => {
 			state.items = [];
-			
-			state.orderSummary = updateOrderSummary(state)
+
+			state.orderSummary = updateOrderSummary(state);
 		},
 	},
 });
 
 const updateOrderSummary = (state) => {
-	const subtotal = parseFloat(state.items.reduce((sum, item) => {
-		return sum + item.quantity * item.price.currentPrice;
-	}, 0).toFixed(2))
+	const subtotal = parseFloat(
+		state.items
+			.reduce((sum, item) => {
+				return sum + item.quantity * item.price.currentPrice;
+			}, 0)
+			.toFixed(2)
+	);
 
-	const tax = parseFloat((subtotal * 0.09).toFixed(2))
-	const total =parseFloat( (subtotal + tax).toFixed(2))
-
+	const tax = parseFloat((subtotal * 0.09).toFixed(2));
+	const total = parseFloat((subtotal + tax).toFixed(2));
 
 	return {
 		subtotal,
@@ -156,5 +174,6 @@ export const {
 	removeFromCart,
 	incrementQuantity,
 	decrementQuantity,
+	toggleLike,
 	clearCart,
 } = cartSlice.actions;

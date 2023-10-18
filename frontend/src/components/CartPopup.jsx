@@ -7,21 +7,43 @@ import { MdDelete } from "react-icons/md";
 import { MdAdd } from "react-icons/md";
 import { MdRemove } from "react-icons/md";
 
-
 //redux
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import { removeFromCart } from "../slices/cartSlice";
-import { incrementQuantity, decrementQuantity } from "../slices/cartSlice";
+import { updatePdp } from "../slices/ProductSlice";
+import {
+	incrementQuantity,
+	decrementQuantity,
+	removeFromCart,
+} from "../slices/cartSlice";
 
-const CartItem = ({ image, imageAlt, name, quantity, price:{currentPrice}, id }) => {
+const CartItem = ({item}) => {
+	const {
+		image,
+		imageAlt,
+		name,
+		quantity,
+		price: { currentPrice },
+		id,
+	} = item
 	const dispatch = useDispatch();
 
 	return (
 		<div className="cart_item">
-			<div className="left">
+			<Link
+				className="left"
+				to={`/pdp/${id}`}
+				onClick={() => {
+					dispatch(updatePdp(item));
+					window.scrollTo({
+						top: 0,
+						left: 0,
+						behavior: "instant",
+					});
+				}}
+			>
 				<img src={image} alt={imageAlt} />
-			</div>
+			</Link>
 			<div className="center">
 				<p className="name product-m item_name">{name}</p>
 				<p className="h8 rg item_weight">
@@ -35,7 +57,7 @@ const CartItem = ({ image, imageAlt, name, quantity, price:{currentPrice}, id })
 						className="decrement icon"
 						onClick={() => {
 							if (quantity !== 1) {
-								dispatch(decrementQuantity({id}))
+								dispatch(decrementQuantity({ id }));
 							}
 						}}
 					>
@@ -44,7 +66,7 @@ const CartItem = ({ image, imageAlt, name, quantity, price:{currentPrice}, id })
 					<div className="amount">{quantity}</div>
 					<div
 						className="dincrement icon"
-						onClick={() => dispatch(incrementQuantity({id}))}
+						onClick={() => dispatch(incrementQuantity({ id }))}
 					>
 						<MdAdd size={16} />
 					</div>
@@ -65,7 +87,7 @@ const CartItem = ({ image, imageAlt, name, quantity, price:{currentPrice}, id })
 const CartPopup = () => {
 	const [isDropDownVisible, setIsDropDownVisible] = useState(false);
 	const cartItems = useSelector((state) => state.cart.items);
-	const orderSummary = useSelector(state => state.cart.orderSummary )
+	const orderSummary = useSelector((state) => state.cart.orderSummary);
 
 	const handleCartClick = () => {
 		setIsDropDownVisible(false);
@@ -88,18 +110,14 @@ const CartPopup = () => {
 				<div className="cart_items">
 					{cartItems &&
 						cartItems.map((item, index) => {
-							return (
-								<CartItem 
-									{...item}
-									key={index} 
-								/>
-							);
+							return <CartItem item={item} key={index} />;
 						})}
 				</div>
 
 				<div className="checkout">
 					<p className="h7 rg subtotal">
-						Subtotal <span className="sb">${orderSummary.subtotal}</span>
+						Subtotal{" "}
+						<span className="sb">${orderSummary.subtotal}</span>
 					</p>
 					<Link to="/payment">
 						<button

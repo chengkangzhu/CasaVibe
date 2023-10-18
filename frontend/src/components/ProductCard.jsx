@@ -22,7 +22,18 @@ const ProductCard = ({ productObj }) => {
 	const dispatch = useDispatch();
 
 	return (
-		<Link to={"/pdp/" + id} onClick={() => dispatch(updatePdp(productObj))}>
+		<Link
+			to={"/pdp/" + id}
+			onClick={() => {
+				dispatch(updatePdp(productObj));
+				window.scrollTo({
+					top: 0,
+					left: 0,
+					behavior: 'instant'
+				  });
+				  
+			}}
+		>
 			<div className="product_card">
 				<div
 					className="image_container"

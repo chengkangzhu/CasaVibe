@@ -7,26 +7,21 @@ import RoomSubcatergory from "../components/RoomSubcatergory";
 import ProductCard from "../components/ProductCard";
 import ProductCarousel from "../components/ProductCarousel";
 
+//redux
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { updateShopGrid } from "../slices/shopGridSlice";
+
 //imgs
 import ShopGrid from "../components/ShopGrid";
 
-//product datas
-import {
-	defaultShopGridProducts,
-	collectonShopGridProducts,
-	diningShopGridProducts,
-	kitchenShopGridProducts,
-	livingShopGridProducts,
-	homeOfficeShopGridProducts,
-	bathroomShopGridProducts,
-} from "../data";
 
 const Shop = () => {
-	const [shopGridProducts, setShopGridProducts] = useState(
-		defaultShopGridProducts
-	);
 	const [showRoom, setShowRoom] = useState(false);
 	const { type } = useParams();
+
+	const bestSellingProducts = useSelector((state) => state.grid.bestSelling);
+	const dispatch = useDispatch();
 
 	//check the route param to determine to showroom or not
 	useEffect(() => {
@@ -40,56 +35,43 @@ const Shop = () => {
 		];
 
 		if (rooms.includes(type)) {
-			setShowRoom(type);
-
-			//update the shopgridproduct state to show the bedroom furnitures
-			switch (type) {
-				case "Bedroom":
-					setShopGridProducts(defaultShopGridProducts); // Change this to your desired data for Bedroom
-					break;
-				case "Dining Room":
-					setShopGridProducts(diningShopGridProducts);
-					break;
-				case "Kitchen":
-					setShopGridProducts(kitchenShopGridProducts);
-					break;
-				case "Living Room":
-					setShopGridProducts(livingShopGridProducts);
-					break;
-				case "Home Office":
-					setShopGridProducts(homeOfficeShopGridProducts);
-					break;
-				case "Bathroom":
-					setShopGridProducts(bathroomShopGridProducts);
-					break;
-				default:
-					setShopGridProducts(defaultShopGridProducts);
-			}
-		} else if (type === "collections") {
-			setShopGridProducts(collectonShopGridProducts);
-		} else if (type !== undefined) {
+			setShowRoom(type) // when i make it through search bar then it turns this off
+		}
+		
+		if (type !== undefined) {
 			//send a category result to the backend and update the shopGridProducts state
-			async function fetchData() {
+
+			async function fetchData(keyword) {
 				try {
+					dispatch(updateShopGrid([]));
 					const response = await axios.get(
-						`${process.env.REACT_APP_API_URL}/product/search/${type}`
+						`${process.env.REACT_APP_API_URL}/product/search/${keyword}`
 					);
-					setShopGridProducts(response.data);
+					if (response.data.length === 0) {
+						console.log("No products found.");
+					} else {
+						dispatch(updateShopGrid(response.data));
+					}
 				} catch (error) {
 					console.error("Error fetching data:", error);
 				}
 			}
 
-			fetchData();
+			fetchData(type);
 		}
-	}, [type]);
+		window.scrollTo({
+			top: 0,
+			left: 0,
+			behavior: "instant",
+		});
+	}, [type, dispatch]);
 
 	return (
 		<div className="shop">
 			{showRoom && <RoomSubcatergory room={showRoom} />}
-			{shopGridProducts && (
+			{bestSellingProducts.length > 1 && (
 				<ProductCarousel h2="Best Selling Products">
-					{shopGridProducts.map((item, index) => {
+					{bestSellingProducts.map((item, index) => {
 						if (index < 10) {
 							return (
 								<ProductCard key={index} productObj={item} />
@@ -100,7 +82,7 @@ const Shop = () => {
 					})}
 				</ProductCarousel>
 			)}
-			<ShopGrid gridProducts={shopGridProducts.slice(10, 50)} />
+			<ShopGrid />
 		</div>
 	);
 };

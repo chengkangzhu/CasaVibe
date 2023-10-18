@@ -69,6 +69,7 @@ body {
 			padding: 0 12px 0 24px;
 			border-radius: 24px;
 			margin: 0 48px;
+			border: 1px solid $grey_600;
 
 			input {
 				border: none;
@@ -324,7 +325,7 @@ body {
 			position: relative;
 			width: 72px;
 			height: 72px;
-			border-radius: 4px;
+			border-radius: 4px; 
 		}
 
 		.center {
@@ -1130,6 +1131,16 @@ body {
 					display: grid;
 					place-items: center;
 					margin-right: 16px;
+
+					&.liked {
+						border-color: #FF0000; /* liked border color (red) */
+						background-color: #FFD3D3; /* liked background color (light red) */
+					
+						.icon {
+							color: #FF0000; /* liked icon color (red) */
+						}
+					}
+					
 				}
 
 				.add_cart {
@@ -1142,7 +1153,12 @@ body {
 					align-items: center;
 					justify-content: center;
 					gap: 8px;
-					flex: 1 1 auto;
+					flex: 1 1 auto; 
+					
+					&:active { 
+						/* Add styles for the :active state here */
+						background-color: #44316f; /* Darker color, for example */    		
+					}
 				}
 			}
 		}
@@ -1206,7 +1222,7 @@ body {
 	padding: 0 10.42vw;
 
 	.room_subcatergory {
-		padding: 72px 0;
+		padding: 48px 0;
 		border-bottom: 1px solid $shape_line;
 
 		.h2 {
@@ -1241,8 +1257,8 @@ body {
 	}
 
 	.product_carousel {
-		border-bottom: 1px solid $shape_line;
-		margin-bottom: 50px;
+		border-bottom: 1px solid $shape_line; 
+		padding: 80px 0;
 	}
 
 	@media (max-width: 780px) {
@@ -1319,6 +1335,7 @@ body {
 	padding: 72px 10.42vw 0;
 
 	.cart_items_scrollbar {
+		
 		overflow-x: auto;
 
 		&::-webkit-scrollbar-track {
@@ -1400,6 +1417,10 @@ body {
 				.action_icons {
 					display: flex;
 					align-items: center;
+
+					.like {
+						color:#DC143C;
+					}
 
 					.vertical_divider {
 						height: 24px;
@@ -2284,4 +2305,20 @@ body {
 			}
 		}
 	}
+}
+
+.loading_screen{ 
+	display:block;
+	margin: 100px auto;
+	width: 50px;
+	height: 50px;
+
+	&.wider {
+		margin: 30vh auto;
+	}
+}
+.not_found_image{
+	display: block;
+	width: 100%;
+	margin: 50px 0;
 }

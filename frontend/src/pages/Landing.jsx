@@ -234,7 +234,7 @@ const Landing = () => {
 							</div>
 						</div>
 					</Link>
-					<Link to="/shop/collections">
+					<Link to="/shop/furniture sets">
 						<button className="explore_collection_button h5 sb">
 							Explore Collection
 							<MdOutlineKeyboardArrowRight

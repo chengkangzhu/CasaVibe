@@ -19,6 +19,8 @@ router.get("/:id", async (req, res) => {
 		},
 	};
 
+	
+
 	try {
 		const response = await axios.request(options);
 		if (!response.data[0]) {
