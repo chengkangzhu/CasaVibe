@@ -82,17 +82,17 @@ const Footer = () => {
 					</div>
 					<div className="list_container">
 						<h5 className="h5 sb">Contact us</h5>
-						<span href="tel:(123)4567890" className="h7 md contact">
+						<a href="tel:(123)4567890" className="h7 md contact">
 							<HiPhone />
 							(123) 456 7890
-						</span>
-						<span
+						</a>
+						<a
 							href="mailto:hello@CasaVibe.com"
 							className="h7 md contact"
 						>
 							<MdEmail />
 							hello@CasaVibe.com
-						</span>
+						</a>
 						<span className="h7 md contact inactive_cursor">
 							<AiFillShop />
 							Monday – Friday: 09.00 - 16.00 WIB

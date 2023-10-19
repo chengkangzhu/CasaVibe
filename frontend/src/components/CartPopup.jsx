@@ -89,15 +89,12 @@ const CartPopup = () => {
 	const cartItems = useSelector((state) => state.cart.items);
 	const orderSummary = useSelector((state) => state.cart.orderSummary);
 
-	const handleCartClick = () => {
-		setIsDropDownVisible(false);
-	};
 
 	return (
 		<div className="cart_popup">
 			<Link
 				to="/cart"
-				onClick={handleCartClick}
+				onClick={() => setIsDropDownVisible(false)}
 				onMouseEnter={() => setIsDropDownVisible(true)}
 			>
 				<HiShoppingCart size={24} className="icon" />

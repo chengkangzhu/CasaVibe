@@ -1,9 +1,8 @@
-import { useEffect } from "react";
+
 import {
 	BrowserRouter as Router,
 	Route,
-	Routes,
-	useLocation,
+	Routes, 
 } from "react-router-dom";
 
 //components
@@ -20,27 +19,17 @@ import Location from "./pages/Location";
 import ThankYou from "./pages/ThankYou";
 import Payment from "./pages/Payment";
 
-const ScrollToTop = () => {
-	const { pathname } = useLocation();
-
-	// useEffect(() => {
-	// 	window.scrollTo(0, 0);
-	// }, [pathname]);
-
-	return null;
-};
 
 function App() {
 	return (
 		<Router>
 			<AnnouncementBar />
-			<Navbar />
-			<ScrollToTop />
+			<Navbar /> 
 			<Routes>
 				<Route path="/" element={<Landing />} />
 				<Route path="/pdp/:id" element={<ProductDetail />} />
-				<Route path="/shop/:type" element={<Shop />} />
-				<Route path="/shop" element={<Shop />} />
+				<Route path="/shop/:type" element={<Shop />} /> 
+				<Route path="/search/:keyword" element={<Shop />} />
 				<Route path="/cart" element={<ShoppingCart />} />
 				<Route path="/location" element={<Location />} />
 				<Route path="/payment/completed/:id" element={<ThankYou />} />

@@ -63,7 +63,7 @@ const Landing = () => {
 				</h6>
 			</div>
 			<div className="shop_now">
-				<Link to="/shop" className="shop_now__button h5 sb">
+				<Link to="/shop/furnitures" className="shop_now__button h5 sb">
 					Shop Now
 					<MdOutlineKeyboardArrowRight size={24} className="icon" />
 				</Link>

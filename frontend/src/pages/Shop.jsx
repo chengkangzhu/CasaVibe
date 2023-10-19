@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from "react"; 
 import { useParams } from "react-router-dom";
 
 //componennts
@@ -10,14 +9,14 @@ import ProductCarousel from "../components/ProductCarousel";
 //redux
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { updateShopGrid } from "../slices/shopGridSlice";
+import { fetchData, toggleShowRoom} from "../slices/shopGridSlice";
 
 //imgs
 import ShopGrid from "../components/ShopGrid";
 
 
 const Shop = () => {
-	const [showRoom, setShowRoom] = useState(false);
+	const showRoom = useSelector(state => state.grid.showRoom)
 	const { type } = useParams();
 
 	const bestSellingProducts = useSelector((state) => state.grid.bestSelling);
@@ -35,36 +34,24 @@ const Shop = () => {
 		];
 
 		if (rooms.includes(type)) {
-			setShowRoom(type) // when i make it through search bar then it turns this off
+			dispatch(toggleShowRoom(type)) 
+		} else if (type === "furnitures"){
+			dispatch(toggleShowRoom(false))
 		}
 		
-		if (type !== undefined) {
-			//send a category result to the backend and update the shopGridProducts state
+		if (type !== undefined) {  
+			dispatch(fetchData(type));
+		} 
+	}, [type, dispatch]);
 
-			async function fetchData(keyword) {
-				try {
-					dispatch(updateShopGrid([]));
-					const response = await axios.get(
-						`${process.env.REACT_APP_API_URL}/product/search/${keyword}`
-					);
-					if (response.data.length === 0) {
-						console.log("No products found.");
-					} else {
-						dispatch(updateShopGrid(response.data));
-					}
-				} catch (error) {
-					console.error("Error fetching data:", error);
-				}
-			}
 
-			fetchData(type);
-		}
+	useEffect(()=>{  
 		window.scrollTo({
 			top: 0,
 			left: 0,
 			behavior: "instant",
 		});
-	}, [type, dispatch]);
+	},[])
 
 	return (
 		<div className="shop">

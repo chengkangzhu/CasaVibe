@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { addToCart } from "../slices/cartSlice";
 import { useDispatch } from "react-redux";
+import { updatePdp } from "../slices/ProductSlice";
 
 //components
 import Rating from "../components/Rating";
@@ -110,7 +111,7 @@ const ProductDetail = () => {
 	};
 
 	useEffect(() => {
-		async function fetchRelatedItems(category) {
+		const fetchRelatedItems = async (category) => {
 			try {
 				setRelatedItem([]);
 				const response = await axios.get(
@@ -125,25 +126,31 @@ const ProductDetail = () => {
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			}
-		}
+		};
 
 		const fetchDataById = async (productId) => {
 			console.log("fetching product id item");
 			const response = await axios.get(
 				`${process.env.REACT_APP_API_URL}/product/${productId}`
 			);
-			if(isEmptyObject(response.data)){
+			console.log(response);
+			if (isEmptyObject(response.data)) {
 				setCurrentProduct(temp);
 			} else {
-				
-			setCurrentProduct(response.data);
+				setCurrentProduct(response.data);
+				dispatch(updatePdp(response.data));
 			}
 
 			//  fetchRelatedItems(response.data.typeName.split(",")[0]);
 		};
+
+		setVariation(-1);
+
 		if (id === reduxPdp.id) {
 			setCurrentProduct(reduxPdp);
-			fetchRelatedItems(currentProduct.typeName.split(",")[0]);
+			if (currentProduct) {
+				fetchRelatedItems(currentProduct.typeName.split(",")[0]);
+			}
 			//set error page saying cant find item if it doesnt match
 		} else {
 			fetchDataById(id);
@@ -218,8 +225,8 @@ const ProductDetail = () => {
 							<div className="variation_images">
 								{/* outline on first default variation */}
 								<img
-									src={currentProduct.image}
-									alt={currentProduct.imageAlt}
+									src={reduxPdp.image}
+									alt={reduxPdp.imageAlt}
 									className={
 										variation === -1
 											? "shape_outline_active"
@@ -232,30 +239,27 @@ const ProductDetail = () => {
 								/>
 
 								{/* when clicked will change the variant state nubmer to index+1, show outline*/}
-								{currentProduct.variants &&
-									currentProduct.variants.map(
-										(variant, index) => {
-											return (
-												<img
-													key={index}
-													src={variant.image}
-													alt={variant.imageAlt}
-													className={
-														variation === index
-															? "shape_outline_active"
-															: ""
-													}
-													onClick={() => {
-														setVariation(index);
-														setCurrentProduct(
-															currentProduct
-																.variants[index]
-														);
-													}}
-												/>
-											);
-										}
-									)}
+								{reduxPdp.variants &&
+									reduxPdp.variants.map((variant, index) => {
+										return (
+											<img
+												key={index}
+												src={variant.image}
+												alt={variant.imageAlt}
+												className={
+													variation === index
+														? "shape_outline_active"
+														: ""
+												}
+												onClick={() => {
+													setVariation(index);
+													setCurrentProduct(
+														reduxPdp.variants[index]
+													);
+												}}
+											/>
+										);
+									})}
 							</div>
 						</div>
 						<div className="action_container">
@@ -264,7 +268,10 @@ const ProductDetail = () => {
 									Stock:{" "}
 									<span className="md">
 										{" "}
-										{currentProduct.id.slice(-3)} left{" "}
+										{currentProduct.id
+											.slice(-3)
+											.replace(/^0+/, "")}{" "}
+										left{" "}
 									</span>
 								</h5>
 								<div
