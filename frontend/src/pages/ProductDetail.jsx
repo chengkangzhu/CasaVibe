@@ -26,6 +26,9 @@ import { useParams } from "react-router-dom";
 import { MdAdd } from "react-icons/md";
 import { MdRemove } from "react-icons/md";
 
+//img
+import notFoundImage from "../img/no-product-found.png";
+
 const AccordionItem = ({ title, content, id }) => {
 	return (
 		<div className="accordion-item">
@@ -70,94 +73,70 @@ const ProductDetail = () => {
 		return Object.keys(obj).length === 0;
 	}
 
-	const temp = {
-		id: "s69216757",
-		name: "FRIHETEN",
-		price: {
-			currency: "USD",
-			currentPrice: 899,
-			discounted: true,
-		},
-		availability: {
-			status: "Unknown",
-			store: "No Store Specified",
-		},
-		measurement: "",
-		typeName: "Sleeper sectional,3 seat w/storage",
-		image: "https://www.ikea.com/us/en/images/products/friheten-sleeper-sectional-3-seat-w-storage-skiftebo-dark-gray__0175610_pe328883_s5.jpg",
-		contextualImageUrl:
-			"https://www.ikea.com/us/en/images/products/friheten-sleeper-sectional-3-seat-w-storage-skiftebo-dark-gray__1089881_pe861727_s5.jpg",
-		imageAlt:
-			"FRIHETEN Sleeper sectional,3 seat w/storage, Skiftebo dark gray",
-		url: "https://www.ikea.com/us/en/p/friheten-sleeper-sectional-3-seat-w-storage-skiftebo-dark-gray-s69216757/",
-		categoryPath: [
-			{
-				name: "Furniture",
-				key: "fu001",
-			},
-			{
-				name: "Sofas & sectionals",
-				key: "fu003",
-			},
-			{
-				name: "Sleeper sofas & sofa beds",
-				key: "10663",
-			},
-			{
-				name: "Convertible sofa beds & futons",
-				key: "20874",
-			},
-		],
+	const fetchRelatedItems = async (category, reupdateRedux = false) => {
+		try {
+			setRelatedItem([]);
+			const response = await axios.get(
+				`${process.env.REACT_APP_API_URL}/product/search/${category}`
+			);
+
+			// console.log("fetching related item");
+			const filteredData = response.data
+				.filter((item) => {
+					if (item.id !== id) {
+						return true;
+					} else {
+						//update the same reduxpdp if the reupdateredux is true
+						if (reupdateRedux) {
+							dispatch(updatePdp(item));
+						}
+						return false;
+					}
+				})
+				.slice(0, 15);
+			setRelatedItem(filteredData);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
 	};
 
-	useEffect(() => {
-		const fetchRelatedItems = async (category) => {
-			try {
-				setRelatedItem([]);
-				const response = await axios.get(
-					`${process.env.REACT_APP_API_URL}/product/search/${category}`
-				);
-
-				console.log("fetching related item");
-				const filteredData = response.data
-					.slice(0, 15)
-					.filter((item) => item.id !== id);
-				setRelatedItem(filteredData);
-			} catch (error) {
-				console.error("Error fetching data:", error);
-			}
-		};
-
-		const fetchDataById = async (productId) => {
-			console.log("fetching product id item");
+	const fetchDataById = async (productId) => {
+		try {
+			// console.log("fetching product id item");
 			const response = await axios.get(
 				`${process.env.REACT_APP_API_URL}/product/${productId}`
 			);
-			console.log(response);
+
 			if (isEmptyObject(response.data)) {
-				setCurrentProduct(temp);
+				setNotFound(true);
 			} else {
 				setCurrentProduct(response.data);
 				dispatch(updatePdp(response.data));
+				await new Promise((resolve) => setTimeout(resolve, 1000));
+				fetchRelatedItems(response.data.typeName.split(",")[0], true);
 			}
+		} catch (error) {
+			console.log("Error fetching product:", error);
+			setNotFound(true);
+		}
+	};
 
-			//  fetchRelatedItems(response.data.typeName.split(",")[0]);
-		};
-
-		setVariation(-1);
-
+	//update the page when id is changed
+	useEffect(() => {
+		setVariation(-1); 
 		if (id === reduxPdp.id) {
 			setCurrentProduct(reduxPdp);
+
+			//when currentproduct is set then search for related products
 			if (currentProduct) {
 				fetchRelatedItems(currentProduct.typeName.split(",")[0]);
-			}
-			//set error page saying cant find item if it doesnt match
+			} 
 		} else {
 			fetchDataById(id);
 		}
-	}, [reduxPdp]);
+	}, [id]);
 
-	return (
+	return !notFound ? (
 		<div className="pdp">
 			{/* MAIN CONTENT */}
 
@@ -422,6 +401,8 @@ const ProductDetail = () => {
 				/>
 			)}
 		</div>
+	) : (
+		<img src={notFoundImage} alt="not found" className="not_found_image" />
 	);
 };
 

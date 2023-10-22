@@ -9,7 +9,7 @@ const Sort = () => {
 		setSortMethod(method);
 		setShowMenu(false); // Close the menu when a sorting option is clicked
 	};
-
+ 
 	return (
 		<div
 			className="sort"

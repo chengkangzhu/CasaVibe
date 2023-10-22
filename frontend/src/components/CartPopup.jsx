@@ -17,6 +17,9 @@ import {
 	removeFromCart,
 } from "../slices/cartSlice";
 
+//component
+import AuthPopup from "./AuthPopup";
+
 const CartItem = ({item}) => {
 	const {
 		image,
@@ -85,22 +88,23 @@ const CartItem = ({item}) => {
 };
 
 const CartPopup = () => {
-	const [isDropDownVisible, setIsDropDownVisible] = useState(false);
+	const [showMenu, setShowMenu] = useState(false);
 	const cartItems = useSelector((state) => state.cart.items);
 	const orderSummary = useSelector((state) => state.cart.orderSummary);
+	const isAuth = useSelector(state => state.auth.token)
 
 
 	return (
 		<div className="cart_popup">
 			<Link
 				to="/cart"
-				onClick={() => setIsDropDownVisible(false)}
-				onMouseEnter={() => setIsDropDownVisible(true)}
+				onClick={() => setShowMenu(false)}
+				onMouseEnter={() => setShowMenu(true)}
 			>
 				<HiShoppingCart size={24} className="icon" />
 			</Link>
-
-			<div className={`menu shadow_300 ${isDropDownVisible && "show"}`}>
+			{isAuth ? 
+			<div className={`menu shadow_300 ${showMenu && "show"}`}>
 				<div className="header">
 					<h5 className="h5 md">Cart (2)</h5>
 				</div>
@@ -119,7 +123,7 @@ const CartPopup = () => {
 					<Link to="/payment">
 						<button
 							className="checkout_button shape_outline_active h7 sb"
-							onClick={() => setIsDropDownVisible(false)}
+							onClick={() => setShowMenu(false)}
 						>
 							Checkout
 						</button>
@@ -127,13 +131,15 @@ const CartPopup = () => {
 					<Link to="/cart">
 						<button
 							className="view_cart_button shape_outline h7 sb"
-							onClick={() => setIsDropDownVisible(false)}
+							onClick={() => setShowMenu(false)}
 						>
 							View Cart
 						</button>
 					</Link>
 				</div>
-			</div>
+			</div>  :
+			<AuthPopup showMenu={showMenu} setShowMenu={setShowMenu} />
+			}
 		</div>
 	);
 };

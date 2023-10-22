@@ -55,6 +55,7 @@ const Landing = () => {
 
 	return (
 		<div className="landing">
+			{/* HERO SECTION */}
 			<div className="hero">
 				<h1 className="h1 sb">A furniture that eases your life</h1>
 				<h6 className="h6 rg">
@@ -62,12 +63,16 @@ const Landing = () => {
 					and choice
 				</h6>
 			</div>
+
+			{/* CALL TO ACTION */}
 			<div className="shop_now">
 				<Link to="/shop/furnitures" className="shop_now__button h5 sb">
 					Shop Now
 					<MdOutlineKeyboardArrowRight size={24} className="icon" />
 				</Link>
 			</div>
+
+			{/* CATEGORY SECTION */}
 			<div className="catergory_section">
 				<h2 className="h2 sb">Preferred Category</h2>
 				<div className="catergories_container">
@@ -79,14 +84,23 @@ const Landing = () => {
 					<CatergoryBlock imageSrc={lampImage} name="Lamp" />
 				</div>
 			</div>
+
+			{/* NEW PRODUCTS */}
 			<div className="new_product">
 				<div className="new_product__header">
 					<h2 className="h2 sb">New Products</h2>
 					<nav className="h7 md">
 						<span
-							className={ activeCategory === "All category" ? "shape_outline_active" : "" }
-							onClick={() => handleClick("All category")}
-						> 
+							className={
+								activeCategory === "All category"
+									? "shape_outline_active"
+									: ""
+							}
+							onClick={() => {
+								setProductArr([]);
+								handleClick("All category");
+							}}
+						>
 							All category
 						</span>
 						<span
@@ -95,9 +109,12 @@ const Landing = () => {
 									? "shape_outline_active"
 									: ""
 							}
-							onClick={() => handleClick("Furnitures")}
-						> 
-							Furnitures 
+							onClick={() => {
+								setProductArr([]);
+								handleClick("Furnitures");
+							}}
+						>
+							Furnitures
 						</span>
 						<span
 							className={
@@ -105,8 +122,11 @@ const Landing = () => {
 									? "shape_outline_active"
 									: ""
 							}
-							onClick={() => handleClick("Chairs")}
-						> 
+							onClick={() => {
+								setProductArr([]);
+								handleClick("Chairs");
+							}}
+						>
 							Chairs
 						</span>
 						<span
@@ -115,9 +135,11 @@ const Landing = () => {
 									? "shape_outline_active"
 									: ""
 							}
-							onClick={() => handleClick("Decor")}
+							onClick={() => {
+								setProductArr([]);
+								handleClick("Decor");
+							}}
 						>
-							
 							Decor
 						</span>
 						<span
@@ -126,42 +148,63 @@ const Landing = () => {
 									? "shape_outline_active"
 									: ""
 							}
-							onClick={() => handleClick("Lighting")}
+							onClick={() => {
+								setProductArr([]);
+								handleClick("Lighting");
+							}}
 						>
-							
 							Lighting
 						</span>
 					</nav>
 				</div>
-				<div className="new_product__content">
-					<div className="mainDisplayContainer ">
-						<Link
-							to={`/pdp/${productArr[0].id}`}
-							onClick={() => dispatch(updatePdp(productArr[0]))}
-						>
-							<img
-								src={productArr[0].contextualImageUrl}
-								alt={productArr[0].imageAlt}
-							/>
-						</Link>
-					</div>
 
-					<div className="other_products_container">
-						{productArr.map((item, index) => {
-							if (index !== 0) {
-								return (
-									<ProductCard
-										key={index}
-										productObj={item}
-									/>
-								);
-							} else {
-								return null; // or return undefined;
-							}
-						})}
+				{/* NEW PRODUCT DISPLAYS */}
+				{productArr.length > 1 ? (
+					<div className="new_product__content">
+						<div className="mainDisplayContainer ">
+							<Link
+								to={`/pdp/${productArr[0].id}`}
+								onClick={() => {
+									window.scrollTo({
+										top: 0,
+										left: 0,
+										behavior: "instant",
+									});
+									dispatch(updatePdp(productArr[0]));
+								}}
+							>
+								<img
+									src={productArr[0].contextualImageUrl}
+									alt={productArr[0].imageAlt}
+								/>
+							</Link>
+						</div>
+
+						<div className="other_products_container">
+							{productArr.map((item, index) => {
+								if (index !== 0) {
+									return (
+										<ProductCard
+											key={index}
+											productObj={item}
+										/>
+									);
+								} else {
+									return null; // or return undefined;
+								}
+							})}
+						</div>
 					</div>
-				</div>
+				) : (
+					<img
+						src="https://i.gifer.com/ZKZg.gif"
+						alt="loading gif"
+						className="loading_screen"
+					/>
+				)}
 			</div>
+
+			{/* COLLECTOINS SETION */}
 			<div className="sofa_set">
 				<div className="sofa_set__content">
 					<p className="h7 md">sale upto 20%</p>
@@ -172,9 +215,14 @@ const Landing = () => {
 					</p>
 					<Link
 						to={`/pdp/${collectionProducts[0].id}`}
-						onClick={() =>
-							dispatch(updatePdp(collectionProducts[0]))
-						}
+						onClick={() => {
+							window.scrollTo({
+								top: 0,
+								left: 0,
+								behavior: "instant",
+							});
+							dispatch(updatePdp(collectionProducts[0]));
+						}}
 					>
 						<div className="other_product pointer_cursor">
 							<img
@@ -204,8 +252,13 @@ const Landing = () => {
 					</Link>
 					<Link
 						to={`/pdp/${collectionProducts[1].id}`}
-						onClick={() =>
-							dispatch(updatePdp(collectionProducts[1]))
+						onClick={() =>{
+							window.scrollTo({
+								top: 0,
+								left: 0,
+								behavior: "instant",
+							});
+							dispatch(updatePdp(collectionProducts[1]))}
 						}
 					>
 						<div className="other_product pointer_cursor">
@@ -234,7 +287,12 @@ const Landing = () => {
 							</div>
 						</div>
 					</Link>
-					<Link to="/shop/furniture sets">
+					<Link to="/shop/furniture sets" onClick={()=>
+									window.scrollTo({
+										top: 0,
+										left: 0,
+										behavior: "instant",
+									})}>
 						<button className="explore_collection_button h5 sb">
 							Explore Collection
 							<MdOutlineKeyboardArrowRight
@@ -252,6 +310,8 @@ const Landing = () => {
 					/>
 				</div>
 			</div>
+
+			{/* BRAND SECTION */}
 			<div className="brands">
 				<div className="brand__container">
 					<div className="brand">
@@ -287,6 +347,8 @@ const Landing = () => {
 				</div>
 				<div className="divider"></div>
 			</div>
+
+			{/* NEWS BLOG SECTION */}
 			<div className="news">
 				<h1 className="h1 sb">Our Recent News</h1>
 				<div className="news_wrapper">

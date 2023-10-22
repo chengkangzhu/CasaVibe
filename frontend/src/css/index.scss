@@ -277,6 +277,10 @@ body {
 				border-radius: 20px;
 				width: 100%;
 				margin-bottom: 16px;
+
+				&:active {
+					background-color: #44316f; /* Darker color, for example */
+				}
 			}
 
 			.view_cart_button {
@@ -304,11 +308,11 @@ body {
 			border-bottom: 14px solid $white;
 			position: absolute;
 			right: 48px;
-			top: -14px;
+			top: -13px;
 		}
 
 		&:hover.show {
-			visibility: visible; 
+			visibility: visible;
 			opacity: 1;
 		}
 	}
@@ -325,7 +329,7 @@ body {
 			position: relative;
 			width: 72px;
 			height: 72px;
-			border-radius: 4px; 
+			border-radius: 4px;
 		}
 
 		.center {
@@ -344,6 +348,16 @@ body {
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
 
 .breadcrumb {
 	display: flex;
@@ -1133,14 +1147,13 @@ body {
 					margin-right: 16px;
 
 					&.liked {
-						border-color: #FF0000; /* liked border color (red) */
-						background-color: #FFD3D3; /* liked background color (light red) */
-					
+						border-color: #ff0000; /* liked border color (red) */
+						background-color: #ffd3d3; /* liked background color (light red) */
+
 						.icon {
-							color: #FF0000; /* liked icon color (red) */
+							color: #ff0000; /* liked icon color (red) */
 						}
 					}
-					
 				}
 
 				.add_cart {
@@ -1153,11 +1166,10 @@ body {
 					align-items: center;
 					justify-content: center;
 					gap: 8px;
-					flex: 1 1 auto; 
-					
-					&:active { 
-						/* Add styles for the :active state here */
-						background-color: #44316f; /* Darker color, for example */    		
+					flex: 1 1 auto;
+
+					&:active {
+						background-color: #44316f; /* Darker color, for example */
 					}
 				}
 			}
@@ -1257,7 +1269,7 @@ body {
 	}
 
 	.product_carousel {
-		border-bottom: 1px solid $shape_line; 
+		border-bottom: 1px solid $shape_line;
 		padding: 80px 0;
 	}
 
@@ -1335,7 +1347,6 @@ body {
 	padding: 72px 10.42vw 0;
 
 	.cart_items_scrollbar {
-		
 		overflow-x: auto;
 
 		&::-webkit-scrollbar-track {
@@ -1419,7 +1430,7 @@ body {
 					align-items: center;
 
 					.like {
-						color:#DC143C;
+						color: #dc143c;
 					}
 
 					.vertical_divider {
@@ -1988,6 +1999,82 @@ body {
 	}
 }
 
+.profile_popup{
+	position: relative; 
+
+	
+	&:hover .show {
+		visibility: visible;
+		opacity: 1;
+	}
+}
+
+
+
+
+
+.auth_menu { 
+	position: absolute;   
+	background: white; 
+	width: 120px;
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+	padding: 12px 0px;
+	right: -28px;
+	top: 50px;
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0.3s, opacity 0.3s;
+	z-index: 2;
+
+	&::after {
+		content: "";
+		border-left: 12px solid transparent;
+		border-right: 12px solid transparent;
+		border-bottom: 14px solid $white;
+		position: absolute;
+		right: 28px;
+		top: -13px;
+	}
+	&::before {
+		content: "";
+		height: 26px;
+		width: 100%;
+		position: absolute;
+		right: 0px;
+		top: -26px;
+	}
+
+
+	span {
+		padding: 4px 32px 4px 12px;
+		display: flex;
+		align-items: center;
+		display: block;
+		cursor: pointer;
+		transition: background-color 0.5s ease;
+
+		&:hover {
+			background-color: $grey_600;
+		}
+	}
+
+	&:hover.show {
+		visibility: visible;
+		opacity: 1;
+	}
+}
+
+
+
+
+
+
+
+
+
+
 .payment {
 	width: 100%;
 	padding: 72px 10.42vw 100px;
@@ -2271,6 +2358,9 @@ body {
 			color: white;
 			border-radius: 32px;
 			border: none;
+			&:active {
+				background-color: #44316f; /* Darker color, for example */
+			}
 		}
 	}
 
@@ -2307,8 +2397,8 @@ body {
 	}
 }
 
-.loading_screen{ 
-	display:block;
+.loading_screen {
+	display: block;
 	margin: 100px auto;
 	width: 50px;
 	height: 50px;
@@ -2317,8 +2407,136 @@ body {
 		margin: 30vh auto;
 	}
 }
-.not_found_image{
+.not_found_image {
 	display: block;
 	width: 100%;
 	margin: 50px 0;
 }
+
+.auth {
+	.form_container {
+		width: 360px;
+		border: 1px solid $grey_500;
+		border-radius: 12px;
+		box-shadow: 3px 3px 10px 2px rgba(128, 128, 128, 0.429);
+		margin: 80px auto 0;
+		padding: 32px;
+
+		.header {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 20px;
+			margin-bottom: 24px;
+
+			.logo {
+				width: auto;
+				height: 38px;
+			}
+			
+			.h3 {
+				margin-top: 6px;
+			}
+		}
+
+		.google_button {
+			height: 40px;
+			width: 100%;
+			background: white;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border: 1px solid #d8d8d8;
+			gap: 10px;
+			border-radius: 6px;
+			cursor: pointer;
+
+			img {
+				height: 20px;
+			}
+
+			.h6 {
+				margin: 0;
+			}
+		}
+
+		.divider_container {
+			margin: 28px 0;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+
+			.h5 {
+				margin: 0;
+				color: $grey_500;
+			}
+		}
+
+		form {
+			
+			input {
+				display: block;
+				border: 1px solid #d8d8d8;
+				border-radius: 6px;
+				width: 100%;
+				height: 38px;
+				padding: 16px;
+				margin-bottom: 12px;
+			}
+
+			.password_container{ 
+				position: relative;
+
+
+				.eye_icon{
+					position: absolute; 
+					top: 10px;
+					right: 16px;
+				}				
+			}
+
+
+			button {
+				margin-top: 16px;
+				background-color: $purple;
+				color: $white;
+				padding: 12px;
+				border: 1px solid #d8d8d8;
+				border-radius: 20px;
+				width: 100%;
+
+				&:active {
+					background-color: #44316f; /* Darker color, for example */
+				}
+			}
+
+			.forgot_password{
+				text-align: right;
+				margin-bottom: 12px;
+				cursor: pointer;
+				&:hover {
+					transition: color 0.5s ease;
+					color: $purple
+				}
+			}
+
+			
+			.change_form {
+				margin-top: 24px;
+				margin-bottom: 0;
+				text-align: center;
+
+				.underline{
+					cursor: pointer;
+					text-decoration: underline;
+
+					&:hover {
+						transition: color 0.5s ease;
+						color: $purple
+					}
+				}
+			}
+		}
+	}
+}
+

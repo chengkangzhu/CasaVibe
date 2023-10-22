@@ -346,7 +346,7 @@ const Payment = () => {
 					Total <span className="sb h4">${orderSummary.total}</span>
 				</h6>
 				<Link
-					to={`/checkout/completed/${orderId}`}
+					to={`/payment/completed/${orderId}`}
 					className="next_button h5 sb"
 				>
 					Next

@@ -1,9 +1,15 @@
 
+import { useEffect, useState } from "react";
 import {
 	BrowserRouter as Router,
+	useNavigate,
 	Route,
-	Routes, 
+	Routes,
+	useLocation,
+	Navigate,
 } from "react-router-dom";
+
+//redux
 
 //components
 import Navbar from "./components/Navbar";
@@ -18,25 +24,54 @@ import ShoppingCart from "./pages/ShoppingCart";
 import Location from "./pages/Location";
 import ThankYou from "./pages/ThankYou";
 import Payment from "./pages/Payment";
-
+import Auth from "./pages/Auth";
+import { useSelector } from "react-redux";
 
 function App() {
+	// Ensure that the App component is wrapped in the Router
 	return (
 		<Router>
-			<AnnouncementBar />
-			<Navbar /> 
+			<AppComponent />
+		</Router>
+	);
+}
+
+function AppComponent() {
+	const location = useLocation();
+	const navigate = useNavigate()
+	const [isAuthPage, setIsAuthPage] = useState(false);
+	const token = useSelector(state => state.auth.token)
+
+ 
+	const authRoutes = ["/signin", "/signup"];
+
+	// Check if the current route is in the array
+	useEffect(() => {
+		setIsAuthPage(authRoutes.includes(location.pathname));   
+	}, [location.pathname]); 
+
+	
+ 
+
+
+	return (
+		<>
+			{!isAuthPage && <AnnouncementBar />}
+			{!isAuthPage && <Navbar />}
 			<Routes>
 				<Route path="/" element={<Landing />} />
+				<Route path="/signin" element={token ? <Navigate to="/"/> : <Auth isSignIn={true} /> } />
+      			<Route path="/signup" element={token ? <Navigate to="/" />:<Auth isSignIn={false} /> } />
 				<Route path="/pdp/:id" element={<ProductDetail />} />
-				<Route path="/shop/:type" element={<Shop />} /> 
+				<Route path="/shop/:type" element={<Shop />} />
 				<Route path="/search/:keyword" element={<Shop />} />
-				<Route path="/cart" element={<ShoppingCart />} />
+				<Route path="/cart" element={token ? <ShoppingCart />:<Navigate to="/signin"/> } />
 				<Route path="/location" element={<Location />} />
 				<Route path="/payment/completed/:id" element={<ThankYou />} />
 				<Route path="/payment" element={<Payment />} />
 			</Routes>
-			<Footer />
-		</Router>
+			{!isAuthPage && <Footer />}
+		</>
 	);
 }
 

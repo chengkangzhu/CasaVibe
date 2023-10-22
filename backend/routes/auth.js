@@ -5,16 +5,15 @@ const bcrypt = require("bcrypt");
 
 const router = express.Router();
 
-router.post("/register", async (req, res) => {
+router.post("/signup", async (req, res) => {
 	try {
-		const { firstName, lastName, email, password } = req.body;
+		const { fullName, email, password } = req.body;
 
 		// Hash the password
 		const hashedPassword = await bcrypt.hash(password, 10);
 
 		const savedUser = await User.create({
-			firstName,
-			lastName,
+			fullName,
 			email,
 			password: hashedPassword,
 		});
@@ -27,7 +26,7 @@ router.post("/register", async (req, res) => {
 	}
 });
 
-router.post("/login", async (req, res) => {
+router.post("/signin", async (req, res) => {
 	try {
 		const { email, password } = req.body;
 

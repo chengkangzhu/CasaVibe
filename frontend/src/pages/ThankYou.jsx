@@ -5,7 +5,7 @@ import { BsCheckLg } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 
 const ThankYou = () => {
-	const { id } = useParams();
+	const { id } = useParams(); 
 	return (
 		<div className="thankyou">
 			<div className="checked shape_outline_active">
