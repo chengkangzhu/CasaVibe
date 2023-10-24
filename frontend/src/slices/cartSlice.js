@@ -146,12 +146,7 @@ export const cartSlice = createSlice({
 					? { ...item, liked: !item.liked }
 					: item
 			);
-		},
-		clearCart: (state) => {
-			state.items = [];
-
-			state.orderSummary = updateOrderSummary(state);
-		},
+		}, 
 	},
 });
 
@@ -180,6 +175,5 @@ export const {
 	removeFromCart,
 	incrementQuantity,
 	decrementQuantity,
-	toggleLike,
-	clearCart,
+	toggleLike, 
 } = cartSlice.actions;

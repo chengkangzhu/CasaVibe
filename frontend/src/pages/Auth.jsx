@@ -116,6 +116,7 @@ const Auth = ({ isSignIn }) => {
 						setIsValidPassword(false);
 					}
 					toast.error(error.message);
+					return null
 				});
 			} else {
 				toast.error(
