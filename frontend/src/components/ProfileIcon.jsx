@@ -1,14 +1,11 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import React, { useState } from "react"; 
 //icons
 import { BsFillPersonFill } from "react-icons/bs";
 
 //components
 import AuthPopup from "./AuthPopup";
 
-const ProfileIcon = () => {
-	const navigate = useNavigate();
+const ProfileIcon = () => { 
 	const [showMenu, setShowMenu] = useState(false);
 	return (
 		<div

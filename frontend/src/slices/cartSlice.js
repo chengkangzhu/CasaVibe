@@ -93,6 +93,9 @@ export const cartSlice = createSlice({
 	name: "cart",
 	initialState: cartInitialState,
 	reducers: {
+		initCart: (state) => {
+			state.orderSummary = updateOrderSummary(state);
+		},
 		addToCart: (state, action) => {
 			const isItemDuplicate = state.items.some(
 				(item) => item.id === action.payload.id
@@ -105,9 +108,11 @@ export const cartSlice = createSlice({
 				state.orderSummary = updateOrderSummary(state);
 			} else if (isItemDuplicate) {
 				state.items.map((item, index) => {
-					if (item.id === action.payload.id)
+					if (item.id === action.payload.id) {
 						state.items[index].quantity += action.payload.quantity;
+					}
 					state.orderSummary = updateOrderSummary(state);
+					return null
 				});
 			}
 		},
@@ -170,6 +175,7 @@ const updateOrderSummary = (state) => {
 };
 
 export const {
+	initCart,
 	addToCart,
 	removeFromCart,
 	incrementQuantity,

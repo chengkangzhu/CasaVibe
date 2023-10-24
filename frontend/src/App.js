@@ -1,8 +1,7 @@
 
 import { useEffect, useState } from "react";
 import {
-	BrowserRouter as Router,
-	useNavigate,
+	BrowserRouter as Router, 
 	Route,
 	Routes,
 	useLocation,
@@ -37,16 +36,15 @@ function App() {
 }
 
 function AppComponent() {
-	const location = useLocation();
-	const navigate = useNavigate()
+	const location = useLocation(); 
 	const [isAuthPage, setIsAuthPage] = useState(false);
 	const token = useSelector(state => state.auth.token)
 
  
-	const authRoutes = ["/signin", "/signup"];
 
 	// Check if the current route is in the array
 	useEffect(() => {
+		const authRoutes = ["/signin", "/signup"];
 		setIsAuthPage(authRoutes.includes(location.pathname));   
 	}, [location.pathname]); 
 

@@ -260,3 +260,9 @@ a {
 .inactive_cursor {
 	cursor: not-allowed !important;
 }
+
+.error {
+	border-color: red !important;
+	background: #fff0f4;
+	color: #c51244;
+}

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; 
 
 //icon
 import { HiShoppingCart } from "react-icons/hi";
@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { updatePdp } from "../slices/ProductSlice";
 import {
+	initCart,
 	incrementQuantity,
 	decrementQuantity,
 	removeFromCart,
@@ -92,6 +93,11 @@ const CartPopup = () => {
 	const cartItems = useSelector((state) => state.cart.items);
 	const orderSummary = useSelector((state) => state.cart.orderSummary);
 	const isAuth = useSelector(state => state.auth.token)
+	const dispatch = useDispatch();
+
+	useEffect(()=>{
+		dispatch(initCart())
+	},[dispatch])
 
 
 	return (

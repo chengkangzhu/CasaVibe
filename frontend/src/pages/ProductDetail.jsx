@@ -22,7 +22,7 @@ import { BiCartAdd } from "react-icons/bi";
 import { RiTruckFill } from "react-icons/ri";
 import { FaStoreAlt } from "react-icons/fa";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MdAdd } from "react-icons/md";
 import { MdRemove } from "react-icons/md";
 
@@ -61,6 +61,8 @@ const ProductDetail = () => {
 	const [isLiked, setIsLiked] = useState(false);
 	const [notFound, setNotFound] = useState(false);
 	const { id } = useParams();
+	const isAuth = useSelector((state) => state.auth.token);
+	const navigate = useNavigate()
 
 	//redux
 	const reduxPdp = useSelector((state) => state.products.pdp);
@@ -123,18 +125,35 @@ const ProductDetail = () => {
 
 	//update the page when id is changed
 	useEffect(() => {
-		setVariation(-1); 
+		setVariation(-1);
 		if (id === reduxPdp.id) {
 			setCurrentProduct(reduxPdp);
 
 			//when currentproduct is set then search for related products
 			if (currentProduct) {
 				fetchRelatedItems(currentProduct.typeName.split(",")[0]);
-			} 
+			}
 		} else {
 			fetchDataById(id);
 		}
 	}, [id]);
+
+	const handleAddToCart = () => {
+		if(isAuth){
+			dispatch(
+				addToCart({
+					...currentProduct,
+					quantity,
+					liked: isLiked,
+				})
+			);
+			toast.success("Successfully added to cart!");			
+		} else {
+			navigate("/signin")
+			toast.warning('Please sign in to add items to cart.');
+		}
+
+	};
 
 	return !notFound ? (
 		<div className="pdp">
@@ -300,18 +319,7 @@ const ProductDetail = () => {
 
 								<button
 									className="add_cart h5 sb"
-									onClick={() => {
-										dispatch(
-											addToCart({
-												...currentProduct,
-												quantity,
-												liked: isLiked,
-											})
-										);
-										toast.success(
-											"Successfully added to cart!"
-										);
-									}}
+									onClick={handleAddToCart}
 								>
 									<BiCartAdd size={24} />
 									Add to Cart

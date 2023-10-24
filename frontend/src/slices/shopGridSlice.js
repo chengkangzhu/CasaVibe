@@ -39,9 +39,14 @@ export const shopGridSlice = createSlice({
 			if (action.payload === "not found") {
 				state.notFound = true;
 			} else {
-				state.bestSelling = action.payload.slice(0, 10);
-				state.grid = action.payload.slice(10);
-				state.notFound = false;
+				if (action.payload.length < 40) {
+					state.grid = action.payload;
+					state.notFound = false;
+				} else {
+					state.bestSelling = action.payload.slice(0, 10);
+					state.grid = action.payload.slice(10);
+					state.notFound = false;
+				}
 			}
 		},
 		toggleShowRoom: (state, action) => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { Link } from "react-router-dom";
 
@@ -15,10 +15,11 @@ import { MdRemove } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { updatePdp } from "../slices/ProductSlice";
 import {
+	initCart,
 	incrementQuantity,
 	decrementQuantity,
 	removeFromCart,
-	toggleLike
+	toggleLike,
 } from "../slices/cartSlice";
 
 const CartItem = ({ item }) => {
@@ -88,13 +89,13 @@ const CartItem = ({ item }) => {
 						<AiFillHeart
 							size={24}
 							className="icon like"
-							onClick={() => dispatch(toggleLike({id}))}
+							onClick={() => dispatch(toggleLike({ id }))}
 						/>
 					) : (
 						<AiOutlineHeart
 							size={24}
 							className="icon"
-							onClick={() => dispatch(toggleLike({id}))}
+							onClick={() => dispatch(toggleLike({ id }))}
 						/>
 					)}
 					<div className="vertical_divider"></div>
@@ -113,6 +114,10 @@ const ShoppingCart = () => {
 	const [isFocused, setIsFocused] = useState(false);
 	const [note, setNote] = useState("");
 	const cartItems = useSelector((state) => state.cart.items);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(initCart());
+	}, [dispatch]);
 
 	const handleFocus = () => {
 		setIsFocused(true);
@@ -185,9 +190,19 @@ const ShoppingCart = () => {
 						Service and Shipping Fees{" "}
 						<span className="h4">$46.77</span>
 					</p>
-					<button className="pay_button h5 sb">
+					<Link
+						to="/payment"
+						className="pay_button h5 sb"
+						onClick={() => {
+							window.scrollTo({
+								top: 0,
+								left: 0,
+								behavior: "instant",
+							});
+						}}
+					>
 						<HiOutlineShoppingBag size={24} /> Continue to payment
-					</button>
+					</Link>
 					<p className="p4">
 						CasaVibe always attaches importance to the security
 						ofyour transactions. All transactions via CasaVibe.com
