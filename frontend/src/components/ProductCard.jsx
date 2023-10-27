@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 //redux
 import { useDispatch } from "react-redux";
-import { updatePdp } from "../slices/ProductSlice";
+import { updatePdp } from "../slices/productSlice";
 
 const ProductCard = ({ productObj }) => {
 	const {
@@ -29,9 +29,8 @@ const ProductCard = ({ productObj }) => {
 				window.scrollTo({
 					top: 0,
 					left: 0,
-					behavior: 'instant'
-				  });
-				  
+					behavior: "instant",
+				});
 			}}
 		>
 			<div className="product_card">

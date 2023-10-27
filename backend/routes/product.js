@@ -67,7 +67,6 @@ router.get("/search/:keyword", async (req, res) => {
 			res.json(response.data);
 		}
 	} catch (error) {
-		console.error(error); 
 
 		if (error.response) {
 			// Handle specific error response from the API (non-sensitive errors)
@@ -80,13 +79,13 @@ router.get("/search/:keyword", async (req, res) => {
 	}
 });
 
-router.get("/category/:categoryId", async (req, res) => {
-	const categoryId = req.params.categoryId;
+router.get("/category/:categoryKey", async (req, res) => {
+	const categoryKey = req.params.categoryKey; 
 	const options = {
 		method: "GET",
 		url: "https://ikea-api.p.rapidapi.com/categorySearch",
 		params: {
-			categoryID: categoryId,
+			categoryID: categoryKey,
 			countryCode: "us",
 			languageCode: "en",
 		},

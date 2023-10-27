@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 //redux
 import { useDispatch } from "react-redux";
-import { updatePdp } from "../slices/ProductSlice";
+import { updatePdp } from "../slices/productSlice";
 
 //icon
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
@@ -252,14 +252,14 @@ const Landing = () => {
 					</Link>
 					<Link
 						to={`/pdp/${collectionProducts[1].id}`}
-						onClick={() =>{
+						onClick={() => {
 							window.scrollTo({
 								top: 0,
 								left: 0,
 								behavior: "instant",
 							});
-							dispatch(updatePdp(collectionProducts[1]))}
-						}
+							dispatch(updatePdp(collectionProducts[1]));
+						}}
 					>
 						<div className="other_product pointer_cursor">
 							<img
@@ -287,12 +287,16 @@ const Landing = () => {
 							</div>
 						</div>
 					</Link>
-					<Link to="/shop/furniture sets" onClick={()=>
-									window.scrollTo({
-										top: 0,
-										left: 0,
-										behavior: "instant",
-									})}>
+					<Link
+						to="/shop/furniture sets"
+						onClick={() =>
+							window.scrollTo({
+								top: 0,
+								left: 0,
+								behavior: "instant",
+							})
+						}
+					>
 						<button className="explore_collection_button h5 sb">
 							Explore Collection
 							<MdOutlineKeyboardArrowRight

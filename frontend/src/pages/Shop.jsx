@@ -27,7 +27,7 @@ const Shop = () => {
 		const rooms = [
 			"Bedroom",
 			"Dining Room",
-			"Kitchen",
+			"Kitchen", 
 			"Living Room",
 			"Home Office",
 			"Bathroom",

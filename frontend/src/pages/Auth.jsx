@@ -8,7 +8,7 @@ import validator from "validator";
 
 //redux
 import { useDispatch } from "react-redux";
-import { setSignin } from "../slices/AuthSlice";
+import { setSignin } from "../slices/authSlice";
 
 //icon
 import { AiOutlineEye } from "react-icons/ai";
@@ -25,7 +25,7 @@ const Auth = ({ isSignIn }) => {
 		email: "",
 		password: "",
 	});
-	const [isValidName, setIsValidName] = useState(true)
+	const [isValidName, setIsValidName] = useState(true);
 	const [isValidEmail, setIsValidEmail] = useState(true);
 	const [isValidPassword, setIsValidPassword] = useState(true);
 	const [showPassword, setShowPassword] = useState(false);
@@ -37,9 +37,9 @@ const Auth = ({ isSignIn }) => {
 			password: "",
 		});
 		setShowPassword(false);
-		setIsValidName(true)
+		setIsValidName(true);
 		setIsValidEmail(true);
-		setIsValidPassword(true)
+		setIsValidPassword(true);
 	}, [isSignIn]);
 
 	// Handle input changes
@@ -51,8 +51,8 @@ const Auth = ({ isSignIn }) => {
 			setIsValidEmail(true);
 		} else if (name === "password") {
 			setIsValidPassword(true);
-		} else if (name === "fullName"){
-			setIsValidName(true)
+		} else if (name === "fullName") {
+			setIsValidName(true);
 		}
 	};
 
@@ -74,17 +74,19 @@ const Auth = ({ isSignIn }) => {
 			toast.success("Successfully signed in!");
 		} catch (error) {
 			console.error("Error during signup:", error);
-			if(error.response && error.response.status === 400){
+			if (error.response && error.response.status === 400) {
 				const errorMessage = error.response.data.message;
 
 				if (errorMessage.includes("User not found")) {
-				  setIsValidEmail(false);
-				  toast.error(errorMessage);
+					setIsValidEmail(false);
+					toast.error(errorMessage);
 				} else if (errorMessage.includes("Wrong password")) {
-				  setIsValidPassword(false);
-				  toast.error(errorMessage);
+					setIsValidPassword(false);
+					toast.error(errorMessage);
 				} else {
-				  toast.error("An unexpected error occurred. Please try again.");
+					toast.error(
+						"An unexpected error occurred. Please try again."
+					);
 				}
 			}
 		}
@@ -116,7 +118,7 @@ const Auth = ({ isSignIn }) => {
 						setIsValidPassword(false);
 					}
 					toast.error(error.message);
-					return null
+					return null;
 				});
 			} else {
 				toast.error(
@@ -129,22 +131,26 @@ const Auth = ({ isSignIn }) => {
 	// Handle form submission
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-	  
+
 		const { fullName, email, password } = formData;
-	  
+
 		//ensure all fields are filled
-		if ((!fullName.trim() && !isSignIn) || !email.trim() || !password.trim()) { 
-		  setIsValidName(!!fullName.trim() && isSignIn)
-		  setIsValidEmail(!!email.trim());
-		  setIsValidPassword(!!password.trim());
-		  toast.error("Please fill in all fields");
+		if (
+			(!fullName.trim() && !isSignIn) ||
+			!email.trim() ||
+			!password.trim()
+		) {
+			setIsValidName(!!fullName.trim() && isSignIn);
+			setIsValidEmail(!!email.trim());
+			setIsValidPassword(!!password.trim());
+			toast.error("Please fill in all fields");
 		} else if (validator.isEmail(email)) {
-		  isSignIn ? handleSignIn() : handleSignUp();
+			isSignIn ? handleSignIn() : handleSignUp();
 		} else {
-		  setIsValidEmail(false);
-		  toast.error("Please enter a valid email address");
+			setIsValidEmail(false);
+			toast.error("Please enter a valid email address");
 		}
-	  };
+	};
 	return (
 		<div className="auth">
 			<div className="form_container">
@@ -152,7 +158,7 @@ const Auth = ({ isSignIn }) => {
 					<img src={logo} alt="logo" className="logo" />
 					<h3 className="h3 sb">CasaVibe</h3>
 				</Link>
-				<div className="google_button">
+				<div className="google_button inactive_cursor">
 					<img
 						src="https://w7.pngwing.com/pngs/543/934/png-transparent-google-app-logo-google-logo-g-suite-google-text-logo-circle.png"
 						alt="google icon"

@@ -85,6 +85,8 @@ const cartInitialState = {
 	orderSummary: {
 		subtotal: 0,
 		tax: 0,
+		shipping: 0,
+		quantity: 0,
 		grandTotal: 0,
 	},
 };
@@ -158,12 +160,16 @@ const updateOrderSummary = (state) => {
 			}, 0)
 			.toFixed(2)
 	);
+	const quantity = state.items.reduce((sum, item) => sum + item.quantity, 0);
 
+	const shipping = subtotal > 200 ? 0 : subtotal > 0 ? 25 : 0 
 	const tax = parseFloat((subtotal * 0.09).toFixed(2));
-	const total = parseFloat((subtotal + tax).toFixed(2));
+	const total = parseFloat((subtotal + tax + shipping).toFixed(2));
 
 	return {
 		subtotal,
+		quantity,
+		shipping,
 		tax,
 		total,
 	};

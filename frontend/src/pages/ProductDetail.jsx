@@ -8,7 +8,8 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { addToCart } from "../slices/cartSlice";
 import { useDispatch } from "react-redux";
-import { updatePdp } from "../slices/ProductSlice";
+import { updatePdp } from "../slices/productSlice";
+import { updateWishlist } from "../slices/wishlistSlice";
 
 //components
 import Rating from "../components/Rating";
@@ -62,7 +63,7 @@ const ProductDetail = () => {
 	const [notFound, setNotFound] = useState(false);
 	const { id } = useParams();
 	const isAuth = useSelector((state) => state.auth.token);
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	//redux
 	const reduxPdp = useSelector((state) => state.products.pdp);
@@ -123,6 +124,10 @@ const ProductDetail = () => {
 		}
 	};
 
+	useEffect(()=>{
+		setIsLiked(false)
+	},[id])
+
 	//update the page when id is changed
 	useEffect(() => {
 		setVariation(-1);
@@ -138,8 +143,24 @@ const ProductDetail = () => {
 		}
 	}, [id]);
 
+	const handleLike = () => {
+		//update the isLiked state
+
+		
+
+		//update the watchlist slice
+		dispatch(
+			updateWishlist({
+				...currentProduct,
+				liked: !isLiked,
+
+			})
+		);
+		setIsLiked(!isLiked)
+	}
+
 	const handleAddToCart = () => {
-		if(isAuth){
+		if (isAuth) {
 			dispatch(
 				addToCart({
 					...currentProduct,
@@ -147,12 +168,12 @@ const ProductDetail = () => {
 					liked: isLiked,
 				})
 			);
-			toast.success("Successfully added to cart!");			
-		} else {
-			navigate("/signin")
-			toast.warning('Please sign in to add items to cart.');
-		}
 
+			toast.success("Successfully added to cart!");
+		} else {
+			navigate("/signin");
+			toast.warning("Please sign in to add items to cart.");
+		}
 	};
 
 	return !notFound ? (
@@ -302,7 +323,7 @@ const ProductDetail = () => {
 									className={`add_wishlist shape_outline ${
 										isLiked ? "liked" : ""
 									}`}
-									onClick={() => setIsLiked(!isLiked)}
+									onClick={handleLike}
 								>
 									{isLiked ? (
 										<AiFillHeart

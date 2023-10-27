@@ -8,8 +8,9 @@ import ProfileIcon from "./ProfileIcon";
 import RoomPopup from "./RoomPopup";
 
 //icons
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { MdLocationOn } from "react-icons/md";
+import ProductPopup from "./ProductPopup";
+import ContactPopup from "./ContactPopup";
 
 const Navbar = () => {
 	return (
@@ -25,25 +26,18 @@ const Navbar = () => {
 			<div className="navbar__bottom ">
 				<div className="left h7 md">
 					<RoomPopup />
-					<div className="product_dropdown inactive_cursor">
-						Product{" "}
-						<MdOutlineKeyboardArrowDown
-							size={16}
-							className="icon"
-						/>
-					</div>
-					<div className="contact_dropdown inactive_cursor">
-						Contact{" "}
-					</div>
+					<ProductPopup />
+					<Link to="/about">About</Link>
+					<ContactPopup /> 
 				</div>
 				<div className="right h7 md">
-					<Link to="/location" className="store_location">
+					<Link to="/location">
 						<MdLocationOn size={16} className="icon" /> Store
 						Location
 					</Link>
-					<span className="track_order inactive_cursor">
+					<Link to="/orders" className="track_order ">
 						Track your order
-					</span>
+					</Link>
 				</div>
 			</div>
 		</nav>

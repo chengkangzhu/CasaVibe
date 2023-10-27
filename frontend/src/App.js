@@ -35,6 +35,7 @@ function App() {
 	);
 }
 
+
 function AppComponent() {
 	const location = useLocation(); 
 	const [isAuthPage, setIsAuthPage] = useState(false);
@@ -67,10 +68,23 @@ function AppComponent() {
 				<Route path="/location" element={<Location />} />
 				<Route path="/payment/completed/:id" element={<ThankYou />} />
 				<Route path="/payment" element={<Payment />} />
+				<Route path="/profile" element={<UnderConstruction />} />
+				<Route path="/orders" element={<UnderConstruction />} />
+				<Route path="/wishlist" element={<UnderConstruction />} />
+				<Route path="/about" element={<UnderConstruction />} /> 
 			</Routes>
 			{!isAuthPage && <Footer />}
 		</>
 	);
 }
 
+function UnderConstruction() {
+	return (
+	  <img
+		src="https://www.seekpng.com/png/detail/259-2598162_page-in-under-construction.png"
+		className="under_construction_image"
+		alt="site under construction"
+	  />
+	);
+  }
 export default App;

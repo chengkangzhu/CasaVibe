@@ -207,8 +207,8 @@ const Payment = () => {
 											alt="mastercard logo"
 										/>
 										<img
-											src={paymentPartners}
-											alt="payment partners logo"
+											src={visa}
+											alt="visa logo"
 										/>
 									</div>
 								</button>
@@ -274,7 +274,7 @@ const Payment = () => {
 									)}
 									Paypal
 									<div className="logo_containers">
-										<img src={visa} alt="visa logo" />
+										<img src={paymentPartners} alt="paypal logo" />
 									</div>
 								</button>
 							</h6>
@@ -324,7 +324,7 @@ const Payment = () => {
 						</div>
 						<div className="deliery_method_review">
 							<h5 className="h5 md">Delivery method</h5>
-							<div className=" p3">Free (30 days)</div>
+							<div className=" p3">Cargo</div>
 						</div>
 					</div>
 				</div>
@@ -339,7 +339,7 @@ const Payment = () => {
 						Tax (9%)<span className="md">${orderSummary.tax}</span>
 					</h6>
 					<h6 className="h6 rg">
-						Shipping <span className="md">$00.00</span>
+						Shipping <span className="md">${orderSummary.shipping}</span>
 					</h6>
 				</div>
 				<h6 className="total h6 md">

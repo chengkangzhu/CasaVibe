@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 
 //icon
 import { HiShoppingCart } from "react-icons/hi";
@@ -10,7 +10,7 @@ import { MdRemove } from "react-icons/md";
 //redux
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import { updatePdp } from "../slices/ProductSlice";
+import { updatePdp } from "../slices/productSlice";
 import {
 	initCart,
 	incrementQuantity,
@@ -19,9 +19,9 @@ import {
 } from "../slices/cartSlice";
 
 //component
-import AuthPopup from "./AuthPopup";
+import PopupMenu from "./PopupMenu";
 
-const CartItem = ({item}) => {
+const CartItem = ({ item }) => {
 	const {
 		image,
 		imageAlt,
@@ -29,7 +29,7 @@ const CartItem = ({item}) => {
 		quantity,
 		price: { currentPrice },
 		id,
-	} = item
+	} = item;
 	const dispatch = useDispatch();
 
 	return (
@@ -92,13 +92,12 @@ const CartPopup = () => {
 	const [showMenu, setShowMenu] = useState(false);
 	const cartItems = useSelector((state) => state.cart.items);
 	const orderSummary = useSelector((state) => state.cart.orderSummary);
-	const isAuth = useSelector(state => state.auth.token)
+	const isAuth = useSelector((state) => state.auth.token);
 	const dispatch = useDispatch();
 
-	useEffect(()=>{
-		dispatch(initCart())
-	},[dispatch])
-
+	useEffect(() => {
+		dispatch(initCart());
+	}, [dispatch]);
 
 	return (
 		<div className="cart_popup">
@@ -109,43 +108,52 @@ const CartPopup = () => {
 			>
 				<HiShoppingCart size={24} className="icon" />
 			</Link>
-			{isAuth ? 
-			<div className={`menu shadow_300 ${showMenu && "show"}`}>
-				<div className="header">
-					<h5 className="h5 md">Cart (2)</h5>
-				</div>
-				<div className="cart_items">
-					{cartItems &&
-						cartItems.map((item, index) => {
-							return <CartItem item={item} key={index} />;
-						})}
-				</div>
+			{isAuth ? (
+				<PopupMenu showMenu={showMenu} className="cart_menu">
+					<div>
+						<h5 className="h5 md">Cart (2)</h5>
+					</div>
 
-				<div className="checkout">
-					<p className="h7 rg subtotal">
-						Subtotal{" "}
-						<span className="sb">${orderSummary.subtotal}</span>
-					</p>
-					<Link to="/payment">
-						<button
-							className="checkout_button shape_outline_active h7 sb"
-							onClick={() => setShowMenu(false)}
-						>
-							Checkout
-						</button>
+					<div className="cart_items">
+						{cartItems &&
+							cartItems.map((item, index) => {
+								return <CartItem item={item} key={index} />;
+							})}
+					</div>
+
+					<div className="checkout">
+						<p className="h7 rg subtotal">
+							Subtotal{" "}
+							<span className="sb">${orderSummary.subtotal}</span>
+						</p>
+						<Link to="/payment">
+							<button
+								className="checkout_button shape_outline_active h7 sb"
+								onClick={() => setShowMenu(false)}
+							>
+								Checkout
+							</button>
+						</Link>
+						<Link to="/cart">
+							<button
+								className="view_cart_button shape_outline h7 sb"
+								onClick={() => setShowMenu(false)}
+							>
+								View Cart
+							</button>
+						</Link>
+					</div>
+				</PopupMenu>
+			) : (
+				<PopupMenu showMenu={showMenu} className="auth_menu">
+					<Link to="/signin">
+						<span onClick={() => setShowMenu(false)}>Sign in</span>
 					</Link>
-					<Link to="/cart">
-						<button
-							className="view_cart_button shape_outline h7 sb"
-							onClick={() => setShowMenu(false)}
-						>
-							View Cart
-						</button>
+					<Link to="/signup">
+						<span onClick={() => setShowMenu(false)}>Sign up</span>{" "}
 					</Link>
-				</div>
-			</div>  :
-			<AuthPopup showMenu={showMenu} setShowMenu={setShowMenu} />
-			}
+				</PopupMenu>
+			)}
 		</div>
 	);
 };

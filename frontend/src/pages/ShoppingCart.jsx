@@ -13,7 +13,7 @@ import { MdRemove } from "react-icons/md";
 
 //redux
 import { useDispatch } from "react-redux";
-import { updatePdp } from "../slices/ProductSlice";
+import { updatePdp } from "../slices/productSlice";
 import {
 	initCart,
 	incrementQuantity,
@@ -21,6 +21,7 @@ import {
 	removeFromCart,
 	toggleLike,
 } from "../slices/cartSlice";
+import { updateWishlist } from "../slices/wishlistSlice";
 
 const CartItem = ({ item }) => {
 	const {
@@ -33,6 +34,11 @@ const CartItem = ({ item }) => {
 		liked,
 	} = item;
 	const dispatch = useDispatch();
+	
+	const handleLike = (id) =>{
+		dispatch(updateWishlist({...item, liked: !liked}))
+		dispatch(toggleLike({ id }))
+	}
 
 	return (
 		<div className="cart_item">
@@ -89,13 +95,13 @@ const CartItem = ({ item }) => {
 						<AiFillHeart
 							size={24}
 							className="icon like"
-							onClick={() => dispatch(toggleLike({ id }))}
+							onClick={() => handleLike(id)}
 						/>
 					) : (
 						<AiOutlineHeart
 							size={24}
 							className="icon"
-							onClick={() => dispatch(toggleLike({ id }))}
+							onClick={() => handleLike(id)}
 						/>
 					)}
 					<div className="vertical_divider"></div>
@@ -114,6 +120,7 @@ const ShoppingCart = () => {
 	const [isFocused, setIsFocused] = useState(false);
 	const [note, setNote] = useState("");
 	const cartItems = useSelector((state) => state.cart.items);
+	const orderSummary = useSelector( state => state.cart.orderSummary)
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(initCart());
@@ -168,27 +175,27 @@ const ShoppingCart = () => {
 				</div>
 				<div className="checkout_container">
 					<h5 className="h5 md">Use a promo code</h5>
-					<div className="promo_code_container">
+					<div className="promo_code_container inactive_cursor">
 						<input
 							type="text"
-							className="h7 rg"
+							className="h7 rg inactive_cursor"
 							placeholder="Enter gift card or discount code"
 						/>
-						<button className="h7 md">Apply</button>
+						<button className="h7 md inactive_cursor">Apply</button>
 					</div>
 					<p className="h7 rg quantity">
 						{" "}
-						Product quantity: <span>3</span>{" "}
+						Product quantity: <span>{orderSummary.quantity}</span>
 					</p>
 					<p className="h7 rg weight">
 						Total package weight: <span>232.23kg</span>
 					</p>
 					<p className="h7 rg shipping">
-						Service and Shipping Fees <span>$14.00</span>
+						Service and Shipping Fees <span>${orderSummary.shipping}</span>
 					</p>
 					<p className="h5 sb total">
-						Service and Shipping Fees{" "}
-						<span className="h4">$46.77</span>
+						Subtotal{" "}
+						<span className="h4">${orderSummary.subtotal}</span>
 					</p>
 					<Link
 						to="/payment"

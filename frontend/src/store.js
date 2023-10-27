@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { productSlice } from "./slices/ProductSlice";
+import { productSlice } from "./slices/productSlice";
 import { cartSlice } from "./slices/cartSlice";
 import { shopGridSlice } from "./slices/shopGridSlice";
-import { authSlice } from "./slices/AuthSlice";
+import { authSlice } from "./slices/authSlice";
+import { wishlistSlice } from "./slices/wishlistSlice";
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
+
 import thunk from 'redux-thunk';
 
 const persistConfig = {
@@ -17,6 +19,7 @@ const persistConfig = {
 	cart: cartSlice.reducer,
 	grid: shopGridSlice.reducer,
 	auth: authSlice.reducer,
+	wishlist: wishlistSlice.reducer
   }));
   
   export const store = configureStore({

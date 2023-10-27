@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import PopupMenu from "./PopupMenu";
 
 const Sort = () => {
 	const [sortMethod, setSortMethod] = useState("Price: Low to High");
@@ -20,11 +21,7 @@ const Sort = () => {
 				Sort by:&nbsp;&nbsp;{sortMethod}{" "}
 				<MdOutlineKeyboardArrowDown size={24} className="icon" />
 			</button>
-			<div
-				className={`sort__menu shadow_300 h7 rg ${
-					showMenu ? "show" : ""
-				}`}
-			>
+			<PopupMenu showMenu={showMenu} className="sort__menu" >
 				<span onClick={() => handleChangeSort("Best Match")}>
 					Best Match
 				</span>
@@ -40,7 +37,7 @@ const Sort = () => {
 				<span onClick={() => handleChangeSort("Customer Ratings")}>
 					Customer Ratings
 				</span>
-			</div>
+			</PopupMenu>
 		</div>
 	);
 };

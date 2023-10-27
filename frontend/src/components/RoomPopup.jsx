@@ -12,23 +12,22 @@ import kitchen from "../img/navbar/kitchen.jpg";
 import living_room from "../img/navbar/living_room.jpg";
 import home_office from "../img/navbar/home_office.jpg";
 
+//component
+import PopupMenu from "./PopupMenu";
+
 const RoomPopup = () => {
-	const [isDropDownVisible, setIsDropDownVisible] = useState(false);
+	const [showMenu, setShowMenu] = useState(false);
 
 	const handleRoomClick = () => {
-		setIsDropDownVisible(false);
+		setShowMenu(false);
 	};
 
 	return (
 		<div className="room_popup">
-			<span onMouseEnter={() => setIsDropDownVisible(true)}>
+			<span onMouseEnter={() => setShowMenu(true)}>
 				Room <MdOutlineKeyboardArrowDown size={16} className="icon" />
 			</span>
-			<div
-				className={`room_container shadow_300 ${
-					isDropDownVisible && "show"
-				}`}
-			>
+			<PopupMenu showMenu={showMenu} className="room_menu">
 				<Link
 					to="/shop/Bedroom"
 					className="h7 md"
@@ -77,7 +76,7 @@ const RoomPopup = () => {
 					<img src={bathroom} alt="Bathroom" />
 					Bathroom
 				</Link>
-			</div>
+			</PopupMenu>
 		</div>
 	);
 };
