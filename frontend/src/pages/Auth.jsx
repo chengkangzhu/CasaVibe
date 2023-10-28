@@ -8,7 +8,7 @@ import validator from "validator";
 
 //redux
 import { useDispatch } from "react-redux";
-import { setSignin } from "../slices/authSlice";
+import { setSignin } from "../slices/AuthSlice";
 
 //icon
 import { AiOutlineEye } from "react-icons/ai";

@@ -8,7 +8,7 @@ import { BsFillPersonFill } from "react-icons/bs";
 //components
 import PopupMenu from "./PopupMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { setSignout } from "../slices/authSlice";
+import { setSignout } from "../slices/AuthSlice";
 
 const ProfileIcon = () => {
 	const [showMenu, setShowMenu] = useState(false);

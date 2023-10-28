@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { productSlice } from "./slices/ProductSlice.js";
 import { cartSlice } from "../src/slices/cartSlice";
 import { shopGridSlice } from "../src/slices/shopGridSlice";
-import { authSlice } from "../src/slices/authSlice";
+import { authSlice } from "./slices/AuthSlice.js";
 import { wishlistSlice } from "../src/slices/wishlistSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
