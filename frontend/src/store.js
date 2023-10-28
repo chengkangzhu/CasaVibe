@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { productSlice }  from "../src/slices/productSlice"
+import { productSlice } from "./slices/ProductSlice.js";
 import { cartSlice } from "../src/slices/cartSlice";
 import { shopGridSlice } from "../src/slices/shopGridSlice";
 import { authSlice } from "../src/slices/authSlice";

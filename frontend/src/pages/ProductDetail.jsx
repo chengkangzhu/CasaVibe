@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { addToCart } from "../slices/cartSlice";
 import { useDispatch } from "react-redux";
-import { updatePdp } from "../slices/productSlice";
+import { updatePdp } from "../slices/ProductSlice";
 import { updateWishlist } from "../slices/wishlistSlice";
 
 //components

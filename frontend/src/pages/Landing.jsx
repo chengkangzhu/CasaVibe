@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 //redux
 import { useDispatch } from "react-redux";
-import { updatePdp } from "../slices/productSlice";
+import { updatePdp } from "../slices/ProductSlice";
 
 //icon
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";

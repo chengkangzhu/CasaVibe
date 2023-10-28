@@ -13,7 +13,7 @@ import { MdRemove } from "react-icons/md";
 
 //redux
 import { useDispatch } from "react-redux";
-import { updatePdp } from "../slices/productSlice";
+import { updatePdp } from "../slices/ProductSlice";
 import {
 	initCart,
 	incrementQuantity,
