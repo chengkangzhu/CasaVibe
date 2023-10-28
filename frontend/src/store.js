@@ -4,27 +4,30 @@ import { cartSlice } from "./slices/cartSlice";
 import { shopGridSlice } from "./slices/shopGridSlice";
 import { authSlice } from "./slices/authSlice";
 import { wishlistSlice } from "./slices/wishlistSlice";
-import storage from 'redux-persist/lib/storage';
-import { persistReducer, persistStore } from 'redux-persist';
+import storage from "redux-persist/lib/storage";
+import { persistReducer, persistStore } from "redux-persist";
 
-import thunk from 'redux-thunk';
+import thunk from "redux-thunk";
 
 const persistConfig = {
-	key: 'root',
+	key: "root",
 	storage,
-  }
-  
-  const persistedReducer = persistReducer(persistConfig, combineReducers({
-	products: productSlice.reducer,
-	cart: cartSlice.reducer,
-	grid: shopGridSlice.reducer,
-	auth: authSlice.reducer,
-	wishlist: wishlistSlice.reducer
-  }));
-  
-  export const store = configureStore({
+};
+
+const persistedReducer = persistReducer(
+	persistConfig,
+	combineReducers({
+		products: productSlice.reducer,
+		cart: cartSlice.reducer,
+		grid: shopGridSlice.reducer,
+		auth: authSlice.reducer,
+		wishlist: wishlistSlice.reducer,
+	})
+);
+
+export const store = configureStore({
 	reducer: persistedReducer,
 	middleware: [thunk],
-  });
-  
-  export const persistor = persistStore(store);
+});
+
+export const persistor = persistStore(store);
