@@ -19,7 +19,7 @@ export const fetchData = createAsyncThunk(
 		try {
 			dispatch(updateShopGrid([]));
 			const response = await axios.get(
-				`${process.env.REACT_APP_API_URL}/product/search/${keyWord}`
+				`casavibe-production.up.railway.app/product/search/${keyWord}`
 			);
 			if (response.data.length === 0) {
 				dispatch(updateShopGrid("not found"));
