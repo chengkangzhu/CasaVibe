@@ -1,45 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"; 
 
 //icon
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 
-//mui
-import { Slider, Tooltip } from "@mui/material";
-import styled from "@emotion/styled";
+//redux 
+import { useDispatch } from "react-redux";
 
-const StyledTooltip = styled(({ className, ...props }) => (
-	<Tooltip {...props} classes={{ popper: className }} arrow />
-))`
-	& .MuiTooltip-tooltip {
-		background-color: #5a4098;
-		color: white;
-		padding: 4px 8px;
-		font-size: 12px;
-		font-weight: 600;
-		font-family: "GeneralSans-Semibold";
-	}
-
-	& .MuiTooltip-arrow {
-		color: #5a4098;
-	}
-`;
-
-function ValueLabelComponent(props) {
-	const { children, open, value } = props;
-
-	return (
-		<StyledTooltip
-			open={open}
-			enterTouchDelay={0}
-			placement="top"
-			title={value}
-		>
-			{children}
-		</StyledTooltip>
-	);
-}
-
+//accordion section
 const FilterItem = ({ title, children, buttonFunc, containerClass }) => {
 	return (
 		<div className="accordion-item filter_item">
@@ -65,47 +33,147 @@ const FilterItem = ({ title, children, buttonFunc, containerClass }) => {
 	);
 };
 
+const priceArr = [
+	{
+		id: "PRICE_0_10000",
+		name: "$0.00 - 99.99",
+	},
+	{
+		id: "PRICE_10000_20000",
+		name: "$100.00 - 199.99",
+	},
+	{
+		id: "PRICE_20000_30000",
+		name: "$200.00 - 299.99",
+	},
+	{
+		id: "PRICE_30000_40000",
+		name: "$300.00 - 399.99",
+	},
+	{
+		id: "PRICE_40000_2147483647",
+		name: "$400.00+",
+	},
+];
+
+const materialArr = [
+	{
+		id: "38828",
+		name: "Fabric",
+	},
+	{
+		id: "50788",
+		name: "Solid wood",
+	},
+	{
+		id: "47350",
+		name: "Metal",
+	},
+	{
+		id: "47349",
+		name: "Wood (including board)",
+	},
+	{
+		id: "53958",
+		name: "Wood veneer",
+	},
+	{
+		id: "47675",
+		name: "Plastic",
+	},
+	{
+		id: "38829",
+		name: "Leather",
+	},
+	{
+		id: "38830",
+		name: "Coated fabric",
+	},
+	{
+		id: "39393",
+		name: "Rattan",
+	},
+	{
+		id: "50350",
+		name: "Plastic rattan",
+	},
+	{
+		id: "47653",
+		name: "Bamboo",
+	},
+];
+
+const colorArr = [
+	{
+		id: "10028",
+		name: "gray",
+	},
+	{
+		id: "10003",
+		name: "beige",
+	},
+	{
+		id: "10156",
+		name: "white",
+	},
+	{
+		id: "10139",
+		name: "black",
+	},
+	{
+		id: "10019",
+		name: "brown",
+	},
+	{
+		id: "10007",
+		name: "blue",
+	},
+	{
+		id: "10033",
+		name: "green",
+	},
+	{
+		id: "10124",
+		name: "red",
+	},
+	{
+		id: "10042",
+		name: "yellow",
+	},
+	{
+		id: "10152",
+		name: "turquoise",
+	},
+	{
+		id: "10119",
+		name: "pink",
+	},
+	{
+		id: "10112",
+		name: "orange",
+	},
+	{
+		id: "10064",
+		name: "lilac",
+	},
+];
+
 const Filter = () => {
+	const dispatch = useDispatch();
 	const [showFilter, setShowFilter] = useState(false);
-	const [showLabel, setShowLabel] = useState(false);
-	const [priceRange, setPriceRange] = useState([30, 300]);
-	const [material, setMaterial] = useState("");
-	const [color, setColor] = useState("");
 	const [filterList, setFilterList] = useState([]);
 
-	const handleFilterOn = () => {
-		setShowFilter((e) => true);
-		const isPriceExpanded = document
-			.getElementById("Price")
-			.classList.contains("show");
-		if (isPriceExpanded) {
-			setShowLabel(true);
-		}
-	};
-
-	const handleFilterOff = () => {
-		setShowFilter((e) => false);
-		setShowLabel(false);
-	};
-
-	const handlePriceRange = (event, newValue, activeThumb) => {
+	//add the price as well
+	const [price, setPrice] = useState("");
+	const [material, setMaterial] = useState("");
+	const [color, setColor] = useState("");
+	
+	const handlePriceChange = (event) => {
 		//add it to filter list
-		setFilterList(
-			filterList.includes("price") ? filterList : [...filterList, "price"]
-		);
-
-		if (!Array.isArray(newValue)) {
-			return;
-		}
-
-		if (activeThumb === 0) {
-			const max = newValue[1] - 40;
-			setPriceRange([Math.min(newValue[0], max), newValue[1]]);
-		} else {
-			const min = newValue[0] + 40;
-			setPriceRange([newValue[0], Math.max(newValue[1], min)]);
-		}
+		setFilterList(filterList.includes("price") ? filterList : [...filterList, "price"]);
+		setPrice(event.target.value);
 	};
+
 
 	const handleMaterialChange = (event) => {
 		//add it to filter list
@@ -123,25 +191,15 @@ const Filter = () => {
 			filterList.includes("color") ? filterList : [...filterList, "color"]
 		);
 		setColor(event.target.value);
-	};
+	}; 
 
-	const handleClearAll = () => {
-		//reset price range
-		setShowLabel(false);
-		setPriceRange([30, 300]);
-		setTimeout(() => {
-			if (showLabel) {
-				setShowLabel(true);
-			}
-		}, 1);
+	//send the request
+	const handleApplyFilter = async () => {
+		setShowFilter(false);
+ 
+		//update the filter parameter to the filters appled
+		// dispatch(fetchData({keyWord: type, filter: `sort=${sortType.id}`}))
 
-		setMaterial("");
-		setColor("");
-		setFilterList([]);
-	};
-
-	const handleApplyFilter = () => {
-		handleFilterOff();
 	};
 
 	//remove scroll on filter shown
@@ -160,72 +218,79 @@ const Filter = () => {
 
 	return (
 		<div className="filter">
+
+			{/* BUTTON */}
 			<button
 				className="filter_button shape_outline h7 rg"
-				onClick={handleFilterOn}
+				onClick={() => setShowFilter(true)}
 			>
 				Filter <MdOutlineKeyboardArrowDown size={24} className="icon" />
 			</button>
 
+			{/* SIDEBAR */}
 			<div className={`overlay ${showFilter && "active"}`}>
-				<div className="close_filter" onClick={handleFilterOff}></div>
+				
+				{/* grey overlay */}
+				<div
+					className="close_overlay"
+					onClick={() => {
+						setShowFilter(false);
+					}}
+				></div>
+
+				{/* SIDEBAR BODY */}
 				<div className="filter_sidebar">
+
+					{/* header */}
 					<h4 className="h4 sb">
 						Filter{" "}
 						<MdClose
 							size={24}
 							className="icon"
-							onClick={handleFilterOff}
+							onClick={() => setShowFilter(false)}
 						/>
 					</h4>
+
+					{/* contents */}
 					<div
 						className="filter_content accordion accordion-flush"
 						id="filterPirceAccordion"
 					>
 						<FilterItem
 							title="Price"
-							buttonFunc={() => setShowLabel((e) => !e)}
+							containerClass="price_container"
 						>
-							<div className="price_range_sentence">
-								From ${priceRange[0]} to $
-								{priceRange[1] === 605
-									? "\u221E"
-									: "$" + priceRange[1]}
-							</div>
-							<Slider
-								value={priceRange}
-								getAriaLabel={() => "Minimum distance shift"}
-								disableSwap
-								onChange={handlePriceRange}
-								valueLabelDisplay={showLabel ? "on" : "off"}
-								valueLabelFormat={(value) =>
-									value === 605 ? "\u221E" : `$${value}`
-								}
-								step={5}
-								min={0}
-								max={605}
-								components={{ ValueLabel: ValueLabelComponent }}
-								sx={{
-									"& .MuiSlider-thumb": {
-										backgroundColor: "#5A4098", // This will change the color of the thumb
-										width: 24, // This will change the width of the thumb
-										height: 24,
-										boxShadow: "none !important",
-									},
-									"& .MuiSlider-rail": {
-										backgroundColor: "#D8D8D8", // This will change the color of the track (the part of the bar that's not filled)
-									},
-									"& .MuiSlider-track": {
-										backgroundColor: "#5A4098", // This will change the color of the track (the part of the bar that's filled)
-									},
-								}}
-							/>
+							{priceArr.map((item, index) => (
+								<label className="h7 rg" key={index}>
+									{item.name}
+									<input
+										type="radio"
+										name="price"
+										value={item.name}
+										onChange={handlePriceChange}
+										checked={price === item.name}
+									/>
+								</label>
+							))}
 						</FilterItem>
 						<FilterItem
 							title="Material"
 							containerClass="material_container"
 						>
-							<label className="h7 rg" id="material_wood">
+							{materialArr.map((item, index) => (
+								<label className="h7 rg" key={index}>
+									{item.name}
+									<input
+										type="radio"
+										name="material"
+										value={item.name}
+										onChange={handleMaterialChange}
+										checked={material === item.name}
+									/>
+								</label>
+							))}
+
+							<label className="h7 rg">
 								Wood
 								<input
 									type="radio"
@@ -298,119 +363,35 @@ const Filter = () => {
 							title="Color"
 							containerClass="colors_container"
 						>
-							<label className="h7 rg" id="color__blue">
-								Blue
-								<input
-									type="radio"
-									name="color"
-									value="blue"
-									onChange={handleColorChange}
-									checked={color === "blue"}
-								/>
-							</label>
-
-							<label className="h7 rg" id="color__red">
-								Red
-								<input
-									type="radio"
-									name="color"
-									value="red"
-									onChange={handleColorChange}
-									checked={color === "red"}
-								/>
-							</label>
-
-							<label className="h7 rg" id="color__green">
-								Green
-								<input
-									type="radio"
-									name="color"
-									value="green"
-									onChange={handleColorChange}
-									checked={color === "green"}
-								/>
-							</label>
-
-							<label className="h7 rg" id="color__black">
-								Black
-								<input
-									type="radio"
-									name="color"
-									value="black"
-									onChange={handleColorChange}
-									checked={color === "black"}
-								/>
-							</label>
-
-							<label className="h7 rg" id="color__white">
-								White
-								<input
-									type="radio"
-									name="color"
-									value="white"
-									onChange={handleColorChange}
-									checked={color === "white"}
-								/>
-							</label>
-
-							<label className="h7 rg" id="color__gray">
-								Gray
-								<input
-									type="radio"
-									name="color"
-									value="gray"
-									onChange={handleColorChange}
-									checked={color === "gray"}
-								/>
-							</label>
-
-							<label className="h7 rg" id="color__brown">
-								Brown
-								<input
-									type="radio"
-									name="color"
-									value="brown"
-									onChange={handleColorChange}
-									checked={color === "brown"}
-								/>
-							</label>
-
-							<label className="h7 rg" id="color__orange">
-								Orange
-								<input
-									type="radio"
-									name="color"
-									value="orange"
-									onChange={handleColorChange}
-									checked={color === "orange"}
-								/>
-							</label>
-
-							<label className="h7 rg" id="color__pink">
-								Pink
-								<input
-									type="radio"
-									name="color"
-									value="pink"
-									onChange={handleColorChange}
-									checked={color === "pink"}
-								/>
-							</label>
-
-							<label className="h7 rg" id="color__yellow">
-								Yellow
-								<input
-									type="radio"
-									name="color"
-									value="yellow"
-									onChange={handleColorChange}
-									checked={color === "yellow"}
-								/>
-							</label>
+							{colorArr.map((item, index) => (
+								<label
+									key={index}
+									className={"h7 rg " + item.name}
+								>
+									{item.name}
+									<input
+										type="radio"
+										name="color"
+										value={item.name}
+										onChange={handleColorChange}
+										checked={color === item.name}
+									/>
+								</label>
+							))}
 						</FilterItem>
 					</div>
+
+					{/* buttons */}
 					<div className="button_container h7 md  ">
-						<button className="white" onClick={handleClearAll}>
+						<button
+							className="white"
+							onClick={() => {
+								setPrice("")
+								setMaterial("");
+								setColor("");
+								setFilterList([]);
+							}}
+						>
 							Clear All
 						</button>
 						<button className="purple" onClick={handleApplyFilter}>

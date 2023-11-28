@@ -27,9 +27,12 @@ mongoose
 //ROUTES 
 const authRoute = require("./routes/auth")
 const productRoute = require("./routes/product")
+const userRoute = require("./routes/user")
 
 app.use('/auth', authRoute); 
 app.use('/product', productRoute); 
+app.use('/user', userRoute)
+
 
 // Define a default route for testing purposes
 app.get("/", (req, res) => {

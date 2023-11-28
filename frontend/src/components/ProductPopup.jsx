@@ -10,7 +10,7 @@ import PopupMenu from "./PopupMenu";
 
 //redux
 import { useDispatch } from "react-redux";
-import { toggleShowRoom, fetchCategory } from "../slices/shopGridSlice";
+import { toggleShowRoom } from "../slices/shopGridSlice";
 
 
 const ProductPopup = () => {
@@ -149,17 +149,19 @@ const ProductPopup = () => {
         ]
       };
 
-    const handleClick = (categoryKey) =>{
-        console.log(categoryKey)
+    const handleClick = (categoryKey) =>{ 
         setShowMenu(false)
-        navigate("/search/" + categoryKey.toLowerCase());
+
+        //change the path which automatically make request 
+        navigate("/shop/" + categoryKey.toLowerCase());
 		window.scrollTo({
 			top: 0,
 			left: 0,
 			behavior: "instant",
 		});
-		dispatch(toggleShowRoom(false));
-		dispatch(fetchCategory(categoryKey));
+        
+		dispatch(toggleShowRoom(false)); 
+
     }
 
 

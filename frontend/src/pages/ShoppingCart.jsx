@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 //icon
 import { MdDelete } from "react-icons/md";
 import { AiOutlineHeart } from "react-icons/ai";
-import { AiFillHeart } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai"; 
 import { FaPen } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { MdAdd } from "react-icons/md";
@@ -34,11 +35,47 @@ const CartItem = ({ item }) => {
 		liked,
 	} = item;
 	const dispatch = useDispatch();
-	
-	const handleLike = (id) =>{
-		dispatch(updateWishlist({...item, liked: !liked}))
-		dispatch(toggleLike({ id }))
-	}
+	const userId = useSelector((state) => state.auth.user._id);
+
+
+	const updateDatabase = async (action) => {
+		await axios.patch(
+			`${process.env.REACT_APP_API_URL}/user/${userId}/cart`,
+			{
+				action: action,
+				productObj: { id },
+			},
+			{
+				headers: {
+					"Content-Type": "application/json",
+					// 'Authorization': `Bearer ${token}`,
+				},
+			}
+		);
+	};
+
+	const handleLike = (id) => {
+		dispatch(updateWishlist({ ...item, liked: !liked }));
+		dispatch(toggleLike({ id }));
+		updateDatabase("toggleLike")
+	};
+
+	const handleDecrement = () => {
+		if (quantity !== 1) {
+			dispatch(decrementQuantity({ id }));
+			updateDatabase("decrementQuantity");
+		}
+	};
+
+	const handleIncrement = () => {
+		dispatch(incrementQuantity({ id }));
+		updateDatabase("incrementQuantity");
+	};
+
+	const handleRemove = () => {
+		dispatch(removeFromCart({ id }));
+		updateDatabase("remove");
+	};
 
 	return (
 		<div className="cart_item">
@@ -70,18 +107,14 @@ const CartItem = ({ item }) => {
 			>
 				<div
 					className="decrement icon"
-					onClick={() => {
-						if (quantity !== 1) {
-							dispatch(decrementQuantity({ id }));
-						}
-					}}
+					onClick={handleDecrement}
 				>
 					<MdRemove size={24} />
 				</div>
 				<div className="amount">{quantity}</div>
 				<div
-					className="dincrement icon"
-					onClick={() => dispatch(incrementQuantity({ id }))}
+					className="increment icon"
+					onClick={handleIncrement}
 				>
 					<MdAdd size={24} />
 				</div>
@@ -108,7 +141,7 @@ const CartItem = ({ item }) => {
 					<MdDelete
 						size={24}
 						className="icon"
-						onClick={() => dispatch(removeFromCart({ id }))}
+						onClick={handleRemove}
 					/>
 				</div>
 			</div>
@@ -120,7 +153,7 @@ const ShoppingCart = () => {
 	const [isFocused, setIsFocused] = useState(false);
 	const [note, setNote] = useState("");
 	const cartItems = useSelector((state) => state.cart.items);
-	const orderSummary = useSelector( state => state.cart.orderSummary)
+	const orderSummary = useSelector((state) => state.cart.orderSummary);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(initCart());
@@ -150,10 +183,17 @@ const ShoppingCart = () => {
 						<span className="h7 rg amount">Amount</span>
 						<span className="h7 rg subtotal">Subtotal</span>
 					</div>
-					{cartItems &&
+					{cartItems.length > 0 ? (
 						cartItems.map((item, index) => {
 							return <CartItem item={item} key={index} />;
-						})}
+						})
+					) : (
+						<img
+							src="https://www.seensil.com/assets/images/cart-empty.jpg"
+							alt="empty cart"
+							className="empty_cart"
+						/>
+					)}
 				</div>
 			</div>
 
@@ -191,7 +231,8 @@ const ShoppingCart = () => {
 						Total package weight: <span>232.23kg</span>
 					</p>
 					<p className="h7 rg shipping">
-						Service and Shipping Fees <span>${orderSummary.shipping}</span>
+						Service and Shipping Fees{" "}
+						<span>${orderSummary.shipping}</span>
 					</p>
 					<p className="h5 sb total">
 						Subtotal{" "}

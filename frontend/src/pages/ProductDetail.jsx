@@ -62,7 +62,8 @@ const ProductDetail = () => {
 	const [isLiked, setIsLiked] = useState(false);
 	const [notFound, setNotFound] = useState(false);
 	const { id } = useParams();
-	const isAuth = useSelector((state) => state.auth.token);
+	const token = useSelector((state) => state.auth.token);
+	const userId = useSelector((state) => state.auth.user._id);
 	const navigate = useNavigate();
 
 	//redux
@@ -124,12 +125,10 @@ const ProductDetail = () => {
 		}
 	};
 
-	useEffect(()=>{
-		setIsLiked(false)
-	},[id])
-
 	//update the page when id is changed
 	useEffect(() => {
+		setIsLiked(false);
+		setQuantity(1);
 		setVariation(-1);
 		if (id === reduxPdp.id) {
 			setCurrentProduct(reduxPdp);
@@ -146,27 +145,39 @@ const ProductDetail = () => {
 	const handleLike = () => {
 		//update the isLiked state
 
-		
-
 		//update the watchlist slice
 		dispatch(
 			updateWishlist({
 				...currentProduct,
 				liked: !isLiked,
-
 			})
 		);
-		setIsLiked(!isLiked)
-	}
+		setIsLiked(!isLiked);
+	};
 
-	const handleAddToCart = () => {
-		if (isAuth) {
-			dispatch(
-				addToCart({
-					...currentProduct,
-					quantity,
-					liked: isLiked,
-				})
+	const handleAddToCart = async () => {
+		if (token) {
+			const itemToBeAdded = {
+				...currentProduct,
+				quantity,
+				liked: isLiked,
+			};
+
+			//update redux
+			dispatch(addToCart(itemToBeAdded));
+			//update database
+			await axios.patch(
+				`${process.env.REACT_APP_API_URL}/user/${userId}/cart`,
+				{
+					action: "add",
+					productObj: itemToBeAdded,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+						// 'Authorization': `Bearer ${token}`,
+					},
+				}
 			);
 
 			toast.success("Successfully added to cart!");

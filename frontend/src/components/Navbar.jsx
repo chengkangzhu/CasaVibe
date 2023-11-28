@@ -28,10 +28,10 @@ const Navbar = () => {
 					<RoomPopup />
 					<ProductPopup />
 					<Link to="/about">About</Link>
-					<ContactPopup /> 
+					<ContactPopup />
 				</div>
 				<div className="right h7 md">
-					<Link to="/location">
+					<Link to="/location" className="store_location">
 						<MdLocationOn size={16} className="icon" /> Store
 						Location
 					</Link>

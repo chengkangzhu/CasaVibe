@@ -9,6 +9,7 @@ import validator from "validator";
 //redux
 import { useDispatch } from "react-redux";
 import { setSignin } from "../slices/AuthSlice";
+import { setCart } from "../slices/cartSlice";
 
 //icon
 import { AiOutlineEye } from "react-icons/ai";
@@ -69,7 +70,8 @@ const Auth = ({ isSignIn }) => {
 			);
 
 			console.log("signing in now");
-			dispatch(setSignin(response.data));
+			dispatch(setSignin(response.data)); 
+			dispatch(setCart(response.data.user.cart))
 			navigate(-1);
 			toast.success("Successfully signed in!");
 		} catch (error) {
@@ -106,6 +108,7 @@ const Auth = ({ isSignIn }) => {
 
 			// console.log("signing up now")
 			dispatch(setSignin(response.data));
+			dispatch(setCart([]))
 			navigate(-1);
 			toast.success("Successfully signed up!");
 		} catch (error) {

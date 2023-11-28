@@ -16,14 +16,14 @@ const Searchbar = () => {
 			return;
 		}
 
-		navigate("/search/" + searchKeyword.toLowerCase());
+		navigate("/shop/" + searchKeyword.toLowerCase());
 		window.scrollTo({
 			top: 0,
 			left: 0,
 			behavior: "instant",
 		});
 		dispatch(toggleShowRoom(false));
-		dispatch(fetchData(searchKeyword));
+		dispatch(fetchData({keyWord: searchKeyword}));
 	};
 
 	const handleKeyDown = (event) => {

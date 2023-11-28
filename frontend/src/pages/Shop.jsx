@@ -39,8 +39,8 @@ const Shop = () => {
 			dispatch(toggleShowRoom(false))
 		}
 		
-		if (type !== undefined) {  
-			dispatch(fetchData(type));
+		if (type !== undefined) {   
+			dispatch(fetchData({keyWord: type}));
 		} 
 	}, [type, dispatch]);
 

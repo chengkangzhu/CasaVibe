@@ -12,13 +12,14 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 
 //img
-import notFoundImage  from "../img/no-product-found.png"
+import notFoundImage from "../img/no-product-found.png";
 
 const ShopGrid = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const gridProducts = useSelector((state) => state.grid.grid);
 	const totalPages = Math.ceil(gridProducts.length / 40);
 	const isNotFound = useSelector((state) => state.grid.notFound);
+	const isFiltering = useSelector((state)=> state.grid.filtering) 
 
 	const handlePageChange = (newPage) => {
 		if (newPage >= 1 && newPage <= totalPages) {
@@ -65,8 +66,9 @@ const ShopGrid = () => {
 	};
 
 	useEffect(() => {
-		setCurrentPage(1);
+		setCurrentPage(1); 
 	}, [gridProducts]);
+
 	return gridProducts.length > 1 ? (
 		<div className="shop_grid">
 			<div className="head_row">
@@ -82,13 +84,21 @@ const ShopGrid = () => {
 					</span>
 				</p>
 			</div>
-			<div className="shop_grid_container">
-				{gridProducts
-					.slice(40 * (currentPage - 1), 40 * currentPage)
-					.map((item, index) => (
-						<ProductCard key={item.id} productObj={item} />
-					))}
-			</div>
+			{!isFiltering ? (
+				<div className="shop_grid_container">
+					{gridProducts
+						.slice(40 * (currentPage - 1), 40 * currentPage)
+						.map((item, index) => (
+							<ProductCard key={item.id} productObj={item} />
+						))}
+				</div>
+			) : (
+				<img
+					src="https://i.gifer.com/ZKZg.gif"
+					alt="loading gif"
+					className="loading_screen wider"
+				/>
+			)}
 
 			{totalPages > 1 && (
 				<div className="pagination h7 md">
@@ -115,11 +125,7 @@ const ShopGrid = () => {
 			className="loading_screen wider"
 		/>
 	) : (
-		<img
-			src={notFoundImage}
-			alt="not found"
-			className="not_found_image"
-		/>
+		<img src={notFoundImage} alt="not found" className="not_found_image" />
 	);
 };
 

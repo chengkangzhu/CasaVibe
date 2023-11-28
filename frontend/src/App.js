@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 
 //redux
+import { useSelector } from "react-redux";
 
 //components
 import Navbar from "./components/Navbar";
@@ -24,7 +25,7 @@ import Location from "./pages/Location";
 import ThankYou from "./pages/ThankYou";
 import Payment from "./pages/Payment";
 import Auth from "./pages/Auth";
-import { useSelector } from "react-redux";
+import About from "./pages/About";
 
 function App() {
 	// Ensure that the App component is wrapped in the Router
@@ -63,7 +64,7 @@ function AppComponent() {
       			<Route path="/signup" element={token ? <Navigate to="/" />:<Auth isSignIn={false} /> } />
 				<Route path="/pdp/:id" element={<ProductDetail />} />
 				<Route path="/shop/:type" element={<Shop />} />
-				<Route path="/search/:keyword" element={<Shop />} />
+				<Route path="/shop/:category" element={<Shop />} />
 				<Route path="/cart" element={token ? <ShoppingCart />:<Navigate to="/signin"/> } />
 				<Route path="/location" element={<Location />} />
 				<Route path="/payment/completed/:id" element={<ThankYou />} />
@@ -71,7 +72,7 @@ function AppComponent() {
 				<Route path="/profile" element={<UnderConstruction />} />
 				<Route path="/orders" element={<UnderConstruction />} />
 				<Route path="/wishlist" element={<UnderConstruction />} />
-				<Route path="/about" element={<UnderConstruction />} /> 
+				<Route path="/about" element={<About />} /> 
 			</Routes>
 			{!isAuthPage && <Footer />}
 		</>

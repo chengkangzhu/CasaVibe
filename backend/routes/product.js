@@ -79,6 +79,45 @@ router.get("/search/:keyword", async (req, res) => {
 	}
 });
 
+router.get("/search/:keyword/:filterString", async (req, res) => {
+	const keyword = req.params.keyword;
+	const filterString = req.params.filterString;
+
+	const options = {
+		method: "GET",
+		url: "https://ikea-api.p.rapidapi.com/keywordSearch",
+		params: {
+			keyword: keyword,
+			countryCode: "us",
+			languageCode: "en",
+			filters: filterString,
+		},
+		headers: {
+			"X-RapidAPI-Key":process.env.IKEA_API,
+			"X-RapidAPI-Host": "ikea-api.p.rapidapi.com",
+		},
+	};
+
+	try {
+		const response = await axios.request(options);
+		if (!response.data) {
+			res.status(404).json({ error: "Products not found" });
+		} else {
+			res.json(response.data);
+		}
+	} catch (error) {
+
+		if (error.response) {
+			// Handle specific error response from the API (non-sensitive errors)
+			const { status, data } = error.response;
+			res.status(status).json({ error: 'An error occurred with the external API' });
+		} else {
+			// Handle other errors (e.g., network issues) without exposing details
+			res.status(500).json({ error: 'An error occurred' });
+		}
+	}
+});
+
 router.get("/category/:categoryKey", async (req, res) => {
 	const categoryKey = req.params.categoryKey; 
 	const options = {

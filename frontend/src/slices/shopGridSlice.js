@@ -1,61 +1,107 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";	
+import axios from "axios";
 import { toast } from "react-toastify";
 
 const shopGridInitialState = {
 	bestSelling: [],
 	grid: [],
-	notFound: false, 
-	showRoom: false,
+	notFound: false,
+	showRoom: false, 
+	filtering : false, 
 };
+
+//accept a argument for filter, if filter exist then send a different request, but only change the shop grid
+// export const fetchData = createAsyncThunk(
+// 	"shopGrid/fetchData",
+// 	async (keyWord, { dispatch }) => {
+// 		if (!keyWord.trim()) {
+// 			return;
+// 		}
+
+// 		//send the request to backend and update the slice
+// 		try {
+// 			dispatch(updateShopGrid([]));
+// 			const response = await axios.get(
+// 				`${process.env.REACT_APP_API_URL}/product/search/${keyWord}`
+// 			);
+// 			if (response.data.length === 0) {
+// 				dispatch(updateShopGrid("not found"));
+// 			} else {
+// 				dispatch(updateShopGrid(response.data));
+// 			}
+// 		} catch (error) {
+// 			if (error.response.status === 429) {
+// 				toast.error(
+// 					"Too many requests. Please slow down and refresh or try again ."
+// 				);
+// 			}
+// 			console.error("Error fetching data:", error);
+// 		}
+// 	}
+// );
 
 export const fetchData = createAsyncThunk(
 	"shopGrid/fetchData",
-	async (keyWord, { dispatch }) => {
+	async ({ keyWord, filter = false }, { dispatch }) => {
+		console.log("requesting new");
 		if (!keyWord.trim()) {
 			return;
 		}
 
 		try {
-			dispatch(updateShopGrid([]));
-			const response = await axios.get(
-				`${process.env.REACT_APP_API_URL}/product/search/${keyWord}`
-			);
+			if (filter !== false) {
+				dispatch(updateShopGridOnly("filtering"));
+			} else {
+				dispatch(updateShopGrid([]));
+			}
+
+			let url = `${process.env.REACT_APP_API_URL}/product/search/${keyWord}`;
+			if (typeof filter === "string") {
+				url += `/${filter}`;
+			}
+			const response = await axios.get(url);
 			if (response.data.length === 0) {
 				dispatch(updateShopGrid("not found"));
 			} else {
-				dispatch(updateShopGrid(response.data));
+				if (filter !== false) {
+					dispatch(updateShopGridOnly(response.data));
+				} else {
+					dispatch(updateShopGrid(response.data));
+				}
 			}
 		} catch (error) {
-			if(error.response.status === 429){
-				toast.error("Too many requests. Please slow down and try again.") 
+			if (error.response.status === 429) {
+				toast.error(
+					"Too many requests. Please slow down and refresh or try again ."
+				);
 			}
 			console.error("Error fetching data:", error);
 		}
 	}
 );
 
-export const fetchCategory = createAsyncThunk(
-	"shopGrid/fetchCategory",
-	async (categoryKey, { dispatch }) => { 
-		try {
-			dispatch(updateShopGrid([]));
-			const response = await axios.get( `${process.env.REACT_APP_API_URL}/product/category/${categoryKey}`);
-			if (response.data.length === 0) {
-				dispatch(updateShopGrid("not found"));
-			} else {
-				dispatch(updateShopGrid(response.data));
-			}
-		} catch (error) {
-			if(error.response.status === 429){
-				toast.error("Too many requests. Please slow down and try again.") 
-			}
-			console.error("Error fetching data:", error);
-		}
-	}
+// export const fetchCategory = createAsyncThunk(
+// 	"shopGrid/fetchCategory",
+// 	async (categoryKey, { dispatch }) => {
+// 		try {
+// 			dispatch(updateShopGrid([]));
+// 			const response = await axios.get( `${process.env.REACT_APP_API_URL}/product/category/${categoryKey}` );
 
-	
-);
+// 			if (response.data.length === 0) {
+// 				dispatch(updateShopGrid("not found"));
+// 			} else {
+// 				dispatch(updateShopGrid(response.data));
+// 			}
+// 		} catch (error) {
+// 			if (error.response.status === 429) {
+// 				toast.error(
+// 					"Too many requests. Please slow down and try again."
+// 				);
+// 			}
+// 			console.error("Error fetching data:", error);
+// 		}
+// 	}
+// );
 
 export const shopGridSlice = createSlice({
 	name: "shopGrid",
@@ -64,14 +110,13 @@ export const shopGridSlice = createSlice({
 		updateShopGrid: (state, action) => {
 			if (action.payload === "not found") {
 				state.notFound = true;
-			} else if(action.payload === "too much request"){
+			} else if (action.payload === "too much request") {
 				// state.tooMuchRequest = true
-			}
-			else {
-				if(action.payload.length === 0){
-					state.bestSelling = []
-					state.grid = []
-				}else if (action.payload.length < 40) {
+			} else {
+				if (action.payload.length === 0) {
+					state.bestSelling = [];
+					state.grid = [];
+				} else if (action.payload.length < 40) {
 					state.grid = action.payload;
 					state.notFound = false;
 				} else {
@@ -81,10 +126,24 @@ export const shopGridSlice = createSlice({
 				}
 			}
 		},
+		updateShopGridOnly: (state, action) => {
+			if (action.payload === "filtering"){ 
+				state.filtering =  true;
+			}else if (action.payload.length < 40) {
+				state.grid = action.payload;
+				state.notFound = false;
+				state.filtering =  false;
+			} else {
+				state.grid = action.payload;
+				state.notFound = false;
+				state.filtering =  false;
+			}
+		},
 		toggleShowRoom: (state, action) => {
 			state.showRoom = action.payload;
 		},
 	},
 });
 
-export const { updateShopGrid, toggleShowRoom } = shopGridSlice.actions;
+export const { updateShopGrid, toggleShowRoom, updateShopGridOnly } =
+	shopGridSlice.actions;

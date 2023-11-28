@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 //icon
 import { HiShoppingCart } from "react-icons/hi";
@@ -31,6 +32,40 @@ const CartItem = ({ item }) => {
 		id,
 	} = item;
 	const dispatch = useDispatch();
+	const userId = useSelector((state) => state.auth.user._id);
+
+	const updateDatabase = async (action) => {
+		await axios.patch(
+			`${process.env.REACT_APP_API_URL}/user/${userId}/cart`,
+			{
+				action: action,
+				productObj: { id },
+			},
+			{
+				headers: {
+					"Content-Type": "application/json",
+					// 'Authorization': `Bearer ${token}`,
+				},
+			}
+		);
+	};
+
+	const handleDecrement = () => {
+		if (quantity !== 1) {
+			dispatch(decrementQuantity({ id }));
+			updateDatabase("decrementQuantity");
+		}
+	};
+
+	const handleIncrement = () => {
+		dispatch(incrementQuantity({ id }));
+		updateDatabase("incrementQuantity");
+	};
+
+	const handleRemove = () => {
+		dispatch(removeFromCart({ id }));
+		updateDatabase("remove");
+	};
 
 	return (
 		<div className="cart_item">
@@ -57,31 +92,17 @@ const CartItem = ({ item }) => {
 					className={`quantity_selector shape_outline md h7`}
 					style={{ width: "96px", height: "32px" }}
 				>
-					<div
-						className="decrement icon"
-						onClick={() => {
-							if (quantity !== 1) {
-								dispatch(decrementQuantity({ id }));
-							}
-						}}
-					>
+					<div className="decrement icon" onClick={handleDecrement}>
 						<MdRemove size={16} />
 					</div>
 					<div className="amount">{quantity}</div>
-					<div
-						className="dincrement icon"
-						onClick={() => dispatch(incrementQuantity({ id }))}
-					>
+					<div className="dincrement icon" onClick={handleIncrement}>
 						<MdAdd size={16} />
 					</div>
 				</div>
 			</div>
 			<div className="right">
-				<MdDelete
-					size="16"
-					className="icon"
-					onClick={() => dispatch(removeFromCart({ id }))}
-				/>
+				<MdDelete size="16" className="icon" onClick={handleRemove} />
 				<p className="h7 sb">${(currentPrice * quantity).toFixed(2)}</p>
 			</div>
 		</div>
@@ -111,14 +132,21 @@ const CartPopup = () => {
 			{isAuth ? (
 				<PopupMenu showMenu={showMenu} className="cart_menu">
 					<div>
-						<h5 className="h5 md">Cart (2)</h5>
+						<h5 className="h5 md">Cart ({cartItems.length})</h5>
 					</div>
 
 					<div className="cart_items">
-						{cartItems &&
+						{cartItems.length > 0 ? (
 							cartItems.map((item, index) => {
 								return <CartItem item={item} key={index} />;
-							})}
+							})
+						) : (
+							<img
+								src="https://www.seensil.com/assets/images/cart-empty.jpg"
+								alt="empty cart"
+								className="empty_cart"
+							/>
+						)}
 					</div>
 
 					<div className="checkout">

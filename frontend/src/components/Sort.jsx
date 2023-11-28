@@ -1,16 +1,65 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+
+//icons
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+
+//component
 import PopupMenu from "./PopupMenu";
 
-const Sort = () => {
-	const [sortMethod, setSortMethod] = useState("Price: Low to High");
-	const [showMenu, setShowMenu] = useState(false);
+//redux
+import { useDispatch } from "react-redux";
+import { fetchData} from "../slices/shopGridSlice";
 
-	const handleChangeSort = (method) => {
-		setSortMethod(method);
-		setShowMenu(false); // Close the menu when a sorting option is clicked
+const Sort = () => {
+	const [sortMethod, setSortMethod] = useState("Best match");
+	const [showMenu, setShowMenu] = useState(false);
+	const dispatch = useDispatch();
+
+	//get the searchkeyword from the path
+	const { type } = useParams();
+
+	const handleChangeSort = async (sortType) => {
+		setSortMethod(sortType.name);
+		setShowMenu(false);
+
+		//send a new request to the slice and the slice will and make request to the backend , get back new sorted products and update the shopgrid
+		dispatch(fetchData({keyWord: type, filter: `sort=${sortType.id}`}))
 	};
- 
+
+	const sortArr = [
+		{
+			id: "RELEVANCE",
+			name: "Best match",
+			eventAction: "sort_by_relevance",
+			selected: true,
+		},
+		{
+			id: "PRICE_LOW_TO_HIGH",
+			name: "Price: low to high",
+			eventAction: "sort_by_price_low",
+			selected: false,
+		},
+		{
+			id: "PRICE_HIGH_TO_LOW",
+			name: "Price: high to low",
+			eventAction: "sort_by_price_high",
+			selected: false,
+		},
+		{
+			id: "NEWEST",
+			name: "Newest",
+			eventAction: "sort_by_newest",
+			selected: false,
+		},
+		{
+			id: "MOST_POPULAR",
+			name: "Most popular",
+			eventAction: "sort_by_most_popular",
+			selected: false,
+		},
+	];
+
 	return (
 		<div
 			className="sort"
@@ -18,25 +67,17 @@ const Sort = () => {
 			onMouseLeave={() => setShowMenu(false)}
 		>
 			<button className={`sort__button shape_outline h7 rg`}>
+				{" "}
 				Sort by:&nbsp;&nbsp;{sortMethod}{" "}
 				<MdOutlineKeyboardArrowDown size={24} className="icon" />
 			</button>
-			<PopupMenu showMenu={showMenu} className="sort__menu" >
-				<span onClick={() => handleChangeSort("Best Match")}>
-					Best Match
-				</span>
-				<span onClick={() => handleChangeSort("Best Sellers")}>
-					Best Sellers
-				</span>
-				<span onClick={() => handleChangeSort("Price - Low to High")}>
-					Price - Low to High
-				</span>
-				<span onClick={() => handleChangeSort("Price - High to Low")}>
-					Price - High to Low
-				</span>
-				<span onClick={() => handleChangeSort("Customer Ratings")}>
-					Customer Ratings
-				</span>
+
+			<PopupMenu showMenu={showMenu} className="sort__menu">
+				{sortArr.map((item, index) => (
+					<span key={index} onClick={() => handleChangeSort(item)}>
+						{item.name}
+					</span>
+				))}
 			</PopupMenu>
 		</div>
 	);
