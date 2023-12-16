@@ -27,9 +27,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { MdAdd } from "react-icons/md";
 import { MdRemove } from "react-icons/md";
 
-//img
+//img and gif
 import notFoundImage from "../img/no-product-found.png";
+import loadingGif from "../img/giphy.gif"
 
+ 
 const AccordionItem = ({ title, content, id }) => {
 	return (
 		<div className="accordion-item">
@@ -63,7 +65,7 @@ const ProductDetail = () => {
 	const [notFound, setNotFound] = useState(false);
 	const { id } = useParams();
 	const token = useSelector((state) => state.auth.token);
-	const userId = useSelector((state) => state.auth.user._id);
+	const user = useSelector((state) => state.auth.user);
 	const navigate = useNavigate();
 
 	//redux
@@ -167,7 +169,7 @@ const ProductDetail = () => {
 			dispatch(addToCart(itemToBeAdded));
 			//update database
 			await axios.patch(
-				`${process.env.REACT_APP_API_URL}/user/${userId}/cart`,
+				`${process.env.REACT_APP_API_URL}/user/${user._id}/cart`,
 				{
 					action: "add",
 					productObj: itemToBeAdded,
@@ -389,7 +391,7 @@ const ProductDetail = () => {
 				</div>
 			) : (
 				<img
-					src="https://i.gifer.com/ZKZg.gif"
+					src={loadingGif}
 					alt="loading gif"
 					className="loading_screen"
 				/>
@@ -435,7 +437,7 @@ const ProductDetail = () => {
 				</ProductCarousel>
 			) : (
 				<img
-					src="https://i.gifer.com/ZKZg.gif"
+					src={loadingGif}
 					alt="loading gif"
 					className="loading_screen"
 				/>

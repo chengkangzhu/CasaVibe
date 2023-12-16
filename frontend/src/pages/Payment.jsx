@@ -38,6 +38,8 @@ const CartItem = ({ image, imageAlt, name, quantity, price:{currentPrice}}) => {
 const Payment = () => {
 	const [orderId, setOrderId] = useState("s2327459");
 
+	
+
 	//check style for input form
 	const [isChecked, setIsChecked] = useState(false);
 

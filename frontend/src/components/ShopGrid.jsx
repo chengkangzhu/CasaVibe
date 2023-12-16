@@ -11,8 +11,9 @@ import ProductCard from "./ProductCard";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 
-//img
+//img and gif
 import notFoundImage from "../img/no-product-found.png";
+import loadingGif from "../img/giphy.gif"
 
 const ShopGrid = () => {
 	const [currentPage, setCurrentPage] = useState(1);
@@ -94,7 +95,7 @@ const ShopGrid = () => {
 				</div>
 			) : (
 				<img
-					src="https://i.gifer.com/ZKZg.gif"
+					src={loadingGif}
 					alt="loading gif"
 					className="loading_screen wider"
 				/>
@@ -119,8 +120,9 @@ const ShopGrid = () => {
 			)}
 		</div>
 	) : !isNotFound ? (
+		
 		<img
-			src="https://i.gifer.com/ZKZg.gif"
+			src={loadingGif}
 			alt="loading gif"
 			className="loading_screen wider"
 		/>

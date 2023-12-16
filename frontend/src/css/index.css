@@ -1,4 +1,3 @@
-@import url("./gambetta.css");
 @import url("general-sans.css");
 html {
   box-sizing: border-box;
@@ -91,41 +90,6 @@ a {
 
 .h8 {
   font-size: 12px;
-}
-
-.h1-italic {
-  font-family: "Gambetta-BoldItalic";
-  font-weight: 700;
-  font-size: 80px;
-  letter-spacing: -1px;
-}
-
-.h2-italic {
-  font-family: "Gambetta-BoldItalic";
-  font-weight: 700;
-  font-size: 72px;
-  letter-spacing: -0.9px;
-}
-
-.h3-italic {
-  font-family: "Gambetta-SemiboldItalic";
-  font-weight: 600;
-  font-size: 48px;
-  letter-spacing: -1px;
-}
-
-.h4-italic {
-  font-family: "Gambetta-SemiboldItalic";
-  font-weight: 600;
-  font-size: 32px;
-  letter-spacing: -0.667px;
-}
-
-.h5-italic {
-  font-family: "Gambetta-SemiboldItalic";
-  font-weight: 600;
-  font-size: 24px;
-  letter-spacing: -1px;
 }
 
 .p1 {

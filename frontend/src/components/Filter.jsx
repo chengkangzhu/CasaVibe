@@ -4,8 +4,7 @@ import React, { useState, useEffect } from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 
-//redux 
-import { useDispatch } from "react-redux";
+//redux  
 
 //accordion section
 const FilterItem = ({ title, children, buttonFunc, containerClass }) => {
@@ -158,8 +157,7 @@ const colorArr = [
 	},
 ];
 
-const Filter = () => {
-	const dispatch = useDispatch();
+const Filter = () => { 
 	const [showFilter, setShowFilter] = useState(false);
 	const [filterList, setFilterList] = useState([]);
 
@@ -179,7 +177,7 @@ const Filter = () => {
 		//add it to filter list
 		setFilterList(
 			filterList.includes("material")
-				? filterList
+				? filterList 
 				: [...filterList, "material"]
 		);
 		setMaterial(event.target.value);

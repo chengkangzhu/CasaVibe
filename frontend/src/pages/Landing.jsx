@@ -13,7 +13,7 @@ import CatergoryBlock from "../components/CatergoryBlock";
 import ProductCard from "../components/ProductCard";
 import NewsCard from "../components/NewsCard";
 
-//images
+//images and gif
 import mirrorImage from "../img/landing/mirror.png";
 import bedImage from "../img/landing/bed.png";
 import cushionImage from "../img/landing/cushion.png";
@@ -37,6 +37,9 @@ import brand10 from "../img/landing/brand10.png";
 import news1 from "../img/landing/news (1).png";
 import news2 from "../img/landing/news (2).png";
 import news3 from "../img/landing/news (3).png";
+
+
+import loadingGif from "../img/giphy.gif"
 
 //product datas
 import { collectionProducts, categoryNewProducts } from "../data";
@@ -197,7 +200,7 @@ const Landing = () => {
 					</div>
 				) : (
 					<img
-						src="https://i.gifer.com/ZKZg.gif"
+					src={loadingGif}
 						alt="loading gif"
 						className="loading_screen"
 					/>
