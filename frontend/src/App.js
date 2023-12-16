@@ -63,8 +63,7 @@ function AppComponent() {
 				<Route path="/signin" element={token ? <Navigate to="/"/> : <Auth isSignIn={true} /> } />
       			<Route path="/signup" element={token ? <Navigate to="/" />:<Auth isSignIn={false} /> } />
 				<Route path="/pdp/:id" element={<ProductDetail />} />
-				<Route path="/shop/:type" element={<Shop />} />
-				<Route path="/shop/:category" element={<Shop />} />
+				<Route path="/shop/:type" element={<Shop />} /> 
 				<Route path="/cart" element={token ? <ShoppingCart />:<Navigate to="/signin"/> } />
 				<Route path="/location" element={<Location />} />
 				<Route path="/payment/completed/:id" element={<ThankYou />} />

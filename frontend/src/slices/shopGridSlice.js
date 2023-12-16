@@ -52,7 +52,9 @@ export const fetchData = createAsyncThunk(
 			if (filter !== false) {
 				dispatch(updateShopGridOnly("filtering"));
 			} else {
+				dispatch(resetNotFound());
 				dispatch(updateShopGrid([]));
+				
 			}
 
 			let url = `${process.env.REACT_APP_API_URL}/product/search/${keyWord}`;
@@ -79,30 +81,7 @@ export const fetchData = createAsyncThunk(
 		}
 	}
 );
-
-// export const fetchCategory = createAsyncThunk(
-// 	"shopGrid/fetchCategory",
-// 	async (categoryKey, { dispatch }) => {
-// 		try {
-// 			dispatch(updateShopGrid([]));
-// 			const response = await axios.get( `${process.env.REACT_APP_API_URL}/product/category/${categoryKey}` );
-
-// 			if (response.data.length === 0) {
-// 				dispatch(updateShopGrid("not found"));
-// 			} else {
-// 				dispatch(updateShopGrid(response.data));
-// 			}
-// 		} catch (error) {
-// 			if (error.response.status === 429) {
-// 				toast.error(
-// 					"Too many requests. Please slow down and try again."
-// 				);
-// 			}
-// 			console.error("Error fetching data:", error);
-// 		}
-// 	}
-// );
-
+ 
 export const shopGridSlice = createSlice({
 	name: "shopGrid",
 	initialState: shopGridInitialState,
@@ -116,13 +95,11 @@ export const shopGridSlice = createSlice({
 				if (action.payload.length === 0) {
 					state.bestSelling = [];
 					state.grid = [];
-				} else if (action.payload.length < 40) {
+				} else if (action.payload.length < 40) { 
 					state.grid = action.payload;
-					state.notFound = false;
-				} else {
+				} else { 
 					state.bestSelling = action.payload.slice(0, 10);
 					state.grid = action.payload.slice(10);
-					state.notFound = false;
 				}
 			}
 		},
@@ -142,8 +119,11 @@ export const shopGridSlice = createSlice({
 		toggleShowRoom: (state, action) => {
 			state.showRoom = action.payload;
 		},
+		resetNotFound: (state) =>{
+			state.notFound = false;
+		}
 	},
 });
 
-export const { updateShopGrid, toggleShowRoom, updateShopGridOnly } =
+export const { updateShopGrid, toggleShowRoom, updateShopGridOnly ,resetNotFound} =
 	shopGridSlice.actions;

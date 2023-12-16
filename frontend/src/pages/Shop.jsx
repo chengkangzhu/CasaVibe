@@ -34,13 +34,12 @@ const Shop = () => {
 		];
 
 		if (rooms.includes(type)) {
-			dispatch(toggleShowRoom(type)) 
-		} else if (type === "furnitures"){
-			dispatch(toggleShowRoom(false))
-		}
-		
-		if (type !== undefined) {   
+			dispatch(toggleShowRoom(type))  
+		} else if (type !== undefined) {   
+
+			//update the shopgrid and turn off the room
 			dispatch(fetchData({keyWord: type}));
+			dispatch(toggleShowRoom(false))
 		} 
 	}, [type, dispatch]);
 

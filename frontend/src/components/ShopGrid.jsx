@@ -19,8 +19,8 @@ const ShopGrid = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const gridProducts = useSelector((state) => state.grid.grid);
 	const totalPages = Math.ceil(gridProducts.length / 40);
-	const isNotFound = useSelector((state) => state.grid.notFound);
-	const isFiltering = useSelector((state)=> state.grid.filtering) 
+	const isFiltering = useSelector((state)=> state.grid.filtering)
+	let isNotFound = useSelector((state) => state.grid.notFound); 
 
 	const handlePageChange = (newPage) => {
 		if (newPage >= 1 && newPage <= totalPages) {
@@ -67,7 +67,7 @@ const ShopGrid = () => {
 	};
 
 	useEffect(() => {
-		setCurrentPage(1); 
+		setCurrentPage(1);  
 	}, [gridProducts]);
 
 	return gridProducts.length > 1 ? (

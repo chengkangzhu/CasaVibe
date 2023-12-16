@@ -2,13 +2,9 @@ import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai"; 
 import { useNavigate } from "react-router-dom"; //
 
-//redux
-import { useDispatch } from "react-redux";
-import { toggleShowRoom, fetchData } from "../slices/shopGridSlice";
 
 const Searchbar = () => {
-	const [searchKeyword, setSearchKeyword] = useState("");
-	const dispatch = useDispatch();
+	const [searchKeyword, setSearchKeyword] = useState(""); 
 	const navigate = useNavigate();
 
 	const handleSearch = () => {
@@ -16,14 +12,13 @@ const Searchbar = () => {
 			return;
 		}
 
+		//when triggered search,navigate and scroll to top
 		navigate("/shop/" + searchKeyword.toLowerCase());
 		window.scrollTo({
 			top: 0,
 			left: 0,
 			behavior: "instant",
-		});
-		dispatch(toggleShowRoom(false));
-		dispatch(fetchData({keyWord: searchKeyword}));
+		}); 
 	};
 
 	const handleKeyDown = (event) => {
