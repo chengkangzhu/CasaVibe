@@ -143,7 +143,7 @@ const ProductDetail = () => {
 		} else {
 			fetchDataById(id);
 		}
-	}, [id,currentProduct, fetchDataById, fetchRelatedItems, reduxPdp]);
+	}, [id]);
 
 	const handleLike = () => {
 		//update the isLiked state
