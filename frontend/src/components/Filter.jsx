@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react"; 
+import { useParams } from "react-router-dom";
 
 //icon
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 
 //redux  
+import { useDispatch } from "react-redux";
+import { fetchData } from "../slices/shopGridSlice";
 
 //accordion section
 const FilterItem = ({ title, children, buttonFunc, containerClass }) => {
@@ -165,39 +168,51 @@ const Filter = () => {
 	const [price, setPrice] = useState("");
 	const [material, setMaterial] = useState("");
 	const [color, setColor] = useState("");
+
 	
-	const handlePriceChange = (event) => {
-		//add it to filter list
-		setFilterList(filterList.includes("price") ? filterList : [...filterList, "price"]);
-		setPrice(event.target.value);
+	//search keyword 
+	const { type } = useParams();
+	const dispatch = useDispatch()
+
+	
+	const handlePriceChange = (id) => {
+		setFilterList(filterList.includes("f-price-buckets") ? filterList : [...filterList, "f-price-buckets"]);
+		setPrice(id);
 	};
 
 
-	const handleMaterialChange = (event) => {
-		//add it to filter list
-		setFilterList(
-			filterList.includes("material")
-				? filterList 
-				: [...filterList, "material"]
-		);
-		setMaterial(event.target.value);
+	const handleMaterialChange = (id) => { 
+		setFilterList( filterList.includes("f-materials") ? filterList : [...filterList, "f-materials"]);
+		setMaterial(id);
 	};
 
-	const handleColorChange = (event) => {
-		//add it to filter list
-		setFilterList(
-			filterList.includes("color") ? filterList : [...filterList, "color"]
-		);
-		setColor(event.target.value);
+	const handleColorChange = (id) => { 
+		setFilterList( filterList.includes("f-colors") ? filterList : [...filterList, "f-colors"] );
+		setColor(id);
 	}; 
-
-	//send the request
-	const handleApplyFilter = async () => {
-		setShowFilter(false);
  
-		//update the filter parameter to the filters appled
-		// dispatch(fetchData({keyWord: type, filter: `sort=${sortType.id}`}))
+	const handleApplyFilter = () => {
+		setShowFilter(false);
+		let filterString = "";
 
+		for(let i in filterList){
+			if(i != 0) filterString += ',' 
+
+			switch(filterList[i]) {
+				case "f-price-buckets":
+					filterString += `f-price-buckets=${price}`
+					break
+				case "f-materials":
+					filterString += `f-materials=${material}`
+					break
+				case "f-colors":
+					filterString += `f-colors=${color}`
+					break
+			}
+		}
+ 
+		//update the filter parameter to the filters appled 
+		dispatch(fetchData({keyWord: type, filter: filterString}))
 	};
 
 	//remove scroll on filter shown
@@ -218,10 +233,7 @@ const Filter = () => {
 		<div className="filter">
 
 			{/* BUTTON */}
-			<button
-				className="filter_button shape_outline h7 rg"
-				onClick={() => setShowFilter(true)}
-			>
+			<button className="filter_button shape_outline h7 rg" onClick={() => setShowFilter(true)}>
 				Filter <MdOutlineKeyboardArrowDown size={24} className="icon" />
 			</button>
 
@@ -265,8 +277,8 @@ const Filter = () => {
 										type="radio"
 										name="price"
 										value={item.name}
-										onChange={handlePriceChange}
-										checked={price === item.name}
+										onChange={() => handlePriceChange(item.id)}
+										checked={price === item.id}
 									/>
 								</label>
 							))}
@@ -282,80 +294,12 @@ const Filter = () => {
 										type="radio"
 										name="material"
 										value={item.name}
-										onChange={handleMaterialChange}
-										checked={material === item.name}
+										onChange={() => handleMaterialChange(item.id)}
+										checked={material === item.id}
 									/>
 								</label>
 							))}
 
-							<label className="h7 rg">
-								Wood
-								<input
-									type="radio"
-									name="material"
-									value="wood"
-									onChange={handleMaterialChange}
-									checked={material === "wood"}
-								/>
-							</label>
-
-							<label className="h7 rg" id="material_metal">
-								Metal
-								<input
-									type="radio"
-									name="material"
-									value="metal"
-									onChange={handleMaterialChange}
-									checked={material === "metal"}
-								/>
-							</label>
-
-							<label className="h7 rg" id="material_leather">
-								Leather
-								<input
-									type="radio"
-									name="material"
-									value="leather"
-									onChange={handleMaterialChange}
-									checked={material === "leather"}
-								/>
-							</label>
-
-							<label className="h7 rg" id="material_plastic">
-								Plastic
-								<input
-									type="radio"
-									name="material"
-									value="plastic"
-									onChange={handleMaterialChange}
-									checked={material === "plastic"}
-								/>
-							</label>
-
-							<label
-								className="h7 rg"
-								id="material_particleboard"
-							>
-								Particleboard
-								<input
-									type="radio"
-									name="material"
-									value="particleboard"
-									onChange={handleMaterialChange}
-									checked={material === "particleboard"}
-								/>
-							</label>
-
-							<label className="h7 rg" id="material_glass">
-								Glass
-								<input
-									type="radio"
-									name="material"
-									value="glass"
-									onChange={handleMaterialChange}
-									checked={material === "glass"}
-								/>
-							</label>
 						</FilterItem>
 						<FilterItem
 							title="Color"
@@ -371,8 +315,8 @@ const Filter = () => {
 										type="radio"
 										name="color"
 										value={item.name}
-										onChange={handleColorChange}
-										checked={color === item.name}
+										onChange={() => handleColorChange(item.id)}
+										checked={color === item.id}
 									/>
 								</label>
 							))}
@@ -382,7 +326,7 @@ const Filter = () => {
 					{/* buttons */}
 					<div className="button_container h7 md  ">
 						<button
-							className="white"
+							className="white" 
 							onClick={() => {
 								setPrice("")
 								setMaterial("");

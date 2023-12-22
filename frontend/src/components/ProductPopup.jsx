@@ -9,8 +9,7 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import PopupMenu from "./PopupMenu";
 
 //redux
-import { useDispatch } from "react-redux";
-import { toggleShowRoom } from "../slices/shopGridSlice";
+import { useDispatch } from "react-redux"; 
 
 
 const ProductPopup = () => {
@@ -159,8 +158,7 @@ const ProductPopup = () => {
 			left: 0,
 			behavior: "instant",
 		});
-        
-		dispatch(toggleShowRoom(false)); 
+         
 
     }
 

@@ -914,6 +914,9 @@ body {
 .filter .overlay .filter_sidebar .colors_container .brown::before {
   background: #8b4513;
 }
+.filter .overlay .filter_sidebar .colors_container .blue::before {
+  background: rgb(58, 58, 225);
+}
 .filter .overlay .filter_sidebar .colors_container .green::before {
   background: #008000;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"; 
+import React, { useEffect, useState } from "react"; 
 import { useParams } from "react-router-dom";
 
 //componennts
@@ -9,14 +9,14 @@ import ProductCarousel from "../components/ProductCarousel";
 //redux
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { fetchData, toggleShowRoom} from "../slices/shopGridSlice";
+import { fetchData} from "../slices/shopGridSlice";
 
 //imgs
 import ShopGrid from "../components/ShopGrid";
 
 
 const Shop = () => {
-	const showRoom = useSelector(state => state.grid.showRoom)
+	const [showRoom, setShowRoom] = useState(false)
 	const { type } = useParams();
 
 	const bestSellingProducts = useSelector((state) => state.grid.bestSelling);
@@ -34,12 +34,11 @@ const Shop = () => {
 		];
 
 		if (rooms.includes(type)) {
-			dispatch(toggleShowRoom(type))  
+			setShowRoom(type)
 		} else if (type !== undefined) {   
-
 			//update the shopgrid and turn off the room
 			dispatch(fetchData({keyWord: type}));
-			dispatch(toggleShowRoom(false))
+			setShowRoom(false)
 		} 
 	}, [type, dispatch]);
 
@@ -57,15 +56,7 @@ const Shop = () => {
 			{showRoom && <RoomSubcatergory room={showRoom} />}
 			{bestSellingProducts.length > 1 && (
 				<ProductCarousel h2="Best Selling Products">
-					{bestSellingProducts.map((item, index) => {
-						if (index < 10) {
-							return (
-								<ProductCard key={index} productObj={item} />
-							);
-						} else {
-							return null;
-						}
-					})}
+					{bestSellingProducts.map((item, index) => <ProductCard key={index} productObj={item} />)}
 				</ProductCarousel>
 			)}
 			<ShopGrid />

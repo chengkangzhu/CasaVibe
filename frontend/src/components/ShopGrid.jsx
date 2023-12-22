@@ -18,9 +18,9 @@ import loadingGif from "../img/giphy.gif"
 const ShopGrid = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const gridProducts = useSelector((state) => state.grid.grid);
-	const totalPages = Math.ceil(gridProducts.length / 40);
-	const isFiltering = useSelector((state)=> state.grid.filtering)
+	const totalPages = Math.ceil(gridProducts.length / 40); 
 	let isNotFound = useSelector((state) => state.grid.notFound); 
+	const isFiltering = useSelector(state => state.grid.filtering)
 
 	const handlePageChange = (newPage) => {
 		if (newPage >= 1 && newPage <= totalPages) {
@@ -85,22 +85,30 @@ const ShopGrid = () => {
 					</span>
 				</p>
 			</div>
+
+			
 			{!isFiltering ? (
 				<div className="shop_grid_container">
 					{gridProducts
 						.slice(40 * (currentPage - 1), 40 * currentPage)
-						.map((item, index) => (
+						.map((item) => (
 							<ProductCard key={item.id} productObj={item} />
 						))}
 				</div>
-			) : (
+			) : !isNotFound ? ( 
 				<img
 					src={loadingGif}
 					alt="loading gif"
 					className="loading_screen wider"
 				/>
-			)}
+			) : (
+				<img src={notFoundImage} alt="not found" className="not_found_image" />
+			)
+			
+			}
 
+
+			{/* pagination */}
 			{totalPages > 1 && (
 				<div className="pagination h7 md">
 					<MdOutlineKeyboardArrowLeft

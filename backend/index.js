@@ -43,7 +43,7 @@ app.use('/user', userRoute)
 
 // Define a default route for testing purposes
 app.get("/", (req, res) => {
-	res.send("Hello, World! this is casavibe backennd");
+	res.send("Hello, World! this is casavibe backend");
 });
 
 
