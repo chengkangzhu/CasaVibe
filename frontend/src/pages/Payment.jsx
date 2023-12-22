@@ -36,7 +36,7 @@ const CartItem = ({ image, imageAlt, name, quantity, price:{currentPrice}}) => {
 };
 
 const Payment = () => {
-	const [orderId, setOrderId] = useState("s2327459");
+	const orderId = "s2327459"
 
 	
 

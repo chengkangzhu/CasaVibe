@@ -7,15 +7,12 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 //component
 import PopupMenu from "./PopupMenu";
-
-//redux
-import { useDispatch } from "react-redux"; 
+ 
 
 
 const ProductPopup = () => {
     const [showMenu, setShowMenu] = useState(false)
-    const [currentCategory, setCurrentCategory] = useState("Furniture")
-    const dispatch = useDispatch()
+    const [currentCategory, setCurrentCategory] = useState("Furniture") 
     const navigate = useNavigate()
 
      

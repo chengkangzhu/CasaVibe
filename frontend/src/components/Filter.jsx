@@ -196,7 +196,7 @@ const Filter = () => {
 		let filterString = "";
 
 		for(let i in filterList){
-			if(i != 0) filterString += ',' 
+			if(i !== 0) filterString += ',' 
 
 			switch(filterList[i]) {
 				case "f-price-buckets":
@@ -208,6 +208,8 @@ const Filter = () => {
 				case "f-colors":
 					filterString += `f-colors=${color}`
 					break
+				default:
+					break;
 			}
 		}
  

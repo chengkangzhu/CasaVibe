@@ -72,6 +72,7 @@ export const shopGridSlice = createSlice({
 		updateShopGrid: (state, action) => { 
 			state.notFound = false
 			state.filtering =  false;
+
 			if (action.payload.length === 0) {
 				state.bestSelling = [];
 				state.grid = [];
@@ -83,14 +84,13 @@ export const shopGridSlice = createSlice({
 			}
 		},
 		filterShopGrid: (state, action) => {
+			state.notFound = false;
+
 			if (action.payload === "filtering"){ 
 				state.filtering =  true;
-			}else if (action.payload.length === 0) {
-				state.grid = [];
 			} else {
-				state.grid = action.payload;
-				state.notFound = false;
 				state.filtering =  false;
+				state.grid = action.payload;
 			}
 		},
 		toggleNotFound: (state,action) =>{

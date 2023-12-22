@@ -128,6 +128,7 @@ const ProductDetail = () => {
 	};
 
 	//update the page when id is changed
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => {
 		setIsLiked(false);
 		setQuantity(1);

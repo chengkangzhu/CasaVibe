@@ -77,10 +77,9 @@ const ShopGrid = () => {
 					<Filter />
 					<Sort />
 				</div>
-				<p className="h7 rg total_products">
+				<p className="h7 rg total_">
 					<span className="h7 rg total_products">
-						Shows {40 * (currentPage - 1)}-
-						{Math.min(40 * currentPage, gridProducts.length)} of{" "}
+						Shows {40 * (currentPage - 1)}- {Math.min(40 * currentPage, gridProducts.length)} of{" "}
 						{gridProducts.length} products
 					</span>
 				</p>
